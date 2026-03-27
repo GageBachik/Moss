@@ -186,9 +186,14 @@ After updating all stats, evaluate each post against thresholds from `~/moss/con
 - Condition: `views >= go_threshold_views (3000)` AND `saves > 0` (if go_requires_saves is true)
 - Action: Add to signals array AND send Dispatch: "✅ STRONG: [ConceptName] on [Platform] crossed GO threshold — [X] views, [Y] saves"
 
+**SOCIAL_VALIDATED** (critical — this is the build gate for concepts in `content-tracking` stage)
+- Condition: Concept is in `content-tracking` stage AND at least one post has `views >= go_threshold_views (3000)` AND `saves > 0` (if go_requires_saves is true)
+- Action: Add to signals array AND send Dispatch: "🚀 SOCIAL_VALIDATED: [ConceptName] proved demand — [X] views, [Y] saves on [Platform]. Ready to build."
+- This signal tells the heartbeat orchestrator to advance the concept from `content-tracking` to `designing-building`.
+
 **DEAD_CONTENT** (log only, no Dispatch unless all posts dead)
 - Condition: `hoursAgo(postedAt) >= 72` AND `views < 500`
-- Action: Add to signals array. If ALL posts for a concept are dead, send Dispatch: "📉 DEAD: All posts for [ConceptName] under 500 views at 72h — consider concept review"
+- Action: Add to signals array. If ALL posts for a concept are dead AND concept is in `content-tracking` stage, send Dispatch: "💀 KILLED: All posts for [ConceptName] under 500 views at 72h — concept failed social validation, recommending kill"
 
 **PLATFORM_DOWN** (send Dispatch)
 - Condition: 2 or more consecutive check failures for the same platform
@@ -221,11 +226,20 @@ For any concept that generated a VIRAL_ALERT or STRONG_PERFORMER signal, update 
   }
   ```
 - Update `lastUpdated` and `lastAgent: "content-tracker"`
-- Do NOT change the stage — stage transitions are the Orchestrator's job
 
-For concepts where ALL posts are dead (DEAD_CONTENT signal on all posts):
+For concepts with SOCIAL_VALIDATED signal (concept is in `content-tracking` stage and meets go threshold):
+- Add a history entry noting the social proof: "Social validation passed: [X] views, [Y] saves on [platform]. Concept proved demand — ready to build."
+- Do NOT change the stage directly — the heartbeat orchestrator reads this signal and advances to `designing-building`
+- Update `lastUpdated` and `lastAgent: "content-tracker"`
+
+For concepts where ALL posts are dead (DEAD_CONTENT signal on all posts) AND concept is in `content-tracking` stage:
+- Add a history entry: "Social validation FAILED: all posts under 500 views at 72h. Recommending kill."
+- Flag concept for orchestrator to kill (the heartbeat will set stage to "killed")
+- Update `lastUpdated` and `lastAgent`
+
+For concepts in other stages (post-launch, etc.) where ALL posts are dead:
 - Add a history entry noting the outcome
-- Set `"needsHuman": false` (Orchestrator decides what to do with dead concepts)
+- Set `"needsHuman": false` (Orchestrator decides what to do)
 - Update `lastUpdated` and `lastAgent`
 
 ---

@@ -1,0 +1,21 @@
+{
+  "halted": false,
+  "lastRun": "2026-03-27T06:51:41.606121+00:00",
+  "activeSubagents": [
+    {
+      "agent": "scout",
+      "concept": null,
+      "spawnedAt": "2026-03-27T06:38:00Z"
+    },
+    {
+      "agent": "eval (moss-active)",
+      "concept": "snap-split",
+      "spawnedAt": "2026-03-27T06:51:41.606121+00:00"
+    }
+  ],
+  "pendingActions": [
+    "Eval loop running via moss-active for snap-split",
+    "Scout still searching for new concepts"
+  ],
+  "restartLog": []
+}

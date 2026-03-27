@@ -28,3 +28,4 @@ Thumbs.db
 
 # QMD index (regenerable)
 .qmd/
+logs/

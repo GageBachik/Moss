@@ -1,14 +1,13 @@
 {
   "halted": false,
-  "lastRun": "2026-03-27T17:27:00+00:00",
+  "lastRun": "2026-03-27T17:52:00+00:00",
   "lastRetro": "2026-03-27T16:31:00+00:00",
   "lastRetroProposals": {"autoApplied": 3, "suggest": 1, "flagged": 1},
-  "activeSubagents": [
-    {"agent": "moss-active", "concept": "glow-cal (eval)", "startedAt": "2026-03-27T17:27:00+00:00"}
-  ],
+  "activeSubagents": [],
   "pendingActions": [
     "6 validated concepts queued for design-build: soma-reset, breath-score, spoon-meter, prote-tracker, stack-check, cold-plunge-log",
-    "Design-build should process oldest-first, max 1 at a time, after glow-cal clears eval",
+    "Design-build should process oldest-first, max 1 at a time",
+    "glow-cal now in content-creating — content-creator should pick it up next sweep",
     "Content tracker should pick up snap-split and nospend-streak on next 2-hour cycle",
     "YouTube Shorts skipped for snap-split and nospend-streak — needs video assets"
   ],
@@ -19,7 +18,11 @@
     "Designer-builder completed glow-cal: zero build errors, 9 source files, SwiftData + RevenueCat",
     "glow-cal advanced to evaluating, moss-active tmux launched for eval loop",
     "Content creator posted snap-split + nospend-streak to TikTok, Instagram, X, Threads",
-    "Both content concepts advanced to content-tracking"
+    "Both content concepts advanced to content-tracking",
+    "moss-active: glow-cal eval attempt 1 FAILED — 1 HIGH (fonts not bundled) + 4 MEDIUM issues",
+    "moss-active: designer-builder fixed all 5 issues (font bundling, Avenir Next, CompactMirrorIcon, legal links)",
+    "moss-active: glow-cal eval attempt 2 PASSED (9/10) — advanced to content-creating",
+    "moss-active: no remaining designing-building/evaluating concepts, self-terminating"
   ],
   "restartLog": [
     {
@@ -40,7 +43,9 @@
     "Shell quoting with $ in prompts breaks heredoc — use single quotes for all claude -p prompts",
     "moss-active tmux session keeps dying — claude -p process likely exiting due to API credits or permissions. Needs investigation.",
     "xcodebuild with -target flag does not resolve SPM packages — must use -scheme flag for builds with SPM dependencies",
-    "xcodebuild signing errors on simulator — use CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO for eval builds"
+    "xcodebuild signing errors on simulator — use CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO for eval builds",
+    "IDB (fb-idb) incompatible with Python 3.14 asyncio — cannot use ios-simulator-skill screen_mapper/navigator scripts. Use Claude Desktop Bridge or code review for eval interaction.",
+    "claude-desktop-send background tasks return empty output — Desktop Bridge may need foreground mode or longer timeout"
   ],
   "escalations": [
     {

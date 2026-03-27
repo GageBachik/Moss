@@ -1,0 +1,473 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		099309BA1655DA969CA74E7E /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0FD1F1F866A5E6E85B41C9 /* DayCell.swift */; };
+		25AD6BE4E9ED6D5E4B13361F /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD5964C1C9DE5CEF33BD6567 /* Nunito-ExtraBold.ttf */; };
+		286CA2B5236B84279619E2B8 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63D8346575BE3C29598DA4CD /* Nunito-Bold.ttf */; };
+		2A71B3D86AC5CD86EDEA6789 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA1B5FDBF8ADF08C49D2646 /* Nunito-SemiBold.ttf */; };
+		30BF2D38A05EAED40A4BB27F /* NoSpendStreakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2FC24BB31E7D45D76EB566 /* NoSpendStreakApp.swift */; };
+		3A18601A68F00EFFD3E50948 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA1D292D7991D29A61B1BF /* UserSettings.swift */; };
+		3E7F04B3CD9EB7935C63C0BA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA137C02084E4AC843272BA4 /* HomeView.swift */; };
+		43DBFD7FB6D5FD8DA1E8406D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C69E8FC481ED6104FC418 /* ContentView.swift */; };
+		4AACD973764A9937425CBABE /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = AAD4F0A324039E19A577B6DA /* RevenueCat */; };
+		4D7B389F7FB2160FD659757D /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB46F1E1B73C8EC851948970 /* Nunito-Regular.ttf */; };
+		55EB9075F4E0C35945A27B7F /* Nunito-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B71509DF80701F2E7920D32 /* Nunito-Medium.ttf */; };
+		566E587121D7530FE63CFFB6 /* StreakBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF90CCDC950989A8865B4E9 /* StreakBadge.swift */; };
+		58577BEF12124BB65EBA423D /* ShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9A16382C51FF1C9986E0F4 /* ShareCardView.swift */; };
+		77F95409F632803D1BABA13D /* SpendDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403C63C75EA186E121EEDF22 /* SpendDay.swift */; };
+		81C851A16FF3F3B32EDEE8DE /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3FBA387B1A443D3F2FD516 /* PaywallView.swift */; };
+		BFAA9A8220EBAF1D9C61548A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67036F5CA30FDC1A9F480A11 /* SettingsView.swift */; };
+		C1398DC10011267B61591F24 /* CalendarGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E497F1871411ACEA18FEF65C /* CalendarGridView.swift */; };
+		C6286F580C4CC299EFD4762E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C039348C6854F99091328400 /* Theme.swift */; };
+		C8C6633A0DE39AD24E331429 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E7C24EBFCC9FB1075EC459 /* StatsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E3FBA387B1A443D3F2FD516 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		1B7C69E8FC481ED6104FC418 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		403C63C75EA186E121EEDF22 /* SpendDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendDay.swift; sourceTree = "<group>"; };
+		5178B9A46F6FF89DB4CBE23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		63D8346575BE3C29598DA4CD /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
+		67036F5CA30FDC1A9F480A11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		6DF90CCDC950989A8865B4E9 /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
+		7D9A16382C51FF1C9986E0F4 /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
+		8B71509DF80701F2E7920D32 /* Nunito-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Medium.ttf"; sourceTree = "<group>"; };
+		9D2FC24BB31E7D45D76EB566 /* NoSpendStreakApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSpendStreakApp.swift; sourceTree = "<group>"; };
+		A1E7C24EBFCC9FB1075EC459 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		BD5964C1C9DE5CEF33BD6567 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
+		C039348C6854F99091328400 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		C99CA3855942970F18160877 /* NoSpendStreak.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NoSpendStreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA137C02084E4AC843272BA4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		CB46F1E1B73C8EC851948970 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		E2EA1D292D7991D29A61B1BF /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		E497F1871411ACEA18FEF65C /* CalendarGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridView.swift; sourceTree = "<group>"; };
+		EA0FD1F1F866A5E6E85B41C9 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		FCA1B5FDBF8ADF08C49D2646 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A95A937736D0BA1DE7A4B25D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AACD973764A9937425CBABE /* RevenueCat in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0479635D6B89A14DD6FFD510 /* NoSpendStreak */ = {
+			isa = PBXGroup;
+			children = (
+				5178B9A46F6FF89DB4CBE23C /* Info.plist */,
+				F641E25C54F80E9A0CED1996 /* App */,
+				C40059EB8C9D7DA7589F409D /* Components */,
+				32D44B8F66DF40AA7D882D2B /* Models */,
+				841E020C982F66F1487EB04C /* Resources */,
+				6AC37360F5047003CB9688E3 /* Screens */,
+				7F45246F403AD7DC99699C93 /* Theme */,
+			);
+			path = NoSpendStreak;
+			sourceTree = "<group>";
+		};
+		31B5FC94A570AC5F983E8BCD = {
+			isa = PBXGroup;
+			children = (
+				0479635D6B89A14DD6FFD510 /* NoSpendStreak */,
+				8762B54613EC85486160EAE4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		32D44B8F66DF40AA7D882D2B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				403C63C75EA186E121EEDF22 /* SpendDay.swift */,
+				E2EA1D292D7991D29A61B1BF /* UserSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6AC37360F5047003CB9688E3 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				CA137C02084E4AC843272BA4 /* HomeView.swift */,
+				0E3FBA387B1A443D3F2FD516 /* PaywallView.swift */,
+				67036F5CA30FDC1A9F480A11 /* SettingsView.swift */,
+				A1E7C24EBFCC9FB1075EC459 /* StatsView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		7F45246F403AD7DC99699C93 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				C039348C6854F99091328400 /* Theme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		841E020C982F66F1487EB04C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C307FB7AF27D98FC070E12DB /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8762B54613EC85486160EAE4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C99CA3855942970F18160877 /* NoSpendStreak.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C307FB7AF27D98FC070E12DB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				63D8346575BE3C29598DA4CD /* Nunito-Bold.ttf */,
+				BD5964C1C9DE5CEF33BD6567 /* Nunito-ExtraBold.ttf */,
+				8B71509DF80701F2E7920D32 /* Nunito-Medium.ttf */,
+				CB46F1E1B73C8EC851948970 /* Nunito-Regular.ttf */,
+				FCA1B5FDBF8ADF08C49D2646 /* Nunito-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		C40059EB8C9D7DA7589F409D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E497F1871411ACEA18FEF65C /* CalendarGridView.swift */,
+				EA0FD1F1F866A5E6E85B41C9 /* DayCell.swift */,
+				7D9A16382C51FF1C9986E0F4 /* ShareCardView.swift */,
+				6DF90CCDC950989A8865B4E9 /* StreakBadge.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F641E25C54F80E9A0CED1996 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1B7C69E8FC481ED6104FC418 /* ContentView.swift */,
+				9D2FC24BB31E7D45D76EB566 /* NoSpendStreakApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F40DED0830C86D25545D23A /* NoSpendStreak */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A99818F3C69DB59B4FC3F84 /* Build configuration list for PBXNativeTarget "NoSpendStreak" */;
+			buildPhases = (
+				ECA3A1BA45D8E1BDE37F039B /* Sources */,
+				A864334B75640F68065DE32E /* Resources */,
+				A95A937736D0BA1DE7A4B25D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NoSpendStreak;
+			packageProductDependencies = (
+				AAD4F0A324039E19A577B6DA /* RevenueCat */,
+			);
+			productName = NoSpendStreak;
+			productReference = C99CA3855942970F18160877 /* NoSpendStreak.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		61D0F5B4EA6170910DC63B15 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					1F40DED0830C86D25545D23A = {
+						DevelopmentTeam = "${APPLE_TEAM_ID}";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B043724CC935D9653F9DFFE1 /* Build configuration list for PBXProject "NoSpendStreak" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 31B5FC94A570AC5F983E8BCD;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				04539DB5D2F45438F79CC8E6 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8762B54613EC85486160EAE4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F40DED0830C86D25545D23A /* NoSpendStreak */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A864334B75640F68065DE32E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286CA2B5236B84279619E2B8 /* Nunito-Bold.ttf in Resources */,
+				25AD6BE4E9ED6D5E4B13361F /* Nunito-ExtraBold.ttf in Resources */,
+				55EB9075F4E0C35945A27B7F /* Nunito-Medium.ttf in Resources */,
+				4D7B389F7FB2160FD659757D /* Nunito-Regular.ttf in Resources */,
+				2A71B3D86AC5CD86EDEA6789 /* Nunito-SemiBold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ECA3A1BA45D8E1BDE37F039B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1398DC10011267B61591F24 /* CalendarGridView.swift in Sources */,
+				43DBFD7FB6D5FD8DA1E8406D /* ContentView.swift in Sources */,
+				099309BA1655DA969CA74E7E /* DayCell.swift in Sources */,
+				3E7F04B3CD9EB7935C63C0BA /* HomeView.swift in Sources */,
+				30BF2D38A05EAED40A4BB27F /* NoSpendStreakApp.swift in Sources */,
+				81C851A16FF3F3B32EDEE8DE /* PaywallView.swift in Sources */,
+				BFAA9A8220EBAF1D9C61548A /* SettingsView.swift in Sources */,
+				58577BEF12124BB65EBA423D /* ShareCardView.swift in Sources */,
+				77F95409F632803D1BABA13D /* SpendDay.swift in Sources */,
+				C8C6633A0DE39AD24E331429 /* StatsView.swift in Sources */,
+				566E587121D7530FE63CFFB6 /* StreakBadge.swift in Sources */,
+				C6286F580C4CC299EFD4762E /* Theme.swift in Sources */,
+				3A18601A68F00EFFD3E50948 /* UserSettings.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0246175BB833AF3D8ED0E627 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "${APPLE_TEAM_ID}";
+				INFOPLIST_FILE = NoSpendStreak/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moss.nospend.streak;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5AEA57281D0590AD69C3053E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7A31023197A96538A0264EB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "${APPLE_TEAM_ID}";
+				INFOPLIST_FILE = NoSpendStreak/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moss.nospend.streak;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E5148624A756CAFA8737D218 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9A99818F3C69DB59B4FC3F84 /* Build configuration list for PBXNativeTarget "NoSpendStreak" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0246175BB833AF3D8ED0E627 /* Debug */,
+				7A31023197A96538A0264EB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B043724CC935D9653F9DFFE1 /* Build configuration list for PBXProject "NoSpendStreak" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AEA57281D0590AD69C3053E /* Debug */,
+				E5148624A756CAFA8737D218 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04539DB5D2F45438F79CC8E6 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AAD4F0A324039E19A577B6DA /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04539DB5D2F45438F79CC8E6 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 61D0F5B4EA6170910DC63B15 /* Project object */;
+}

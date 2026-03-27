@@ -1,9 +1,9 @@
 {
   "id": "glow-cal",
   "name": "Glow Cal",
-  "stage": "designing-building",
+  "stage": "content-creating",
   "created": "2026-03-27",
-  "lastUpdated": "2026-03-27T10:40:00+00:00",
+  "lastUpdated": "2026-03-27T17:52:00+00:00",
   "lastAgent": "eval",
   "history": [
     {
@@ -35,6 +35,18 @@
       "date": "2026-03-27T10:40:00+00:00",
       "agent": "eval",
       "notes": "Eval failed (attempt 1). Issues: [HIGH] Playfair Display font files missing from Resources/Fonts/ — all custom typography falls back to system San Francisco font. [MEDIUM] data()/dataLarge() use system rounded font instead of Avenir Next. [MEDIUM] Empty state uses sparkles SF Symbol instead of compact mirror illustration per manifest. [MEDIUM] Paywall hero uses sparkles SF Symbol instead of compact mirror illustration concept per manifest. [MEDIUM] Privacy Policy and Terms of Use buttons have empty closures — non-functional."
+    },
+    {
+      "stage": "evaluating",
+      "date": "2026-03-27T17:47:03+00:00",
+      "agent": "designer-builder",
+      "notes": "Fixed all 5 eval issues: (1) Bundled Playfair Display variable font with Info.plist UIAppFonts registration and CTFontManager runtime registration. (2) Changed data()/dataLarge() to use AvenirNext-Medium/Bold. (3) Replaced sparkles icon in HomeView empty state with custom CompactMirrorIcon view. (4) Replaced sparkles icon in PaywallView hero with CompactMirrorIcon. (5) Replaced empty Privacy Policy/Terms of Use buttons with Link views opening placeholder URLs. Zero build errors."
+    },
+    {
+      "stage": "content-creating",
+      "date": "2026-03-27T17:52:00+00:00",
+      "agent": "eval",
+      "notes": "Eval passed (attempt 2). Score: 9/10. All 5 previously-reported issues resolved. Build succeeds, app launches without crash, CompactMirrorIcon renders correctly, Playfair Display font bundled and registered, Avenir Next used for data fonts, legal links functional. One low-severity note: font rendering could not be pixel-verified at specific weights due to variable font weight matching."
     }
   ],
   "research": {
@@ -81,52 +93,28 @@
   },
   "content": { "posts": [] },
   "eval": {
-    "attempts": 1,
+    "attempts": 2,
     "last_result": {
-      "result": "fail",
-      "score": 4,
-      "timestamp": "2026-03-27T10:40:00+00:00",
+      "result": "pass",
+      "score": 9,
+      "timestamp": "2026-03-27T17:52:00+00:00",
       "checks": {
-        "build": { "passed": true, "notes": "Zero errors, 1 warning. xcodebuild BUILD SUCCEEDED with RevenueCat SPM dependency resolved." },
-        "launch": { "passed": true, "notes": "App launched on iPhone 17 Pro simulator (PID 13797), no crash after 5 seconds." },
-        "visual": { "passed": false, "notes": "Playfair Display font files not bundled — Resources/Fonts/ directory is empty. All .custom('PlayfairDisplay-*') calls silently fall back to system San Francisco font. The app's entire serif typography identity is broken. Additionally, data display fonts use system rounded instead of Avenir Next per manifest." },
-        "functional": { "passed": false, "notes": "Privacy Policy and Terms of Use buttons on Paywall have empty closures — tapping them does nothing. Core navigation (cards to detail, sheets for add/paywall) appears correct from code review." },
-        "polish": { "passed": false, "notes": "Empty state and Paywall hero both use generic sparkles SF Symbol instead of compact mirror illustration specified in manifest. No placeholder text or debug artifacts found." }
+        "build": { "passed": true, "notes": "Zero errors. xcodebuild BUILD SUCCEEDED with RevenueCat SPM dependency and Playfair Display font bundled." },
+        "launch": { "passed": true, "notes": "App launched on iPhone 17 Pro simulator (PID 28444), no crash after 5 seconds." },
+        "visual": { "passed": true, "notes": "All previous issues resolved. Playfair Display variable font bundled in app, registered via CTFontManager and Info.plist UIAppFonts. Home screen heading renders in serif font. CompactMirrorIcon renders with gold trim ring, reflective gradient surface, and hinge detail. Colors match manifest hex values. Avenir Next now used for data fonts." },
+        "functional": { "passed": true, "notes": "Privacy Policy and Terms of Use now use Link views opening URLs in Safari. Core navigation correct from code review: NavigationLink cards to detail, sheets for add/paywall. RevenueCat fully integrated with fallback pricing." },
+        "polish": { "passed": true, "notes": "CompactMirrorIcon replaces generic sparkles on both Home empty state and Paywall hero. No placeholder text, no debug artifacts, no Lorem ipsum. Themed components throughout." }
       },
       "issues": [
         {
-          "severity": "high",
+          "severity": "low",
           "check": "visual",
           "screen": "all screens",
-          "description": "Playfair Display font files (.ttf or .otf) are missing from GlowCal/Resources/Fonts/ directory. The directory exists but is empty. Theme.swift references PlayfairDisplay-Bold, PlayfairDisplay-SemiBold, PlayfairDisplay-Regular, and PlayfairDisplay-Medium via .custom() but without the font files bundled, iOS silently falls back to San Francisco system font. The entire app renders in sans-serif instead of the specified serif Playfair Display typeface. Must: (1) download Playfair Display font files from Google Fonts, (2) add them to Resources/Fonts/, (3) register them in Info.plist under UIAppFonts, (4) ensure they are included in the Copy Bundle Resources build phase."
-        },
-        {
-          "severity": "medium",
-          "check": "visual",
-          "screen": "all screens",
-          "description": "Theme.Font.data() and Theme.Font.dataLarge() use .system(.body, design: .rounded) and .system(size: 42, weight: .bold, design: .rounded) respectively. Manifest specifies Avenir Next for 'category labels, countdown timers, numerical data, tab bar labels'. Must change to .custom('AvenirNext-Medium', size: 16) and .custom('AvenirNext-Bold', size: 42). Avenir Next is a system-bundled font on iOS so no font files needed."
-        },
-        {
-          "severity": "medium",
-          "check": "polish",
-          "screen": "Home (empty state)",
-          "description": "Empty state shows Image(systemName: 'sparkles') inside a circle. Manifest specifies 'Illustration of an open compact mirror with text Add your first beauty routine'. The icon should represent a compact mirror, not generic sparkles. Consider using a custom SF Symbol composition or a simple drawn asset."
-        },
-        {
-          "severity": "medium",
-          "check": "polish",
-          "screen": "Paywall",
-          "description": "Paywall hero section uses Image(systemName: 'sparkles') as the illustration. Manifest specifies 'Unlock Your Full Glow heading with compact mirror illustration concept'. The hero icon should represent or evoke a compact mirror, not reuse the same sparkles icon from the home empty state."
-        },
-        {
-          "severity": "medium",
-          "check": "functional",
-          "screen": "Paywall",
-          "description": "Privacy Policy and Terms of Use buttons in the terms section of PaywallView have empty action closures: Button('Privacy Policy') {} and Button('Terms of Use') {}. These must either open a URL in Safari or be removed. Non-functional legal links are an App Store review risk."
+          "description": "Variable font weight matching: Playfair Display is bundled as a variable font with weight axis. The .weight() modifier is used for bold/semibold/medium variants. Rendering appears correct in screenshot but specific weight values could not be pixel-verified against exact point sizes."
         }
       ],
       "screenshots": [
-        { "screen": "Home (empty state)", "path": "/tmp/moss-eval-home.png" }
+        { "screen": "Home (empty state)", "path": "/tmp/moss-eval2-home.png" }
       ]
     }
   },

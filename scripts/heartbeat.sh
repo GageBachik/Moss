@@ -29,8 +29,12 @@ THEN EXECUTE THIS SWEEP:
 2. SPAWN SUBAGENTS for pending work:
    - If fewer than 3 concepts in scouted/researching stages → spawn Scout
    - For each concept at "scouted" → spawn Validator
-   - For each concept at "validated" (oldest first, max 1 at a time) → spawn Designer-Builder
-   - For each concept at "content-creating" → spawn Content Creator
+   - For each concept at "validated" → spawn Content Creator (social validation before building)
+   - For each concept at "content-creating" → spawn Content Creator (if not already running)
+   - For each concept at "content-tracking" → check content-stats signals:
+     - If Content Tracker signals SOCIAL_VALIDATED or STRONG_PERFORMER (views >= go_threshold_views AND saves > 0): advance concept to "designing-building" with history entry, then spawn Designer-Builder
+     - If ALL content is DEAD (views < 500 after 72h): set stage to "killed" with history entry noting social validation failure
+   - For each concept at "designing-building" (oldest first, max 1 at a time) → check if moss-active is running
    - For each concept at "launch-prep" → spawn Launcher
    - Do NOT spawn Social Warmer -- it is spawned by the Content Creator after posting
    - Do NOT spawn Eval -- that runs inside Moss Active session
