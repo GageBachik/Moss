@@ -1,0 +1,31 @@
+{
+  "scout": {
+    "max_new_concepts_per_run": 3,
+    "min_pipeline_concepts": 3,
+    "aso": {
+      "min_popularity": 20,
+      "max_difficulty": 50
+    }
+  },
+  "validator": {
+    "min_market_signals": 3,
+    "max_competitor_saturation": 10,
+    "min_monetization_potential": "medium"
+  },
+  "content": {
+    "viral_threshold_views_24h": 5000,
+    "go_threshold_views": 3000,
+    "go_requires_saves": true,
+    "kill_threshold_views_72h": 500,
+    "tracking_duration_hours": 72
+  },
+  "eval": {
+    "max_loop_attempts": 5,
+    "pass_requires_no_high_severity": true,
+    "pass_requires_no_medium_severity": true
+  },
+  "stuck_detection": {
+    "subagent_timeout_minutes": 30,
+    "max_restart_attempts": 2
+  }
+}

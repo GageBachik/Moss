@@ -1,0 +1,46 @@
+{
+  "platforms": [
+    {
+      "name": "tiktok",
+      "display_name": "TikTok",
+      "posting_method": "iphone_mirroring",
+      "fallback_method": "web",
+      "analytics_location": "Creator tools > Analytics",
+      "content_formats": ["carousel", "short_video"]
+    },
+    {
+      "name": "instagram",
+      "display_name": "Instagram",
+      "posting_method": "iphone_mirroring",
+      "fallback_method": "web",
+      "analytics_location": "Professional dashboard > Insights",
+      "content_formats": ["carousel", "reels", "single_image"]
+    },
+    {
+      "name": "x",
+      "display_name": "X (Twitter)",
+      "posting_method": "iphone_mirroring",
+      "fallback_method": "web",
+      "analytics_location": "Post analytics",
+      "content_formats": ["carousel", "single_image", "thread"]
+    },
+    {
+      "name": "youtube_shorts",
+      "display_name": "YouTube Shorts",
+      "posting_method": "iphone_mirroring",
+      "fallback_method": "web",
+      "analytics_location": "YouTube Studio > Analytics",
+      "content_formats": ["short_video"]
+    },
+    {
+      "name": "threads",
+      "display_name": "Threads",
+      "posting_method": "iphone_mirroring",
+      "fallback_method": "web",
+      "analytics_location": "Post insights",
+      "content_formats": ["carousel", "single_image", "text"]
+    }
+  ],
+  "posting_order": ["tiktok", "instagram", "x", "youtube_shorts", "threads"],
+  "tracking_order": ["tiktok", "instagram", "x", "youtube_shorts", "threads"]
+}

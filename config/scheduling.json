@@ -1,0 +1,18 @@
+{
+  "heartbeat": {
+    "interval_hours": 4,
+    "description": "Main pipeline sweep -- spawns subagents for pending work"
+  },
+  "content_tracker": {
+    "interval_hours": 2,
+    "description": "Independent content stats polling via iPhone mirroring"
+  },
+  "nightly_retro": {
+    "time": "23:00",
+    "description": "Daily briefing + self-improvement proposals"
+  },
+  "moss_active": {
+    "poll_interval_minutes": 15,
+    "description": "Tight build/eval loop polling when active builds exist"
+  }
+}

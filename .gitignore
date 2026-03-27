@@ -1,0 +1,30 @@
+# Credentials -- NEVER commit these
+*.env
+.env*
+*.key
+*.pem
+*.p12
+*.p8
+credentials*
+secrets*
+auth*
+*_secret*
+*_token*
+
+# Xcode build artifacts
+pipeline/active-build/*/build/
+pipeline/active-build/*/DerivedData/
+pipeline/active-build/*/*.xcworkspace/xcuserdata/
+pipeline/active-build/*/.build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# QMD index (regenerable)
+.qmd/
