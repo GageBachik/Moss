@@ -32,46 +32,87 @@ After reading context, identify:
 
 ---
 
-## Step 1: Collect Stats via Desktop Bridge + iPhone Mirroring
+## Step 1: Connect and Collect Stats via Mirroir MCP
 
-**CRITICAL: Desktop Bridge uses computer use which is SLOW (1-5 minutes per call). You MUST:**
-- **WAIT for each response** before sending the next message. The tool blocks — this is correct.
-- **NEVER send multiple calls** without reading each response first.
-- **Batch as much as possible** into ONE instruction per platform.
-- **NEVER use --no-wait.** NEVER retry if it's still processing.
+All iPhone interactions use **Mirroir MCP tools** directly. These are fast MCP tools — not computer use. Claude Desktop Bridge is ONLY used as a fallback to reconnect iPhone Mirroring when it is broken.
 
-Open iPhone Mirroring first, then collect ALL stats for ALL platforms in as few calls as possible:
+### Pre-Flight: Verify iPhone Mirroring Connection
 
-```bash
-# Step 1: Open mirroring (ONE call, WAIT for response)
-response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect. Tell me when it's ready." 2>/dev/null)
-echo "$response"  # READ the response before continuing
-```
+Before collecting any stats:
 
-If Desktop Bridge reports failure: retry ONCE, then fall back to web for all platforms.
+1. Call `status` to check if iPhone Mirroring is connected.
+2. If NOT connected or status shows errors:
+   a. Use Claude Desktop Bridge to reconnect:
+      ```bash
+      response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. If it shows disconnected, click Reconnect. Wait for the iPhone screen to appear, then press the home button." 2>/dev/null)
+      ```
+   b. Call `status` again to verify connection.
+   c. If still not connected, log failure and exit gracefully — do not loop.
+3. If connected, proceed with Mirroir MCP tools below.
 
-```bash
-# Step 2: ONE call per platform — batch all posts for that platform into one instruction
-# TikTok
-response=$(claude-desktop-send "In iPhone Mirroring, open TikTok. Go to Profile. For EACH of our posted videos, tap it, tap the three-dot menu, tap Analytics, and read: Video views, Likes, Comments, Shares, Saves. Report ALL stats for ALL our TikTok posts before moving on." 2>/dev/null)
-echo "$response"  # WAIT and READ before next platform
+### Per-Platform Stats Collection
 
-# Instagram
-response=$(claude-desktop-send "Now open Instagram in iPhone Mirroring. Go to Profile. For EACH of our posted reels/carousels, tap it, tap View insights, and read: Plays/Reach, Likes, Comments, Shares, Saves. Report ALL stats for ALL our Instagram posts." 2>/dev/null)
-echo "$response"  # WAIT and READ
+For each platform in order (TikTok → Instagram → X → YouTube Shorts → Threads):
 
-# X / Twitter
-response=$(claude-desktop-send "Now open X in iPhone Mirroring. For EACH of our posted tweets, tap the bar chart icon (analytics) and read: Impressions, Likes, Replies, Reposts, Bookmarks. Map: Impressions=views, Bookmarks=saves, Reposts=shares. Report ALL stats." 2>/dev/null)
-echo "$response"  # WAIT and READ
+**TikTok:**
+1. `launch_app("TikTok")`
+2. `describe_screen` to see current state
+3. Navigate to Profile using `tap(x, y)` based on coordinates from `describe_screen`
+4. For EACH of our posted videos:
+   a. `tap` on the video thumbnail
+   b. `tap` the three-dot menu (or analytics icon)
+   c. `tap` Analytics
+   d. `describe_screen` to read: Video views, Likes, Comments, Shares, Saves
+   e. Record the stats
+   f. Navigate back to profile
+5. `press_home()` before moving to next platform
 
-# YouTube Shorts (skip if no video posts)
-response=$(claude-desktop-send "Now open YouTube Studio in iPhone Mirroring. Go to Content, check for any Shorts we posted. If any exist, tap each Short, go to Analytics, and read: Views, Likes, Comments, Shares. If no Shorts exist, just say 'no YouTube posts found'." 2>/dev/null)
-echo "$response"  # WAIT and READ
+**Instagram:**
+1. `launch_app("Instagram")`
+2. `describe_screen` to see current state
+3. Navigate to Profile using `tap(x, y)` based on coordinates from `describe_screen`
+4. For EACH of our posted reels/carousels:
+   a. `tap` on the post thumbnail
+   b. `tap` "View insights"
+   c. `describe_screen` to read: Plays/Reach, Likes, Comments, Shares, Saves
+   d. Record the stats
+   e. Navigate back to profile
+5. `press_home()` before moving to next platform
 
-# Threads
-response=$(claude-desktop-send "Now open Threads in iPhone Mirroring. For EACH of our posted threads, tap the insights icon (bar chart) and read: Views/Impressions, Likes, Replies, Reposts, Quotes. Map: Impressions=views, Reposts+Quotes=shares. Report ALL stats." 2>/dev/null)
-echo "$response"  # WAIT and READ
-```
+**X / Twitter:**
+1. `launch_app("X")`
+2. `describe_screen` to see current state
+3. For EACH of our posted tweets:
+   a. Navigate to the tweet
+   b. `tap` the bar chart icon (analytics)
+   c. `describe_screen` to read: Impressions, Likes, Replies, Reposts, Bookmarks
+   d. Map: Impressions=views, Bookmarks=saves, Reposts=shares
+   e. Record the stats
+4. `press_home()` before moving to next platform
+
+**YouTube Shorts (skip if no video posts):**
+1. `launch_app("YouTube Studio")`
+2. `describe_screen` to see current state
+3. Navigate to Content using `tap(x, y)` based on coordinates from `describe_screen`
+4. Check for any Shorts we posted. If none, record "no YouTube posts found" and move on.
+5. For EACH Short:
+   a. `tap` on the Short
+   b. Navigate to Analytics
+   c. `describe_screen` to read: Views, Likes, Comments, Shares
+   d. Record the stats
+   e. Navigate back
+6. `press_home()` before moving to next platform
+
+**Threads:**
+1. `launch_app("Threads")`
+2. `describe_screen` to see current state
+3. For EACH of our posted threads:
+   a. Navigate to the thread
+   b. `tap` the insights icon (bar chart)
+   c. `describe_screen` to read: Views/Impressions, Likes, Replies, Reposts, Quotes
+   d. Map: Impressions=views, Reposts+Quotes=shares
+   e. Record the stats
+4. `press_home()` when done
 
 ### For each post, extract:
 - `views` (integer)
@@ -81,18 +122,17 @@ echo "$response"  # WAIT and READ
 - `comments` (integer)
 - `checkedAt` (current ISO-8601 timestamp)
 
-### Platform fallbacks (web, only if Desktop Bridge fails for that platform):
+### Platform fallbacks (web, only if Mirroir MCP fails for that platform):
 - TikTok: tiktok.com → Creator tools → Analytics → Content
 - Instagram: instagram.com → Professional dashboard → Content
 - X: x.com → post → view analytics
 - YouTube: studio.youtube.com → Content → Analytics
 - Threads: threads.net → post insights
-- Fallback: threads.net → post insights
 
 ### Platform failure handling:
-- If a platform fails (app crash, logged out, analytics unavailable):
-  1. Retry once after 10 seconds
-  2. Try web fallback once
+- If Mirroir MCP fails for a platform (app crash, tool error, analytics unavailable):
+  1. Retry the Mirroir MCP operation once
+  2. If retry fails, try web fallback once
   3. If both fail, record `{"status": "failed", "reason": "brief description", "checkedAt": "ISO timestamp"}` for that platform
   4. Note 2+ consecutive failures for the same platform as a "platform_down" signal
   5. Continue to the next platform — never halt the whole run for one platform failure

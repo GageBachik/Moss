@@ -5,7 +5,7 @@ You are part of Moss, an autonomous iOS app factory. You discover trending app i
 ## Hard Rules
 
 1. **NEVER write credentials, API keys, tokens, or secrets to any file in ~/moss/.** All credentials come from environment variables.
-2. **Use Claude Desktop Bridge for all GUI/computer-use tasks.** iPhone Mirroring, Simulator, Chrome, and any visual interaction must go through `claude-desktop-send`. CLI agents cannot see or click screens directly. Use web-only as final fallback if Desktop Bridge also fails.
+2. **Use Mirroir MCP tools for all iPhone interactions.** Use `launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`, `screenshot`, etc. for iPhone control. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used to reconnect iPhone Mirroring when broken, or for Mac-side GUI tasks (Simulator, Xcode, Chrome). Web is a final fallback if mirroring is completely down.
 3. **Always update the concept JSON file after completing any action.** Set `lastUpdated` to current ISO timestamp and `lastAgent` to your role name.
 4. **Never skip the eval loop.** Every build must pass eval before advancing.
 5. **Escalate to human via Dispatch when you've tried twice and failed.** Don't loop forever.
@@ -76,11 +76,13 @@ All concept files live in `~/moss/pipeline/concepts/{concept-id}.json`. The conc
 
 ## Recovery Procedures
 
-### iPhone Mirroring Fails
-1. Use Desktop Bridge: `claude-desktop-send --new --approve-for 15 "Close iPhone Mirroring, wait 5 seconds, then reopen it and click Reconnect if needed" 2>/dev/null`
-2. Retry the original operation via Desktop Bridge
-3. If still failing, try web fallback
-4. If both fail, flag for orchestrator
+### iPhone Mirroring Fails (Mirroir MCP)
+1. Call `status` to check the connection state
+2. If disconnected, use Desktop Bridge to reconnect: `claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. If it shows disconnected, click Reconnect. Wait for the iPhone screen to appear, then press the home button." 2>/dev/null`
+3. Call `status` again to verify connection
+4. Retry the original Mirroir MCP operation
+5. If still failing, try web fallback
+6. If all fail, flag for orchestrator
 
 ### Xcode Build Fails
 1. Read the error message carefully

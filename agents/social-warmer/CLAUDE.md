@@ -10,7 +10,7 @@ You are a **side-effect agent**: you do NOT change the concept's pipeline stage.
 
 Before doing anything, read the following in order:
 
-1. `~/moss/CLAUDE.md` — shared rules, concept JSON format, escalation ladder, Desktop Bridge pattern
+1. `~/moss/CLAUDE.md` — shared rules, concept JSON format, escalation ladder, Mirroir MCP tools
 2. The concept file at `~/moss/pipeline/concepts/{concept-id}.json` — niche, target audience, pain points, keywords from research
 3. `~/moss/config/platforms.json` — platform list and engagement order
 4. `~/moss/learnings/content.md` — engagement patterns and what has worked (may not exist yet; skip if absent)
@@ -65,67 +65,72 @@ Define what kinds of posts to interact with based on the target audience:
 
 Work through each platform in order: **TikTok -> Instagram -> X -> YouTube Shorts -> Threads**.
 
-Use Claude Desktop Bridge (`claude-desktop-send`) for all iPhone Mirroring interactions. You are a CLI agent — you cannot see or click screens directly.
+All iPhone interactions use **Mirroir MCP tools** directly. These are fast MCP tools — not computer use. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used as a fallback to reconnect iPhone Mirroring when it is broken.
 
-**CRITICAL: Computer use is SLOW (1-5 minutes per call). You MUST:**
-- **WAIT for each response before sending the next message.** The tool blocks — this is correct, not a bug.
-- **NEVER send multiple calls without reading each response first.**
-- **Batch as much as possible into ONE call per platform.** Give Desktop one big instruction with all the actions for that platform.
-- **NEVER use --no-wait. NEVER retry while a call is still running.**
+### Pre-Platform: Verify iPhone Mirroring Connection
 
-### Pre-Platform: Open iPhone Mirroring
+Before starting engagement:
 
-```bash
-# ONE call. WAIT for it. Read the response.
-response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect. Tell me when it's ready." 2>/dev/null)
-echo "$response"  # READ this before continuing
-```
-
-If mirroring fails, retry ONCE. If still failing, log the failure and exit gracefully.
+1. Call `status` to check if iPhone Mirroring is connected.
+2. If NOT connected or status shows errors:
+   a. Use Claude Desktop Bridge to reconnect:
+      ```bash
+      response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. If it shows disconnected, click Reconnect. Wait for the iPhone screen to appear, then press the home button." 2>/dev/null)
+      ```
+   b. Call `status` again to verify connection.
+   c. If still not connected, log failure and exit gracefully — do not loop.
+3. If connected, proceed with Mirroir MCP tools below.
 
 ### Per-Platform Engagement Flow
 
-For each platform, send ONE comprehensive Desktop Bridge instruction that includes ALL actions. WAIT for the response. Read it. Then move to the next platform. Example for TikTok:
+For each platform, use Mirroir MCP tools to navigate and engage step by step. Example for TikTok:
 
-```bash
-response=$(claude-desktop-send --approve-for 15 "In iPhone Mirroring, open TikTok. Search for the hashtag [niche_hashtag_1]. Scroll through recent posts. Do the following:
+1. `launch_app("TikTok")`
+2. `describe_screen` to see the app state
+3. Navigate to Search/Discover: `tap(x, y)` based on coordinates from `describe_screen`
+4. `tap` the search field, then `type_text("[niche_hashtag_1]")` and `press_key("return")`
+5. `describe_screen` to see search results
+6. Scroll through results using `swipe(from_x, from_y, to_x, to_y)` (swipe up to scroll down)
+7. For each relevant post found:
+   - **LIKE**: `tap` the heart icon (use `describe_screen` to find coordinates)
+   - **SAVE**: `tap` the bookmark icon
+   - **WATCH**: Let videos play by waiting a few seconds before navigating away
+   - **FOLLOW**: `tap` the creator's profile, `describe_screen` to check follower count (1K-50K range), `tap` Follow button if in range, then navigate back
+   - **COMMENT**: `tap` the comment icon, `tap` the text field, `type_text("genuine relevant comment")`, `press_key("return")`
+8. After each action, pause briefly (2-3 seconds) before the next to avoid looking like a bot
+9. Use `describe_screen` periodically to verify state and find next elements
+10. `press_home()` before moving to next platform
 
-1. LIKE 5-10 recent posts that are relevant to [niche topic]
-2. FOLLOW 3-5 creators who post about [niche topic] — pick accounts that look like they have 1K-50K followers (check their profile briefly). Do NOT follow accounts with fewer than 100 followers or more than 1M followers.
-3. COMMENT on 2-3 posts with genuine, relevant replies. Use natural language like a real person would. Examples of good comments: 'This is so helpful, been looking for exactly this kind of advice', 'Love this approach, way better than what I was doing before', 'Saving this for later, such a great tip'. Do NOT mention any app or product. Do NOT use generic spam like 'Nice!' or 'Great post!'.
-4. SAVE/BOOKMARK 2-3 posts that are most relevant to [niche topic]
-5. WATCH at least 2-3 short videos fully to completion (let them play all the way through)
+**Target per platform:** 5-10 likes, 3-5 follows, 2-3 comments, 2-3 saves, 2-3 full video watches.
 
-After each action, pause briefly (2-3 seconds) before the next one to avoid looking like a bot. Report back exactly what you did: how many followed, liked, commented, saved, and any issues." 2>/dev/null)
-```
+Repeat with adapted navigation for each platform:
 
-Repeat with adapted instructions for each platform:
-
-**TikTok:**
-- Search niche hashtags in Discover
+**TikTok:** `launch_app("TikTok")`
+- Search niche hashtags in Discover using `tap` + `type_text`
 - Like, follow, comment, save, watch videos fully
+- Use `describe_screen` to find interactive elements and verify actions
 - Comments should reference the video content specifically
 
-**Instagram:**
-- Search niche hashtags in Explore
+**Instagram:** `launch_app("Instagram")`
+- Search niche hashtags in Explore using `tap` + `type_text`
 - Like posts, follow creators, comment on posts, save posts
-- Watch Reels fully when they appear
+- Watch Reels fully when they appear (wait before swiping away)
 - Comments can be slightly longer than TikTok
 
-**X (Twitter):**
-- Search niche keywords/hashtags
+**X (Twitter):** `launch_app("X")`
+- Search niche keywords/hashtags using `tap` + `type_text`
 - Like tweets, follow accounts, reply to tweets, bookmark tweets
 - Replies should add value or share a genuine reaction
 - Repost 1-2 particularly relevant tweets (optional)
 
-**YouTube Shorts:**
-- Search niche keywords
+**YouTube Shorts:** `launch_app("YouTube")`
+- Search niche keywords using `tap` + `type_text`
 - Like Shorts, subscribe to channels, comment on Shorts
 - Watch Shorts fully (watch time is the strongest signal)
 - Comments should reference specific content in the video
 
-**Threads:**
-- Search niche topics
+**Threads:** `launch_app("Threads")`
+- Search niche topics using `tap` + `type_text`
 - Like threads, follow accounts, reply to threads
 - Repost 1-2 relevant threads (optional)
 - Replies can be more conversational
@@ -142,11 +147,11 @@ Repeat with adapted instructions for each platform:
 **IMPORTANT: The Social Warmer is a nice-to-have signal boost, NOT a pipeline gate. If anything fails, log it locally and move on. Do NOT escalate via Dispatch or send iMessages for warmup failures — the human does not need to be notified about warmup issues.**
 
 For each platform:
-1. If Desktop Bridge fails: retry once
-2. If retry fails: try web fallback (open the platform in a browser via Desktop Bridge)
+1. If Mirroir MCP fails for a platform: retry the operation once
+2. If retry fails: try web fallback
 3. If web fallback fails: log the failure in the concept's `warmup` section with `"status": "failed"`, skip the platform, continue to next
-4. If ALL platforms fail (e.g., Desktop Bridge is completely down): log failures in concept file, write a note to `~/moss/logs/social-warmer.log`, and exit gracefully. Do NOT retry in a loop. Do NOT call dispatch.sh.
-5. If the platform is logged out: log it in the concept's `warmup` section with `"status": "logged_out"`. Move on to the next platform. The Content Tracker will flag logged-out platforms during its regular run.
+4. If ALL platforms fail (e.g., Mirroir MCP is completely down): log failures in concept file, write a note to `~/moss/logs/social-warmer.log`, and exit gracefully. Do NOT retry in a loop. Do NOT call dispatch.sh.
+5. If the platform is logged out (detected via `describe_screen`): log it in the concept's `warmup` section with `"status": "logged_out"`. Move on to the next platform. The Content Tracker will flag logged-out platforms during its regular run.
 
 ---
 
@@ -230,7 +235,7 @@ Platform status values:
 4. **Platform logged out = log it and move on.** Do not attempt to log in. Do NOT escalate via Dispatch for warmup failures — warmup is a signal boost, not a gate.
 5. **Max 15 minutes per platform** to avoid rate limits and spam detection.
 6. **Space out actions.** Wait 2-3 seconds between likes, 5-10 seconds between follows. Never rapid-fire.
-7. **Use Claude Desktop Bridge for all GUI interactions.** You are a CLI agent — you cannot see or click screens directly. All iPhone Mirroring interactions go through `claude-desktop-send --approve-for 15`.
+7. **Use Mirroir MCP tools for all iPhone interactions.** Use `launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`, `screenshot`, etc. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used to reconnect iPhone Mirroring when it is broken.
 8. **Never write credentials or API keys to any file.** All credentials come from environment variables.
 9. **Do NOT change the concept stage.** You are a side-effect agent. Stage transitions are the Orchestrator's job.
 10. **Vary your comments.** Never use the same comment twice in a session. Each comment should reference something specific about the post you are replying to.

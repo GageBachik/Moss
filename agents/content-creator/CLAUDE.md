@@ -139,15 +139,23 @@ Do NOT use real app screenshots (none exist). Do NOT pretend the app is availabl
 
 ---
 
-## Step 3: Post via Claude Desktop Bridge + iPhone Mirroring (PRIMARY)
+## Step 3: Post via Mirroir MCP (PRIMARY)
 
-All platform interactions go through the Claude Desktop Bridge (`claude-desktop-send`). You are a CLI agent — you cannot see or click screens directly.
+All iPhone interactions use **Mirroir MCP tools** directly. These are fast MCP tools — not computer use. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used as a fallback to reconnect iPhone Mirroring when it is broken.
 
-**CRITICAL: Computer use is SLOW (1-5 minutes per call). You MUST:**
-- **WAIT for each response before sending the next message.** The tool blocks — this is correct.
-- **NEVER send multiple calls without reading each response first.**
-- **Batch the ENTIRE posting flow for one platform into ONE call.** Do NOT make separate calls for open, navigate, upload, caption, post.
-- **NEVER use --no-wait. NEVER retry while a call is still running.**
+### Pre-Posting: Verify iPhone Mirroring Connection
+
+Before posting to any platform:
+
+1. Call `status` to check if iPhone Mirroring is connected.
+2. If NOT connected or status shows errors:
+   a. Use Claude Desktop Bridge to reconnect:
+      ```bash
+      response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. If it shows disconnected, click Reconnect. Wait for the iPhone screen to appear, then press the home button." 2>/dev/null)
+      ```
+   b. Call `status` again to verify connection.
+   c. If still not connected, log failure and exit gracefully — do not loop.
+3. If connected, proceed with Mirroir MCP tools below.
 
 ### Pre-Posting Checklist
 
@@ -155,56 +163,49 @@ Before posting:
 1. Confirm all assets are saved to `~/moss/content/{concept-id}/`
 2. Confirm captions are written in `captions.md`
 3. Confirm which platforms still need posting (check concept file `content.posts`)
-4. Read the caption for each platform from `captions.md` BEFORE making Desktop Bridge calls.
+4. Read the caption for each platform from `captions.md` BEFORE starting the posting flow.
 
-### Posting Flow — ONE Call Per Platform
+### Posting Flow — Mirroir MCP Step by Step
 
 Post in order: TikTok → Instagram → X → YouTube Shorts → Threads.
 
-First, open iPhone Mirroring (ONE call, WAIT for response):
-```bash
-response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect. If disconnected, click Reconnect. Tell me when it's ready." 2>/dev/null)
-echo "$response"  # READ before continuing
-```
+For EACH platform, use Mirroir MCP tools to navigate and post. Example for TikTok (adapt for each platform):
 
-Then for EACH platform, send ONE comprehensive instruction that does everything:
-```bash
-# Example for TikTok — adapt for each platform
-response=$(claude-desktop-send --approve-for 15 "In iPhone Mirroring, do the following for TikTok:
-1. Open TikTok app
-2. If logged out, STOP and tell me — do not try to log in
-3. Tap the + button at bottom center, select upload (not record)
-4. Upload the carousel slides from ~/moss/content/{concept-id}/carousel/ in order (slide-01 through the last)
-5. Wait for upload to complete
-6. Paste this caption: {paste the TikTok caption here}
-7. Tap Post
-8. Wait for confirmation that it posted
-9. Go to the post and copy the post URL
-10. Report: success or failure, and the post URL" 2>/dev/null)
-echo "$response"  # READ the full response before moving to next platform
-```
+1. `launch_app("TikTok")`
+2. `describe_screen` to see the app state
+3. If logged out (detected via `describe_screen`): this is a HUMAN BLOCKER. Add to concept blockers, escalate via Dispatch, skip to next platform.
+4. `tap(x, y)` the + button at bottom center (coordinates from `describe_screen`)
+5. `describe_screen` to see the upload/create options
+6. `tap(x, y)` to select upload (not record)
+7. Navigate the upload flow — use `describe_screen` after each step to find the right elements, then `tap` to select carousel slides from the photo library
+8. `describe_screen` to confirm upload is ready
+9. `tap` into the caption field
+10. `type_text("{paste the TikTok caption here}")`
+11. `describe_screen` to verify caption and find the Post button
+12. `tap(x, y)` the Post button
+13. Wait a moment, then `describe_screen` to confirm it posted
+14. Navigate to the post on the profile to get the post URL
+15. `screenshot` to capture proof of the posted content
+16. `press_home()` before moving to next platform
 
-**WAIT for the response. Read it. Record the post URL.** Then proceed to the next platform with a new call.
+**After each platform post:** Record the post URL/ID immediately. Then proceed to the next platform.
 
-If the response says the platform is logged out: this is a HUMAN BLOCKER. Add to concept blockers, escalate via Dispatch, skip to next platform.
+### Platform-Specific Navigation Notes
 
-**Step G: Record Post ID or URL**
-- After posting, open the post from the profile or feed
-- Copy the post URL or note the post ID
-- You will record this in the concept file
+**TikTok:** Tap + → Upload → select slides → caption → Post
+**Instagram:** Tap + → Post → select slides → Next → caption → Share
+**X:** Tap compose → attach images → type caption → Post
+**YouTube Shorts:** Tap + → Upload → select video → add details → Upload
+**Threads:** Tap compose → attach images → type caption → Post
 
-**Step G: Record Post ID or URL**
-- After posting, open the post from the profile or feed
-- Copy the post URL or note the post ID
-- You will record this in the concept file
-
-**Step H: Move to Next Platform**
-- Return to iPhone home screen (swipe up or home button)
-- Proceed to next platform in order
+### Record Post ID or URL
+- After posting, navigate to the post from the profile
+- Use `describe_screen` to read the post URL or ID
+- Record this in the concept file
 
 ### Web Fallback (Per-Platform Only)
 
-Use web fallback only if iPhone mirroring fails for a specific platform after one retry. Do not use web fallback preemptively.
+Use web fallback only if Mirroir MCP fails for a specific platform after one retry. Do not use web fallback preemptively.
 
 Web posting URLs:
 - TikTok: tiktok.com/upload
@@ -275,7 +276,7 @@ If fewer than 3 platforms were posted (due to logged-out blockers or failures):
 
 ## Rules Summary
 
-1. **iPhone mirroring is always primary.** Web fallback is per-platform only, never preemptive.
+1. **Mirroir MCP is always primary for iPhone interactions.** Claude Desktop Bridge is only for reconnecting mirroring. Web fallback is per-platform only, never preemptive.
 2. **If a platform is logged out, DO NOT login.** This is a human blocker. Flag it, escalate, move on to the next platform.
 3. **Post in platforms.json posting_order.** TikTok → Instagram → X → YouTube Shorts → Threads.
 4. **One platform failure does not block the others.** Continue the posting run.
