@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "SessionEnd": [
+      {
+        "type": "command",
+        "command": "cd ~/moss && qmd update && qmd embed",
+        "description": "Index session transcripts for QMD search",
+        "async": true
+      }
+    ]
+  }
+}
