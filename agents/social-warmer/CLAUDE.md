@@ -65,19 +65,27 @@ Define what kinds of posts to interact with based on the target audience:
 
 Work through each platform in order: **TikTok -> Instagram -> X -> YouTube Shorts -> Threads**.
 
-For each platform, use Claude Desktop Bridge (`claude-desktop-send`) as PRIMARY for all iPhone Mirroring interactions. You are a CLI agent — you cannot see or click screens directly.
+Use Claude Desktop Bridge (`claude-desktop-send`) for all iPhone Mirroring interactions. You are a CLI agent — you cannot see or click screens directly.
+
+**CRITICAL: Computer use is SLOW (1-5 minutes per call). You MUST:**
+- **WAIT for each response before sending the next message.** The tool blocks — this is correct, not a bug.
+- **NEVER send multiple calls without reading each response first.**
+- **Batch as much as possible into ONE call per platform.** Give Desktop one big instruction with all the actions for that platform.
+- **NEVER use --no-wait. NEVER retry while a call is still running.**
 
 ### Pre-Platform: Open iPhone Mirroring
 
 ```bash
-response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect." 2>/dev/null)
+# ONE call. WAIT for it. Read the response.
+response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect. Tell me when it's ready." 2>/dev/null)
+echo "$response"  # READ this before continuing
 ```
 
-If mirroring fails, retry once. If still failing, attempt web fallback for each platform.
+If mirroring fails, retry ONCE. If still failing, log the failure and exit gracefully.
 
 ### Per-Platform Engagement Flow
 
-For each platform, send a comprehensive Desktop Bridge instruction. Example for TikTok:
+For each platform, send ONE comprehensive Desktop Bridge instruction that includes ALL actions. WAIT for the response. Read it. Then move to the next platform. Example for TikTok:
 
 ```bash
 response=$(claude-desktop-send --approve-for 15 "In iPhone Mirroring, open TikTok. Search for the hashtag [niche_hashtag_1]. Scroll through recent posts. Do the following:
@@ -131,15 +139,14 @@ Repeat with adapted instructions for each platform:
 
 ### Platform Failure Handling
 
+**IMPORTANT: The Social Warmer is a nice-to-have signal boost, NOT a pipeline gate. If anything fails, log it locally and move on. Do NOT escalate via Dispatch or send iMessages for warmup failures — the human does not need to be notified about warmup issues.**
+
 For each platform:
 1. If Desktop Bridge fails: retry once
 2. If retry fails: try web fallback (open the platform in a browser via Desktop Bridge)
-3. If web fallback fails: log the failure, skip the platform, continue to next
-4. If the platform is logged out: this is a **HUMAN BLOCKER**
-   - Add to concept blockers: `"{platform} logged out — needs human"`
-   - Set `needsHuman: true` on the concept file
-   - Escalate via Dispatch: `"Social Warmer blocked: {platform} is logged out on iPhone. Need human to re-login."`
-   - Move on to the next platform
+3. If web fallback fails: log the failure in the concept's `warmup` section with `"status": "failed"`, skip the platform, continue to next
+4. If ALL platforms fail (e.g., Desktop Bridge is completely down): log failures in concept file, write a note to `~/moss/logs/social-warmer.log`, and exit gracefully. Do NOT retry in a loop. Do NOT call dispatch.sh.
+5. If the platform is logged out: log it in the concept's `warmup` section with `"status": "logged_out"`. Move on to the next platform. The Content Tracker will flag logged-out platforms during its regular run.
 
 ---
 
@@ -220,7 +227,7 @@ Platform status values:
 1. **NEVER post content.** You engage with OTHER people's content only. No creating posts, stories, reels, or any original content.
 2. **Comments must be genuine and relevant.** Never spammy, never promotional, never mention your app or any product. Write like a real person who is genuinely interested in the topic.
 3. **Follower count boundaries:** Do NOT follow accounts with fewer than 100 followers (likely bots) or more than 1M followers (won't notice you, wastes a follow).
-4. **Platform logged out = HUMAN BLOCKER.** Do not attempt to log in. Flag it, escalate via Dispatch, move on.
+4. **Platform logged out = log it and move on.** Do not attempt to log in. Do NOT escalate via Dispatch for warmup failures — warmup is a signal boost, not a gate.
 5. **Max 15 minutes per platform** to avoid rate limits and spam detection.
 6. **Space out actions.** Wait 2-3 seconds between likes, 5-10 seconds between follows. Never rapid-fire.
 7. **Use Claude Desktop Bridge for all GUI interactions.** You are a CLI agent — you cannot see or click screens directly. All iPhone Mirroring interactions go through `claude-desktop-send --approve-for 15`.

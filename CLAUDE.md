@@ -124,37 +124,46 @@ When SENDING via Dispatch (outbound), keep messages concise:
 - Escalation: One-line problem + what you tried + what you need from the human
 - Viral alert: "🚨 [ConceptName] post on [platform] at [X] views and accelerating"
 
-## Claude Desktop Bridge (Computer Use)
+## iPhone Mirroring (Mirroir MCP)
 
-CLI agents (`claude -p`) cannot see or interact with the screen. All GUI tasks must be delegated to Claude Desktop via the bridge tool at `~/.local/bin/claude-desktop-send`.
+All iPhone interactions use the **Mirroir MCP** tools directly. These are fast, reliable MCP tools — not computer use. They give you screenshot, tap, swipe, type, and app launch capabilities on the real iPhone via macOS iPhone Mirroring.
 
-### When to use the Desktop Bridge
-- **iPhone Mirroring**: Opening apps, navigating UI, reading analytics, posting content
-- **Simulator**: Launching apps, visual QA, taking screenshots
-- **Chrome/Safari**: Web fallback when mirroring fails
-- **Any app interaction**: Xcode visual inspection, Finder operations, etc.
+### Primary Tools (Mirroir MCP)
+- `screenshot` — capture iPhone screen as image
+- `describe_screen` — OCR + element detection with tap coordinates
+- `tap(x, y)` — tap at coordinates
+- `swipe(from_x, from_y, to_x, to_y)` — swipe gesture
+- `type_text(text)` — type into focused field
+- `press_key(key)` — send special keys (return, delete, tab, etc.)
+- `launch_app(name)` — open app by name via Spotlight
+- `press_home()` — go to home screen
+- `scroll_to(label)` — scroll until text is visible
+- `status` — check connection state
 
 ### Usage Pattern
-```bash
-# One-shot GUI task (always use --approve-for for computer use)
-response=$(claude-desktop-send --new --approve-for 15 "Open iPhone Mirroring, then open TikTok and navigate to the Analytics page for our latest post" 2>/dev/null)
-
-# Multi-turn (follow-ups in same Desktop conversation)
-r1=$(claude-desktop-send --new --approve-for 15 "Open iPhone Mirroring" 2>/dev/null)
-r2=$(claude-desktop-send "Now open TikTok" 2>/dev/null)
-r3=$(claude-desktop-send "Read the view count on the top post" 2>/dev/null)
+```
+1. Use `status` to verify iPhone Mirroring is connected
+2. Use `launch_app("TikTok")` to open an app
+3. Use `describe_screen` to see what's on screen with tap coordinates
+4. Use `tap(x, y)` to interact with elements
+5. Use `screenshot` to verify results
 ```
 
-### Recovery: iPhone Mirroring Disconnected
-If iPhone Mirroring shows disconnected, use Desktop Bridge to fix it:
+### When to use Claude Desktop Bridge (Fallback ONLY)
+Claude Desktop Bridge (`claude-desktop-send`) is ONLY used when:
+- **iPhone Mirroring is disconnected** and needs the Reconnect button clicked on the Mac
+- **A macOS app needs interaction** (Simulator, Xcode, Chrome — not iPhone apps)
+
 ```bash
-claude-desktop-send --new --approve-for 15 "The iPhone Mirroring app is disconnected. Click the Reconnect button to re-establish the connection." 2>/dev/null
+# ONLY for reconnecting iPhone Mirroring when it disconnects
+claude-desktop-send --new --approve-for 15 "The iPhone Mirroring app is disconnected. Click the Reconnect button." 2>/dev/null
 ```
 
 ### Fallback Order
-1. **Claude Desktop Bridge** (primary — computer use via `claude-desktop-send`)
-2. **Web fallback** (if Desktop Bridge fails — use CLI tools like curl/web scraping)
-3. **Escalate** (if both fail — flag as blocker, escalate via Dispatch)
+1. **Mirroir MCP** (primary — direct iPhone control, fast)
+2. **Claude Desktop Bridge** (only for Mac-side tasks like reconnecting mirroring)
+3. **Web fallback** (if mirroring is completely down)
+4. **Escalate** (if all fail — flag as blocker, escalate via Dispatch)
 
 ## Scheduling Architecture
 

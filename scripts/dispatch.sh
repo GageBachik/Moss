@@ -1,9 +1,9 @@
 #!/bin/bash
 # Moss Dispatch -- Send iMessage to human operator
 # Usage: bash dispatch.sh "your message here"
-# Primary: iMessage plugin via claude -p
+# Rate-limited: max 1 message per 5 minutes with same content
 # Fallback 1: osascript (Messages.app AppleScript)
-# Fallback 2: Claude Desktop Bridge
+# Fallback 2: write to unsent file (never spawns claude -p to avoid fork bombs)
 
 set -euo pipefail
 source ~/.zprofile_moss 2>/dev/null || true
@@ -11,10 +11,10 @@ unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 LOG_DIR="$HOME/moss/logs"
 LOG_FILE="$LOG_DIR/dispatch.log"
+RATE_FILE="$LOG_DIR/.dispatch-last"
 mkdir -p "$LOG_DIR"
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-CHAT_ID="${DISPATCH_CHAT_ID:-any;-;loser@gagebachik.com}"
 
 # --- Validate inputs ---
 
@@ -24,13 +24,23 @@ if [ -z "$MESSAGE" ]; then
   exit 1
 fi
 
-# --- Primary: iMessage plugin via claude -p ---
+# --- Rate limit: skip if same message sent in last 5 minutes ---
 
-send_imessage_plugin() {
-  claude --dangerously-skip-permissions -p "Use the mcp__plugin_imessage_imessage__reply tool to send this message. chat_id: \"$CHAT_ID\", text: \"$MESSAGE\". Just send it, no commentary." 2>/dev/null
-}
+MSG_HASH=$(echo "$MESSAGE" | md5 -q 2>/dev/null || echo "$MESSAGE" | md5sum | cut -d' ' -f1)
+if [ -f "$RATE_FILE" ]; then
+  LAST_HASH=$(head -1 "$RATE_FILE" 2>/dev/null || echo "")
+  LAST_TIME=$(tail -1 "$RATE_FILE" 2>/dev/null || echo "0")
+  NOW=$(date +%s)
+  DIFF=$((NOW - LAST_TIME))
+  if [ "$MSG_HASH" = "$LAST_HASH" ] && [ "$DIFF" -lt 300 ]; then
+    echo "[$TIMESTAMP] RATE-LIMITED (same message within 5min): $MESSAGE" >> "$LOG_FILE"
+    exit 0
+  fi
+fi
+echo "$MSG_HASH" > "$RATE_FILE"
+date +%s >> "$RATE_FILE"
 
-# --- Fallback 1: osascript ---
+# --- Send via osascript (primary for scripts) ---
 
 send_osascript() {
   local CONTACT="${DISPATCH_CONTACT:-loser@gagebachik.com}"
@@ -43,30 +53,13 @@ end tell
 EOF
 }
 
-# --- Fallback 2: Claude Desktop Bridge ---
-
-send_desktop_bridge() {
-  if command -v claude-desktop-send &>/dev/null; then
-    local CONTACT="${DISPATCH_CONTACT:-loser@gagebachik.com}"
-    claude-desktop-send --new --approve-for 15 \
-      "Open the Messages app. Send an iMessage to $CONTACT with this exact text: $MESSAGE" \
-      2>/dev/null
-  else
-    return 1
-  fi
-}
-
 # --- Attempt delivery ---
+# NOTE: Never use claude -p here — it spawns a full process and can cause fork bombs
+# when called from subagents that are already in retry loops.
 
-if send_imessage_plugin; then
-  echo "[$TIMESTAMP] SENT (imessage-plugin): $MESSAGE" >> "$LOG_FILE"
-elif send_osascript 2>/dev/null; then
+if send_osascript 2>/dev/null; then
   echo "[$TIMESTAMP] SENT (osascript): $MESSAGE" >> "$LOG_FILE"
-elif send_desktop_bridge; then
-  echo "[$TIMESTAMP] SENT (desktop-bridge): $MESSAGE" >> "$LOG_FILE"
 else
-  echo "[$TIMESTAMP] FAILED: All methods failed. Message: $MESSAGE" >> "$LOG_FILE"
-  # Write to fallback file so message isn't lost
+  echo "[$TIMESTAMP] UNSENT (osascript failed): $MESSAGE" >> "$LOG_FILE"
   echo "[$TIMESTAMP] $MESSAGE" >> "$HOME/moss/briefings/unsent-dispatch.txt"
-  exit 1
 fi

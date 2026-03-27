@@ -141,7 +141,13 @@ Do NOT use real app screenshots (none exist). Do NOT pretend the app is availabl
 
 ## Step 3: Post via Claude Desktop Bridge + iPhone Mirroring (PRIMARY)
 
-All platform interactions go through the Claude Desktop Bridge (`claude-desktop-send`). You are a CLI agent — you cannot see or click screens directly. Desktop Bridge delegates to Claude Desktop which has computer use capabilities.
+All platform interactions go through the Claude Desktop Bridge (`claude-desktop-send`). You are a CLI agent — you cannot see or click screens directly.
+
+**CRITICAL: Computer use is SLOW (1-5 minutes per call). You MUST:**
+- **WAIT for each response before sending the next message.** The tool blocks — this is correct.
+- **NEVER send multiple calls without reading each response first.**
+- **Batch the ENTIRE posting flow for one platform into ONE call.** Do NOT make separate calls for open, navigate, upload, caption, post.
+- **NEVER use --no-wait. NEVER retry while a call is still running.**
 
 ### Pre-Posting Checklist
 
@@ -149,60 +155,43 @@ Before posting:
 1. Confirm all assets are saved to `~/moss/content/{concept-id}/`
 2. Confirm captions are written in `captions.md`
 3. Confirm which platforms still need posting (check concept file `content.posts`)
+4. Read the caption for each platform from `captions.md` BEFORE making Desktop Bridge calls.
 
-### Posting Flow — For Each Platform in Order
+### Posting Flow — ONE Call Per Platform
 
-Post in the order defined in `~/moss/config/platforms.json` `posting_order`:
-1. TikTok
-2. Instagram
-3. X
-4. YouTube Shorts
-5. Threads
+Post in order: TikTok → Instagram → X → YouTube Shorts → Threads.
 
-For each platform:
-
-**Step A: Open iPhone Mirroring via Desktop Bridge**
+First, open iPhone Mirroring (ONE call, WAIT for response):
 ```bash
-response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect." 2>/dev/null)
-```
-- If response indicates failure: retry once. If still failing, skip to web fallback for this platform.
-
-**Step B: Open the Platform App**
-```bash
-response=$(claude-desktop-send --approve-for 10 "In iPhone Mirroring, tap the {platform} app icon on the home screen. Wait for it to fully load." 2>/dev/null)
-```
-- **If the app is logged out: DO NOT attempt to log in. This is a human blocker.**
-  - Add to concept blockers: `"{platform} logged out — needs human"`
-  - Set `needsHuman: true` on the concept file
-  - Escalate via Dispatch: "Content Creator blocked: {platform} is logged out on iPhone. Need human to re-login."
-  - Move on to the next platform — do not stop the entire posting run.
-
-**Step C: Navigate to Create**
-
-Send platform-specific instructions to Desktop Bridge:
-
-- **TikTok**: `"In TikTok, tap the + button at bottom center, then select upload (not record)"`
-- **Instagram**: `"In Instagram, tap the + at bottom, then select Post for carousel or Reel for video"`
-- **X**: `"In X, tap the compose button (pencil icon), then tap the image icon to attach images"`
-- **YouTube Shorts**: `"In YouTube, tap + at bottom, then Create a Short, then upload video"`
-- **Threads**: `"In Threads, tap compose, then attach images or video"`
-
-**Step D: Upload Assets**
-```bash
-response=$(claude-desktop-send "Now select and upload the content files from ~/moss/content/{concept-id}/carousel/ — select slides in order from slide-01 through the last slide. Wait for upload to complete." 2>/dev/null)
+response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect. If disconnected, click Reconnect. Tell me when it's ready." 2>/dev/null)
+echo "$response"  # READ before continuing
 ```
 
-**Step E: Write Caption**
+Then for EACH platform, send ONE comprehensive instruction that does everything:
 ```bash
-caption=$(cat ~/moss/content/{concept-id}/captions.md | sed -n '/## {Platform}/,/## /p' | head -n -1)
-response=$(claude-desktop-send "Paste this caption into the caption field: ${caption}" 2>/dev/null)
+# Example for TikTok — adapt for each platform
+response=$(claude-desktop-send --approve-for 15 "In iPhone Mirroring, do the following for TikTok:
+1. Open TikTok app
+2. If logged out, STOP and tell me — do not try to log in
+3. Tap the + button at bottom center, select upload (not record)
+4. Upload the carousel slides from ~/moss/content/{concept-id}/carousel/ in order (slide-01 through the last)
+5. Wait for upload to complete
+6. Paste this caption: {paste the TikTok caption here}
+7. Tap Post
+8. Wait for confirmation that it posted
+9. Go to the post and copy the post URL
+10. Report: success or failure, and the post URL" 2>/dev/null)
+echo "$response"  # READ the full response before moving to next platform
 ```
-- Double-check hashtags, spacing, and that the correct platform version is used
 
-**Step F: Post**
-- Tap Post / Share / Upload
-- Wait for the confirmation screen (post published, share to feed, etc.)
-- Do NOT navigate away until confirmation appears
+**WAIT for the response. Read it. Record the post URL.** Then proceed to the next platform with a new call.
+
+If the response says the platform is logged out: this is a HUMAN BLOCKER. Add to concept blockers, escalate via Dispatch, skip to next platform.
+
+**Step G: Record Post ID or URL**
+- After posting, open the post from the profile or feed
+- Copy the post URL or note the post ID
+- You will record this in the concept file
 
 **Step G: Record Post ID or URL**
 - After posting, open the post from the profile or feed

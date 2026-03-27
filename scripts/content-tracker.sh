@@ -32,26 +32,46 @@ After reading context, identify:
 
 ---
 
-## Step 1: Open iPhone Mirroring via Desktop Bridge
+## Step 1: Collect Stats via Desktop Bridge + iPhone Mirroring
 
-Use the Claude Desktop Bridge to open and interact with iPhone Mirroring. You are a CLI agent and cannot see or click screens directly.
+**CRITICAL: Desktop Bridge uses computer use which is SLOW (1-5 minutes per call). You MUST:**
+- **WAIT for each response** before sending the next message. The tool blocks — this is correct.
+- **NEVER send multiple calls** without reading each response first.
+- **Batch as much as possible** into ONE instruction per platform.
+- **NEVER use --no-wait.** NEVER retry if it's still processing.
+
+Open iPhone Mirroring first, then collect ALL stats for ALL platforms in as few calls as possible:
 
 ```bash
-response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect." 2>/dev/null)
+# Step 1: Open mirroring (ONE call, WAIT for response)
+response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect. Tell me when it's ready." 2>/dev/null)
+echo "$response"  # READ the response before continuing
 ```
 
-If Desktop Bridge reports failure:
-1. Retry once with: `claude-desktop-send "Try reconnecting iPhone Mirroring again" 2>/dev/null`
-2. If still failing, proceed with web fallbacks for all platforms
-3. Note the failure in your output
+If Desktop Bridge reports failure: retry ONCE, then fall back to web for all platforms.
 
----
+```bash
+# Step 2: ONE call per platform — batch all posts for that platform into one instruction
+# TikTok
+response=$(claude-desktop-send "In iPhone Mirroring, open TikTok. Go to Profile. For EACH of our posted videos, tap it, tap the three-dot menu, tap Analytics, and read: Video views, Likes, Comments, Shares, Saves. Report ALL stats for ALL our TikTok posts before moving on." 2>/dev/null)
+echo "$response"  # WAIT and READ before next platform
 
-## Step 2: Collect Stats Per Platform
+# Instagram
+response=$(claude-desktop-send "Now open Instagram in iPhone Mirroring. Go to Profile. For EACH of our posted reels/carousels, tap it, tap View insights, and read: Plays/Reach, Likes, Comments, Shares, Saves. Report ALL stats for ALL our Instagram posts." 2>/dev/null)
+echo "$response"  # WAIT and READ
 
-Work through each platform in tracking order: TikTok → Instagram → X → YouTube Shorts → Threads.
+# X / Twitter
+response=$(claude-desktop-send "Now open X in iPhone Mirroring. For EACH of our posted tweets, tap the bar chart icon (analytics) and read: Impressions, Likes, Replies, Reposts, Bookmarks. Map: Impressions=views, Bookmarks=saves, Reposts=shares. Report ALL stats." 2>/dev/null)
+echo "$response"  # WAIT and READ
 
-For EACH platform, collect stats for ALL posts on that platform across ALL tracked concepts before moving to the next platform. This minimizes app switching.
+# YouTube Shorts (skip if no video posts)
+response=$(claude-desktop-send "Now open YouTube Studio in iPhone Mirroring. Go to Content, check for any Shorts we posted. If any exist, tap each Short, go to Analytics, and read: Views, Likes, Comments, Shares. If no Shorts exist, just say 'no YouTube posts found'." 2>/dev/null)
+echo "$response"  # WAIT and READ
+
+# Threads
+response=$(claude-desktop-send "Now open Threads in iPhone Mirroring. For EACH of our posted threads, tap the insights icon (bar chart) and read: Views/Impressions, Likes, Replies, Reposts, Quotes. Map: Impressions=views, Reposts+Quotes=shares. Report ALL stats." 2>/dev/null)
+echo "$response"  # WAIT and READ
+```
 
 ### For each post, extract:
 - `views` (integer)
@@ -61,40 +81,12 @@ For EACH platform, collect stats for ALL posts on that platform across ALL track
 - `comments` (integer)
 - `checkedAt` (current ISO-8601 timestamp)
 
-### Platform-specific navigation:
-
-**TikTok (primary: Desktop Bridge + iPhone Mirroring)**
-```bash
-response=$(claude-desktop-send "In iPhone Mirroring, open TikTok. Go to Profile, tap the posted video, tap the three-dot menu, then tap Analytics. Read and report: Video views, Likes, Comments, Shares, Saves." 2>/dev/null)
-```
-- Fallback if mirroring fails: tiktok.com → Creator tools → Analytics → Content
-
-**Instagram (primary: Desktop Bridge + iPhone Mirroring)**
-```bash
-response=$(claude-desktop-send "In iPhone Mirroring, open Instagram. Go to Profile, tap the posted reel/carousel, tap View insights. Read and report: Plays/Reach, Likes, Comments, Shares, Saves." 2>/dev/null)
-```
-- Fallback: instagram.com → Professional dashboard → Content
-
-**X / Twitter (primary: Desktop Bridge + iPhone Mirroring)**
-```bash
-response=$(claude-desktop-send "In iPhone Mirroring, open X. Navigate to the posted tweet, tap the bar chart icon (analytics). Read and report: Impressions, Likes, Replies, Reposts, Bookmarks." 2>/dev/null)
-```
-- Map: Impressions → views, Bookmarks → saves, Reposts → shares
-- Fallback: x.com → post → view analytics
-
-**YouTube Shorts (primary: Desktop Bridge + iPhone Mirroring)**
-```bash
-response=$(claude-desktop-send "In iPhone Mirroring, open YouTube Studio. Go to Content, tap the Short, then Analytics. Read and report: Views, Likes, Comments, Shares." 2>/dev/null)
-```
-- Note: Saves not available on YouTube Shorts
-- Fallback: studio.youtube.com → Content → Analytics
-
-**Threads (primary: Desktop Bridge + iPhone Mirroring)**
-```bash
-response=$(claude-desktop-send "In iPhone Mirroring, open Threads. Navigate to the posted thread, tap the insights icon (bar chart). Read and report: Views/Impressions, Likes, Replies, Reposts, Quotes." 2>/dev/null)
-```
-- Map: Impressions → views, Reposts+Quotes → shares
-- Note: Saves not available on Threads
+### Platform fallbacks (web, only if Desktop Bridge fails for that platform):
+- TikTok: tiktok.com → Creator tools → Analytics → Content
+- Instagram: instagram.com → Professional dashboard → Content
+- X: x.com → post → view analytics
+- YouTube: studio.youtube.com → Content → Analytics
+- Threads: threads.net → post insights
 - Fallback: threads.net → post insights
 
 ### Platform failure handling:
