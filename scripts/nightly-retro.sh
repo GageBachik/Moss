@@ -1,16 +1,17 @@
 #!/bin/bash
 # Moss Nightly Retro -- Daily briefing + self-improvement
-# Runs at 11pm daily via Desktop Scheduled Task
+# Runs at 11pm daily via launchd (com.moss.nightly-retro)
 # Part 1: Compile daily briefing
 # Part 2: Propose and apply self-improvements
 # Part 3: Send summary via Dispatch
 
 set -euo pipefail
 source ~/.zprofile_moss 2>/dev/null || true
+unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 cd ~/moss
 
-claude -p "$(cat <<'PROMPT'
+claude --dangerously-skip-permissions -p "$(cat <<'PROMPT'
 You are the Moss Nightly Retro agent. It is end-of-day. You have THREE jobs: compile today's briefing, propose self-improvements, and send a Dispatch summary. Complete ALL THREE.
 
 TODAY=$(date +%Y-%m-%d)
@@ -167,4 +168,4 @@ Update orchestrator-state.json to add: "lastRetro": "[ISO-timestamp]", "lastRetr
 
 Report what you did. Be specific: list each proposal and what was done with it.
 PROMPT
-)" --max-tokens 16000
+)"

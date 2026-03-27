@@ -1,0 +1,105 @@
+{
+  "id": "focus-forge",
+  "name": "Focus Forge",
+  "stage": "killed",
+  "created": "2026-03-26",
+  "lastUpdated": "2026-03-26T23:45:00.000Z",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-26",
+      "agent": "scout",
+      "notes": "Micro-productivity focus timer sourced from rising 2026 trend toward single-purpose productivity tools; moderate keyword competition with proven subscription monetization in the category."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T06:36:59.902108+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research — spawning Validator subagent"
+    },
+    {
+      "stage": "killed",
+      "date": "2026-03-26T23:45:00.000Z",
+      "agent": "validator",
+      "notes": "KILL: Competitor saturation exceeds threshold (10+ strong apps including Forest at 16K ratings/4.8 stars, Focus Keeper at 25.8K ratings, plus 6+ gamified alternatives), and MRR math yields only ~$75-299/mo — well below the $500/mo medium threshold required."
+    }
+  ],
+  "research": {
+    "trend_source": "google_trends+app_store",
+    "trend_description": "2026 productivity app trends show a clear shift toward micro-productivity apps that do one thing exceptionally well. Google Trends shows rising queries for 'focus timer' and 'pomodoro timer app'. The App Store Productivity category favors simple, well-designed single-purpose tools. Forest proved gamified focus works; there is room for a fresh take with forge/blacksmith theming and streak mechanics.",
+    "app_concept": "A gamified Pomodoro focus timer where each completed session forges a virtual item (sword, shield, gem), building a collection over time that visualizes your cumulative focus hours as an ever-growing armory.",
+    "target_user": "Students and remote workers (18-35) who struggle with focus and distraction, enjoy gamification and visual progress, and want something more engaging than a plain countdown timer.",
+    "monetization_hypothesis": "Freemium model: free basic timer with standard items. Premium at $2.99/month or $19.99/year unlocks rare collectibles, custom session lengths, detailed focus analytics, ambient forge sounds, and widget support.",
+    "aso": {
+      "primary_keyword": "focus timer",
+      "popularity_score": 35,
+      "difficulty_score": 45,
+      "popularity_passes": true,
+      "difficulty_passes": true
+    },
+    "appifiability": {
+      "standalone_app": true,
+      "buildable_1_2_weeks": true,
+      "clear_monetization": true,
+      "achievable_with_ios_apis": true,
+      "user_would_download": true
+    },
+    "verdict": "KILL",
+    "decidedAt": "2026-03-26T23:45:00.000Z",
+    "killReasons": [
+      "Competitor saturation exceeds max_competitor_saturation threshold of 10: Forest (4.8 stars, 16K ratings, $3.99 paid), Focus Keeper (4.8 stars, 25.8K ratings, freemium), Be Focused (4.7 stars, 4.3K ratings, free+pro), Flora (free + $2/mo subscription), Focus To-Do (freemium), Flow, Focumon, Focus Plant, Plantie, Bakery, Habitica, Tide — 12+ strong competitors, with 6+ specifically in the gamified focus niche.",
+      "Monetization potential rated LOW: MRR math at realistic download volumes (500-2000/mo for a new entrant) with 5% conversion at $2.99/mo yields $75-$299/mo, far below the $500/mo medium threshold. Reaching medium requires 3,400+ downloads/mo — unrealistic against incumbents with tens of thousands of ratings and years of ASO advantage."
+    ],
+    "marketSize": {
+      "demandSignals": [
+        "Pomodoro apps market valued at $428.5M in 2024, growing at 12.7% CAGR to $1.26B by 2033 (Dataintelo market report)",
+        "Forest app has 16K iOS ratings at 4.8 stars and users have planted 2M+ real trees, proving gamified focus has massive engagement",
+        "Multiple 'best pomodoro apps 2026' roundup articles from Reclaim, Zapier, Mindful Suite, and others indicate sustained interest",
+        "Google Trends shows rising queries for 'focus timer' and 'pomodoro timer app' per scout's initial research"
+      ],
+      "trendDirection": "growing",
+      "notes": "Strong market demand exists — the problem is not lack of interest but extreme competition. The growing market has attracted many well-funded players."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Forest", "rating": 4.8, "ratingCount": 16000, "model": "paid ($3.99 iOS)"},
+        {"name": "Focus Keeper", "rating": 4.8, "ratingCount": 25805, "model": "freemium"},
+        {"name": "Be Focused", "rating": 4.7, "ratingCount": 4300, "model": "free + pro"},
+        {"name": "Flora", "rating": 4.5, "ratingCount": 3000, "model": "free + subscription ($2/mo)"},
+        {"name": "Focus To-Do", "rating": 4.6, "ratingCount": 5000, "model": "freemium"}
+      ],
+      "saturationLevel": "high",
+      "identifiedGap": "Users hate Forest's punitive dead-tree mechanic, manual break restarts, currency systems gating basic features, and crashes after updates. A forge/blacksmith theme is a fresh visual metaphor. However, multiple competitors (Focumon, Bakery, Focus Plant, Plantie) already offer alternative gamification themes, diluting the differentiation.",
+      "notes": "12+ strong competitors identified. The gamified focus niche specifically has 6+ apps (Forest, Flora, Focumon, Focus Plant, Plantie, Bakery). The forge/blacksmith theme is novel but theme alone is not a sustainable competitive moat — Forest's real-tree-planting mission and years of brand equity dwarf a cosmetic reskin."
+    },
+    "monetization": {
+      "pricePoints": ["$3.99 one-time (Forest)", "$2/mo (Flora)", "$39.99/year (Focus app)", "free with ads (various)", "$2.99/mo proposed"],
+      "recommendedModel": "subscription",
+      "mrrEstimate": "low",
+      "mrrMath": "Realistic: 500 downloads/mo * 5% conversion * $2.99 = $75/mo. Optimistic: 2000 downloads/mo * 5% conversion * $2.99 = $299/mo. To reach medium ($500/mo): need 3,400 downloads/mo at 5% conversion, or 1,700 at 10% — both unrealistic for a new entrant against Forest (est. millions of total downloads) and Focus Keeper (25K+ ratings).",
+      "notes": "The dominant competitor (Forest) uses a one-time purchase model at $3.99, which sets user expectations against subscriptions. Flora's $2/mo subscription anchors pricing low. Subscription fatigue in productivity is real — users already pay for Notion, Todoist, etc."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1,
+      "risks": [],
+      "notes": "Straightforward SwiftUI build: timer, local notifications, local storage for item collection, optional CloudKit sync. No expensive APIs needed. Widgets are supported natively. This is the easiest dimension — zero technical blockers."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [],
+      "notes": "Productivity timers are a safe App Store category. No health claims, financial advice, content moderation, or guideline gray areas. Standard privacy disclosures for notification permissions only."
+    }
+  },
+  "design": {},
+  "content": {
+    "posts": []
+  },
+  "eval": {
+    "attempts": 0,
+    "last_result": null
+  },
+  "blockers": [],
+  "needsHuman": false
+}

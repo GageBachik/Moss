@@ -1,0 +1,80 @@
+{
+  "id": "spoon-meter",
+  "name": "Spoon Meter",
+  "stage": "validated",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T18:45:00Z",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27T15:03:00Z",
+      "agent": "scout",
+      "notes": "Social battery and energy capacity tracking for neurodivergent users and people with chronic fatigue is an underserved niche with passionate communities. Spoon theory is widely known in disability/ND communities but only one basic app (Spoonie Day) exists. The 'social battery' concept is viral on TikTok among introverts and ADHD communities. Opportunity for a beautifully designed energy budgeting app that lets users allocate daily 'spoons' to activities, track depletion patterns, and learn their limits over time. Monetization via $3.99/mo premium with insights, patterns, and Apple Health integration."
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-27T18:45:00Z",
+      "agent": "validator",
+      "notes": "GO: Underserved niche with 4+ demand signals (62K+ r/ChronicIllness members, 35M TikTok #spoontheory views, $1.2B ADHD app market growing 9.6% CAGR), only 5 weak competitors (top app SpoonieDay has just 38 ratings and was abandoned in 2022), clear gap for beautiful design with pattern insights, medium monetization at $3.99/mo freemium, buildable in 1-2 weeks with SwiftUI + HealthKit, low App Store risk as wellness tracker with no medical claims."
+    }
+  ],
+  "research": {
+    "verdict": "GO",
+    "decidedAt": "2026-03-27T18:45:00Z",
+    "trendSource": "TikTok #socialbattery #spoontheory, Reddit r/ChronicIllness r/neurodivergent, Nature Communications Jan 2026 study on energy management apps",
+    "trendSignal": "Neurodivergent self-advocacy content is surging on TikTok. 'Social battery' memes have billions of views. Spoon theory is mainstream vocabulary. A 2026 Nature study validated digital energy tracking for chronic conditions. Only 1-2 basic competitors exist (Spoonie Day, Bearable's fatigue worksheet). The neurodivergent app market is growing as 15-20% of the population identifies as ND.",
+    "estimatedKeyword": "social battery tracker",
+    "estimatedPopularity": 30,
+    "estimatedDifficulty": 20,
+    "marketSize": {
+      "demandSignals": [
+        "r/ChronicIllness subreddit has 62,818 subscribers with accelerating growth (1K in 2020 to 62K+ now)",
+        "#spoontheory has 35.3M views on TikTok; social battery content viral across introvert and ADHD communities",
+        "ADHD apps market valued at $1.21B in 2025 growing at 9.65% CAGR to $2.77B by 2034 (MarketGrowthReports)",
+        "Mental health apps market at $8.53B in 2025, projected to $41.16B by 2035 at 17% CAGR (PrecedenceResearch)",
+        "15-20% of population identifies as neurodivergent; mainstream awareness driving app adoption"
+      ],
+      "trendDirection": "growing",
+      "notes": "Spoon theory has crossed from chronic illness niche into mainstream neurodivergent and introvert communities. The concept is now vocabulary used by therapists, employers, and educators. TikTok virality in 2025-2026 is creating a new wave of users who understand the metaphor but have no dedicated app to use it."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "SpoonieDay", "rating": 4.1, "ratingCount": 38, "model": "free", "notes": "Last updated May 2022 -- effectively abandoned. Users complain about no customization, rigid 12-spoon daily reset, and lack of analytics."},
+        {"name": "Spoons - Energy Tracker (Abhiveer Singh)", "rating": 4.8, "ratingCount": 5, "model": "free", "notes": "New indie app. Users like the gentle design but complain about inability to delete tasks. Very basic feature set."},
+        {"name": "Daily Spoons", "rating": 4.4, "ratingCount": 7, "model": "free + $0.99 tip jar", "notes": "Simple spoon tracker with 14-day history. Users want customizable activity costs per day and category organization."},
+        {"name": "Social Battery Tracker - Wavi", "rating": 4.3, "ratingCount": 3, "model": "freemium $4.99/mo", "notes": "Social battery focused, includes anonymous 'Echoes' feature. Very new, small user base."},
+        {"name": "Bearable", "rating": 4.8, "ratingCount": 4000, "model": "freemium $6.99/mo or $34.99/yr", "notes": "General symptom tracker used by 900K+ people. Has fatigue worksheets but is NOT a dedicated spoon/energy budgeting app. Too broad and complex for casual spoon tracking."},
+        {"name": "Spoons (getspoons.app)", "rating": null, "ratingCount": 0, "model": "subscription $7.99/mo", "notes": "Launching April 2, 2026. Autism-only focus. $7.99/mo is expensive. Direct competitor but narrower target audience."},
+        {"name": "Introvert Social Battery", "rating": null, "ratingCount": 0, "model": "free", "notes": "Novelty timer app with liquid battery animation. Not a real tracker -- just a countdown timer for social events."}
+      ],
+      "saturationLevel": "low",
+      "identifiedGap": "No app combines spoon theory energy budgeting with beautiful design, pattern insights over time, variable daily starting energy, customizable activity costs, and Apple Health integration. SpoonieDay (the closest competitor) is abandoned since 2022 with only 38 ratings. Users across all competitor reviews complain about: (1) rigid daily spoon resets with no variable starting energy, (2) inability to customize activity energy costs by day, (3) lack of meaningful analytics and trend insights, (4) poor or dated UI design.",
+      "notes": "This is a textbook underserved niche. The top dedicated spoon app has 38 ratings and hasn't been updated in 4 years. Bearable is too broad. The new Spoons app (getspoons.app) targets only autistic adults at $7.99/mo. There is a wide-open opportunity for a well-designed app targeting the broader spoon theory community (chronic illness + neurodivergent + introverts)."
+    },
+    "monetization": {
+      "pricePoints": ["free (SpoonieDay, Daily Spoons)", "$0.99 tip (Daily Spoons)", "$4.99/mo (Wavi)", "$6.99/mo (Bearable)", "$7.99/mo (Spoons/getspoons)"],
+      "recommendedModel": "freemium",
+      "recommendedPrice": "$3.99/mo or $29.99/yr",
+      "mrrEstimate": "medium",
+      "mrrMath": "Conservative: 500 downloads/mo * 5% conversion * $3.99 = $100/mo month 1. With content marketing to ND/chronic illness communities: 2000 downloads/mo * 8% conversion * $3.99 = $639/mo by month 3. At maturity with ASO and word-of-mouth: 5000 downloads/mo * 8% * $3.99 = $1,596/mo. Subscription viable -- Bearable proves chronic illness community pays for tracking tools ($34.99/yr), and getspoons.app is pricing at $7.99/mo. Our $3.99/mo undercuts both significantly.",
+      "notes": "The chronic illness and neurodivergent communities are proven subscription buyers (Bearable has 900K+ users). $3.99/mo is a sweet spot -- cheaper than Bearable and half the price of getspoons.app. Free tier with basic daily tracking, premium unlocks insights/patterns/trends/HealthKit/export."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": [],
+      "notes": "Pure SwiftUI app with local CoreData/SwiftData storage. No backend needed for core features. HealthKit integration for sleep/activity data is well-documented Apple API. No expensive third-party APIs required. Charts framework (Swift Charts) available for trend visualization. Widget support via WidgetKit for home screen spoon display. No camera, location, or contacts permissions needed -- minimal friction."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [],
+      "notes": "This is a personal wellness/self-tracking app, not a medical device. No diagnosis, treatment recommendations, or health claims. Falls squarely under lifestyle/health-fitness category. HealthKit usage requires a privacy policy (standard). Multiple similar apps (SpoonieDay, Bearable, Daily Spoons) are already approved, confirming the category is safe. No Guideline 5.1.1 medical device concerns as long as we frame it as energy self-awareness, not medical advice."
+    }
+  },
+  "design": {},
+  "content": {"posts": []},
+  "eval": {"attempts": 0, "last_result": null},
+  "blockers": [],
+  "needsHuman": false
+}

@@ -1,15 +1,16 @@
 #!/bin/bash
 # Moss Heartbeat -- Durable backbone
-# Runs every 4 hours via Desktop Scheduled Task
+# Runs every 4 hours via launchd (com.moss.heartbeat)
 # Reads pipeline state, spawns subagents, manages Moss Active session
 
 set -euo pipefail
 source ~/.zprofile_moss 2>/dev/null || true
+unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 cd ~/moss
 
 # Run Claude Code with the heartbeat prompt
-claude -p "$(cat <<'PROMPT'
+claude --dangerously-skip-permissions -p "$(cat <<'PROMPT'
 You are the Moss Orchestrator running a scheduled heartbeat sweep.
 
 READ FIRST:
@@ -31,6 +32,7 @@ THEN EXECUTE THIS SWEEP:
    - For each concept at "validated" (oldest first, max 1 at a time) → spawn Designer-Builder
    - For each concept at "content-creating" → spawn Content Creator
    - For each concept at "launch-prep" → spawn Launcher
+   - Do NOT spawn Social Warmer -- it is spawned by the Content Creator after posting
    - Do NOT spawn Eval -- that runs inside Moss Active session
 
 3. STUCK DETECTION: Any concept with lastUpdated > 30 minutes ago AND an active agent? Kill and restart the subagent. If restarted once already, escalate via Dispatch.
@@ -59,4 +61,4 @@ For each subagent you spawn, give it:
 
 Report what you did at the end. Be concise.
 PROMPT
-)" --max-tokens 16000
+)"

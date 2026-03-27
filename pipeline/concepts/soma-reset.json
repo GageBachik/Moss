@@ -1,0 +1,71 @@
+{
+  "id": "soma-reset",
+  "name": "Soma Reset",
+  "stage": "validated",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T16:12:00Z",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27T15:03:00Z",
+      "agent": "scout",
+      "notes": "Somatic exercises for nervous system regulation are exploding on TikTok in 2026 under the 'neurowellness' trend. NEUROFIT is the main competitor at $15/mo but has limited free content and a clinical feel. Opportunity for a warmer, guided-video-first app with shorter daily resets (2-5 min somatic routines) targeting stressed millennials and Gen Z. Monetization via premium routine packs and $4.99/mo subscription. Buildable in SwiftUI with video player, timer, and streak tracking."
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-27T16:12:00Z",
+      "agent": "validator",
+      "notes": "GO: Strong growing trend (top wellness trend of 2026 across multiple sources), only 5 dedicated iOS competitors with the leader at just 665 ratings, and a clear gap — the top competitor (Somatic Exercises by Thinkabout, 298 ratings) has 1-star reviews complaining about NO video or sound, just text instructions. Video-first guided somatic routines is a validated unmet need."
+    }
+  ],
+  "research": {
+    "verdict": "GO",
+    "decidedAt": "2026-03-27T16:12:00Z",
+    "marketSize": {
+      "demandSignals": [
+        "Somatic exercises and nervous system regulation identified as top wellness trend of 2026 by Dr. Axe, Glimpse Top 40, Smart Health Clubs, Active Wellness, and Sanctuary Wellness Spa",
+        "TikTok creator The Workout Witch (5M+ followers) drives massive awareness for somatic exercises; #somaticexercise is a trending hashtag",
+        "r/SomaticExperiencing active Reddit community with users discussing somatic exercises for nervous system dysregulation and burnout",
+        "Major fitness platforms (Peloton, Gymshark, Planet Fitness, Anytime Fitness) all publishing somatic exercise content — confirms mainstream crossover beyond niche therapy"
+      ],
+      "trendDirection": "growing",
+      "notes": "Neurowellness market projected at $48.63B in 2026 with 31% CAGR. Multiple articles call 2026 'The Year of Body-First Healing.' Google Trends shows 'nervous system regulation' at peak interest. This is not a fad — it has institutional support from fitness chains and health publications."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "NEUROFIT (Vagus Nerve Reset)", "rating": 4.8, "ratingCount": 665, "model": "freemium, $19.99/mo or $124.99-179.99/yr"},
+        {"name": "Somatic Exercises (Thinkabout)", "rating": 4.7, "ratingCount": 298, "model": "freemium, $6.99/wk or $14.99/mo or $59.99/yr"},
+        {"name": "SomaShare", "rating": 4.8, "ratingCount": 167, "model": "freemium, $59.99/yr premium"},
+        {"name": "Somatic Yoga by SomYoga", "rating": 4.8, "ratingCount": 165, "model": "freemium, $9.99/mo or $59.99/yr"},
+        {"name": "Somatic Health", "rating": 4.4, "ratingCount": 76, "model": "freemium subscription"}
+      ],
+      "saturationLevel": "low",
+      "identifiedGap": "The #2 app (Somatic Exercises by Thinkabout) has 1-star reviews complaining about NO video or sound — users must read text instructions between exercises. Users explicitly ask for video demonstrations. NEUROFIT is clinical/data-heavy at $20/mo, leaving room for a warm, approachable, video-first app at a lower price point ($4.99-6.99/mo).",
+      "notes": "Only 5 dedicated somatic exercise apps on iOS. The leader (NEUROFIT) has just 665 ratings — this is a young, unsaturated market. No app has crossed the 1000-rating threshold, meaning no dominant incumbent. The gap for guided-video-first content with a friendly UX is clear and validated by negative reviews."
+    },
+    "monetization": {
+      "pricePoints": ["NEUROFIT $19.99/mo", "Somatic Exercises $14.99/mo", "SomYoga $9.99/mo", "SomaShare $59.99/yr"],
+      "recommendedModel": "freemium",
+      "mrrEstimate": "medium",
+      "mrrMath": "Conservative: 800 downloads/mo (growing trend, low competition) * 6% trial-to-paid conversion * $6.99/mo = ~$335/mo Month 1, scaling to $500-800/mo by Month 3 as ASO compounds. Aggressive: 1500 downloads/mo * 8% conversion * $6.99/mo = ~$839/mo. Undercut NEUROFIT ($20/mo) and Somatic Exercises ($15/mo) while offering better content quality.",
+      "notes": "Subscription is clearly viable — all top competitors use it. The category supports $6.99-19.99/mo pricing. Positioning at $4.99-6.99/mo undercuts the market while the video-first content justifies the price vs. text-only competitors. Free tier with 2-3 routines drives organic growth and reviews."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": ["Need to produce or source quality short-form somatic exercise videos (2-5 min each)", "Video hosting/streaming adds to storage costs but can use on-device bundling for v1"],
+      "notes": "Core stack: SwiftUI video player (AVKit), countdown timer, streak/calendar tracking, simple onboarding flow. No expensive APIs — all content is pre-recorded video. User data via Firebase/Supabase (free tier sufficient). HealthKit integration optional for v2. Standard iOS permissions only (notifications for reminders). Well within 1-2 week build timeline."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": ["Must avoid medical/therapeutic claims (Guideline 5.1.1) — position as 'exercise and wellness' not 'treatment'", "Use language like 'may help with relaxation' not 'treats anxiety/PTSD'"],
+      "notes": "Multiple somatic exercise apps already live on the App Store (NEUROFIT, SomaShare, Somatic Exercises, SomYoga, Somatic Health) — this category is clearly approved. As long as we frame it as guided movement/exercise rather than medical intervention, risk is low. No HealthKit dependency in v1 avoids additional review friction."
+    }
+  },
+  "design": {},
+  "content": {"posts": []},
+  "eval": {"attempts": 0, "last_result": null},
+  "blockers": [],
+  "needsHuman": false
+}

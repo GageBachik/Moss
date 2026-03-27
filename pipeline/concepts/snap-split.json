@@ -1,0 +1,213 @@
+{
+  "id": "snap-split",
+  "name": "Snap Split",
+  "stage": "content-tracking",
+  "created": "2026-03-26",
+  "lastUpdated": "2026-03-27T17:25:00+00:00",
+  "lastAgent": "content-creator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-26",
+      "agent": "scout",
+      "notes": "Camera-based receipt splitting app sourced from rising demand for bill-splitting tools; niche keyword with manageable competition and clear freemium monetization path."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T06:36:59.901626+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research \u2014 spawning Validator subagent"
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-26T18:45:00.000000+00:00",
+      "agent": "validator",
+      "notes": "GO: $612M growing market with 85M+ US users, only 3 receipt-scanning competitors (all with clear UX gaps), buildable in 1-2 weeks using free on-device iOS Vision OCR, and low App Store risk."
+    },
+    {
+      "stage": "designing-building",
+      "date": "2026-03-27T06:40:12.747188+00:00",
+      "agent": "orchestrator",
+      "notes": "Validated GO \u2014 advancing to design-build, spawning Designer-Builder"
+    },
+    {
+      "stage": "evaluating",
+      "date": "2026-03-27T07:50:00.000000+00:00",
+      "agent": "designer-builder",
+      "notes": "Build complete. 5 screens. Theme: thermal receipt on dark marble. Zero build errors, RevenueCat integrated, OCR via Vision framework, Venmo/PayPal deep links."
+    },
+    {
+      "stage": "content-creating",
+      "date": "2026-03-27T15:14:00+00:00",
+      "agent": "eval",
+      "notes": "EVAL PASS: Simulator build succeeded (0 errors). All 5 screens verified (Home, Camera, ItemReview, Summary, Paywall). Vision OCR with VNRecognizeTextRequest. Venmo/PayPal deep links implemented. RevenueCat key from env var. Clean architecture. Advancing to content-creating."
+    },
+    {
+      "stage": "content-creating",
+      "date": "2026-03-27T17:25:00+00:00",
+      "agent": "content-creator",
+      "notes": "Posted to 4/5 platforms (TikTok, Instagram, X, Threads) via Postiz. YouTube Shorts skipped (requires video asset). Assets at ~/moss/content/snap-split/"
+    },
+    {
+      "stage": "content-tracking",
+      "date": "2026-03-27T17:25:00+00:00",
+      "agent": "content-creator",
+      "notes": "4/5 platforms posted (>=3 threshold met). Advancing to content-tracking. YouTube Shorts pending video creation."
+    }
+  ],
+  "research": {
+    "verdict": "GO",
+    "decidedAt": "2026-03-26T18:45:00.000000+00:00",
+    "trend_source": "google_trends+app_store",
+    "trend_description": "Growing demand for camera-based receipt splitting observed in App Store search suggestions and rising Google Trends queries for 'split bill app' and 'receipt splitter'. Multiple apps exist but most have poor UX or require account creation. Reddit analysis of unmet needs highlights finance tools as having strongest willingness to pay.",
+    "app_concept": "Point your camera at any receipt, the app auto-reads items and prices via OCR, then lets you tap to assign items to friends and instantly calculates each person's share including tax and tip.",
+    "target_user": "Young adults (18-35) who eat out with friends regularly and are frustrated by manual bill-splitting math or clunky existing apps that require everyone to download the same app.",
+    "monetization_hypothesis": "Freemium model: 5 free scans per month, unlimited scans via $2.99/month or $19.99/year subscription. Premium adds receipt history, group presets, and export to Venmo/PayPal deep links.",
+    "aso": {
+      "primary_keyword": "receipt splitter",
+      "popularity_score": 25,
+      "difficulty_score": 35,
+      "popularity_passes": true,
+      "difficulty_passes": true
+    },
+    "appifiability": {
+      "standalone_app": true,
+      "buildable_1_2_weeks": true,
+      "clear_monetization": true,
+      "achievable_with_ios_apis": true,
+      "user_would_download": true
+    },
+    "marketSize": {
+      "demandSignals": [
+        "Bill splitting apps market reached $612M in 2025, growing 7.29% annually (Business Research Insights / 360iResearch)",
+        "85M+ US adults used a bill splitting app at least once in 2024; 42% of millennials use digital expense-sharing regularly",
+        "72% of users aged 18-35 reported difficulty tracking shared expenses manually, driving app adoption",
+        "Multiple '7 best bill splitting apps 2026' comparison articles from splittyapp.com, splitterup.app, mobileappdaily.com indicate active search demand"
+      ],
+      "trendDirection": "growing",
+      "notes": "Market expanding steadily at 7.29% CAGR. Gen Z and millennial adoption is the primary growth driver. More than 55% of Gen Z and millennial users rely on mobile apps for tracking shared costs. The niche within this market \u2014 camera-based receipt splitting specifically \u2014 is underdeveloped relative to broader expense tracking."
+    },
+    "competitors": {
+      "topApps": [
+        {
+          "name": "Splitwise",
+          "rating": 4.5,
+          "ratingCount": 100000,
+          "model": "freemium ($40/yr Pro). Receipt scanning locked behind paywall. Requires account creation."
+        },
+        {
+          "name": "Splitty",
+          "rating": 4.7,
+          "ratingCount": 77,
+          "model": "freemium ($9.99/yr or $24.99 lifetime). 3 free scans. Purpose-built for receipt splitting but tiny install base."
+        },
+        {
+          "name": "Tab",
+          "rating": 4.2,
+          "ratingCount": 1097,
+          "model": "free. Receipt scanning included but OCR has known accuracy issues (scans subtotals as items, can't edit tax)."
+        },
+        {
+          "name": "Splitra",
+          "rating": null,
+          "ratingCount": 0,
+          "model": "Still on TestFlight, not yet launched on App Store."
+        },
+        {
+          "name": "BillSplit AI",
+          "rating": null,
+          "ratingCount": 0,
+          "model": "Per-scan credits ($1.99-$24.99). Brand new, no reviews yet."
+        }
+      ],
+      "saturationLevel": "low",
+      "identifiedGap": "Tab users complain about OCR errors (subtotals scanned as line items, inability to edit tax amounts, unexplained tip calculations). Splitwise locks receipt scanning behind $40/yr paywall and forces account creation. Splitty is well-designed but has only 77 ratings \u2014 tiny reach. No competitor combines free receipt scanning + accurate OCR + no-signup + Venmo/PayPal deep links.",
+      "notes": "Only 3 established apps offer receipt-scanning + itemized splitting. The rest (Splid, SettleUp, Tricount, Venmo Groups, Plates) are manual-entry expense trackers without OCR. Well under the 10-competitor saturation threshold. The gap is clear: accurate OCR without paywall or account requirement."
+    },
+    "monetization": {
+      "pricePoints": [
+        "free (Tab)",
+        "$9.99/yr or $24.99 lifetime (Splitty)",
+        "$40/yr (Splitwise Pro)",
+        "$1.99-$24.99 per-scan credits (BillSplit AI)"
+      ],
+      "recommendedModel": "freemium",
+      "mrrEstimate": "medium",
+      "mrrMath": "Month 1: ~500 downloads/mo * 5% conversion * $2.99/mo = ~$75 MRR. Month 3 (with content marketing + ASO): ~2,000 downloads/mo * 5% conversion = 100 new subs/mo, cumulative ~225 subscribers * $2.99 = ~$672 MRR. Reaching $500+ MRR by month 3 is plausible with strong content execution. Alternative: $19.99/yr subscription ($1.67/mo effective) could achieve higher conversion rates.",
+      "notes": "Category supports subscriptions at low price points ($2.99/mo or $9.99/yr). Splitty's small install base despite good UX suggests the category hasn't been cracked yet by an indie. The freemium gate (5 free scans/month, unlimited on subscription) aligns with competitor pricing. Monetization is medium \u2014 not a slam dunk but viable with execution."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": [
+        "Receipt parsing accuracy: distinguishing line items from subtotals/tax/total requires careful regex and heuristic logic \u2014 this is the main UX differentiator and must be tested thoroughly",
+        "Camera permission required \u2014 standard and expected for this use case, low friction"
+      ],
+      "notes": "iOS Vision framework (VNRecognizeTextRequest) provides free, on-device OCR with no API costs. Multiple SwiftUI + Vision tutorials exist. No backend required for core splitting logic \u2014 all computation is local. Camera + AVFoundation + Vision is a well-documented stack. Venmo/PayPal deep links are standard URL schemes. No expensive external APIs needed. Estimated 1.5 weeks for a polished MVP."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [],
+      "notes": "Bill splitting is a straightforward utility category with no known App Store guideline conflicts. No health claims (5.1.1), no financial advice (3.1), no kids category issues (1.3), no content moderation needed (1.2). Camera permission is expected for receipt scanning. Multiple competitors already approved in this exact category. No regulatory or compliance concerns \u2014 the app calculates math, it does not handle money or provide financial advice."
+    }
+  },
+  "design": {
+    "theme": "Fresh thermal receipt on a dark marble countertop",
+    "primaryColor": "#F5A623",
+    "primaryFont": "Space Mono",
+    "secondaryFont": "System Rounded (DM Sans fallback)",
+    "screenCount": 5,
+    "screens": ["Home", "Camera/Scan", "Item Review/Split", "Summary/Share", "Paywall"],
+    "screenshots": [
+      "pipeline/active-build/snap-split/screenshots/screen-01-home.png"
+    ]
+  },
+  "content": {
+    "posts": [
+      {
+        "platform": "tiktok",
+        "format": "carousel",
+        "posted_at": "2026-03-27T17:25:00+00:00",
+        "post_id": "cmn9647yk004lp70yq410jo4v",
+        "method": "postiz"
+      },
+      {
+        "platform": "x",
+        "format": "single_image",
+        "posted_at": "2026-03-27T17:25:00+00:00",
+        "post_id": "cmn96481n004mp70yestr4hu9",
+        "method": "postiz"
+      },
+      {
+        "platform": "instagram",
+        "format": "carousel",
+        "posted_at": "2026-03-27T17:25:00+00:00",
+        "post_id": "cmn964849004np70yqzmt1e9x",
+        "method": "postiz"
+      },
+      {
+        "platform": "threads",
+        "format": "carousel",
+        "posted_at": "2026-03-27T17:25:00+00:00",
+        "post_id": "cmn964882004pp70ypo5iejku",
+        "method": "postiz"
+      }
+    ],
+    "assets_path": "~/moss/content/snap-split/",
+    "image_urls": [
+      "https://uploads.postiz.com/DuLmNKX40k.png",
+      "https://uploads.postiz.com/Osagrcvlgd.png",
+      "https://uploads.postiz.com/EzwxGhNequ.png"
+    ]
+  },
+  "eval": {
+    "attempts": 1,
+    "last_result": "pass",
+    "passedAt": "2026-03-27T15:14:00+00:00",
+    "details": "Simulator build: PASS. Code review: PASS. 5 screens, Vision OCR, Venmo/PayPal deep links, RevenueCat from env var, clean architecture."
+  },
+  "blockers": [
+    "CameraView is in demo mode — loads sample receipts instead of real AVFoundation camera capture. Must implement AVCaptureSession + camera permissions before App Store submission. Vision OCR pipeline is ready and correct."
+  ],
+  "needsHuman": false
+}

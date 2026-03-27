@@ -1,0 +1,87 @@
+{
+  "id": "worn-worth",
+  "name": "WornWorth",
+  "stage": "killed",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T11:22:00+00:00",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27",
+      "agent": "scout",
+      "notes": "TikTok cost-per-wear spreadsheet trend + underconsumption core (46M+ views) signal demand for a focused clothing cost tracker with zero dedicated competition."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T11:04:00+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research — spawning Validator subagent"
+    },
+    {
+      "stage": "killed",
+      "date": "2026-03-27T11:22:00+00:00",
+      "agent": "validator",
+      "notes": "KILL: MRR math fails — WearWise is a free dedicated CPW app, Stylebook offers full wardrobe mgmt for $5.99 one-time; charging $8/mo for a subset of existing features yields <$500 MRR. 6 competitors already track cost-per-wear."
+    }
+  ],
+  "research": {
+    "verdict": "KILL",
+    "decidedAt": "2026-03-27T11:22:00+00:00",
+    "killReasons": [
+      "Monetization potential LOW: WearWise (dedicated CPW app) is free with no subscription. Stylebook offers full wardrobe management including CPW for $5.99 one-time. Charging $1.99/week ($8/mo) for a single-feature app competing against free/cheap alternatives will not convert. MRR math: ~500-1000 downloads/mo * 4% conversion * $8/mo = $160-$320/mo.",
+      "Scout's 'zero dedicated competition' claim was incorrect: WearWise: Cost Per Wear (App Store ID 6759916371) is a dedicated CPW tracker. Additionally, Stylebook (7,547 reviews), Whering (8,046 reviews), Clueless, Acloset, and Indyx all include CPW tracking as a feature."
+    ],
+    "marketSize": {
+      "demandSignals": [
+        "TikTok #underconsumptioncore: 46M+ views with creators sharing CPW spreadsheets and tutorials",
+        "Manual spreadsheet workaround: users tracking CPW in spreadsheets indicates unmet app demand",
+        "Reddit/forum communities: r/frugalmalefashion, YouLookFab Forum, Styleforum all have active CPW discussions",
+        "Blog/Substack content: multiple dedicated articles on tracking wardrobe cost-per-wear (doesthislookweird.substack.com, projectcece.com, thewelldressedlife.com)"
+      ],
+      "trendDirection": "growing",
+      "notes": "Genuine demand exists — 4 independent signals confirmed. The underconsumption core movement is mainstream (Wikipedia article, CNBC coverage, WWD coverage). However, demand is already being served by existing apps."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "WearWise: Cost Per Wear", "rating": null, "ratingCount": null, "model": "free (no subscription)", "notes": "DEDICATED cost-per-wear tracker — direct competitor. New app, limited reviews visible."},
+        {"name": "Stylebook", "rating": 4.7, "ratingCount": 7547, "model": "one-time $5.99", "notes": "Gold standard wardrobe app since 2010. Full CPW tracking, wardrobe analytics, outfit planning."},
+        {"name": "Whering", "rating": 4.7, "ratingCount": 8046, "model": "freemium", "notes": "7M+ users. Dragon's Den featured. CPW tracking included. Social features."},
+        {"name": "Clueless", "rating": null, "ratingCount": null, "model": "subscription $9.99/mo or $69/yr", "notes": "AI-powered outfit planning with CPW tracking. Newer entrant."},
+        {"name": "Acloset", "rating": null, "ratingCount": null, "model": "freemium", "notes": "Basic wardrobe analytics including CPW and wear frequency."},
+        {"name": "Indyx", "rating": null, "ratingCount": null, "model": "free", "notes": "Free wardrobe app with CPW tracking and stylist guidance."}
+      ],
+      "saturationLevel": "medium",
+      "identifiedGap": "No clear gap. WearWise already occupies the 'simple dedicated CPW tracker' niche. Stylebook and Whering dominate the feature-rich space with thousands of reviews. A new entrant would need significant differentiation beyond what the concept proposes.",
+      "notes": "6 competitors found, under the 10-app saturation threshold. However, the niche of 'dedicated CPW tracker' is already taken by WearWise, and the broader 'wardrobe app with CPW' space has entrenched players with 7K-8K reviews."
+    },
+    "monetization": {
+      "pricePoints": ["free (WearWise)", "$5.99 one-time (Stylebook)", "freemium (Whering)", "$9.99/mo (Clueless)"],
+      "recommendedModel": "N/A — killed",
+      "mrrEstimate": "low",
+      "mrrMath": "ASO keyword popularity 28 (low search volume) → est. 500-1000 organic downloads/mo. At 4% conversion to $1.99/week ($8/mo effective): 500 * 0.04 * $8 = $160/mo optimistic. Even at 1000 downloads: $320/mo. Both well below $500 threshold. Users have free alternatives (WearWise) and a $5.99 one-time option (Stylebook) that includes far more features.",
+      "notes": "The pricing environment makes subscription monetization extremely difficult. WearWise is free. Stylebook is $5.99 once and includes CPW plus full wardrobe management. Asking $8/mo for less functionality than a $6 one-time app is a losing proposition."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1,
+      "risks": [],
+      "notes": "Technically trivial — SwiftUI, local CoreData/SwiftData storage, camera for item photos, simple arithmetic. No APIs needed, no backend required. This dimension is not the issue."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [],
+      "notes": "Standard utility app. No health claims, financial advice, or guideline gray areas. Camera permission for item photos is routine."
+    }
+  },
+  "design": {},
+  "content": {
+    "posts": []
+  },
+  "eval": {
+    "attempts": 0,
+    "last_result": null
+  },
+  "blockers": [],
+  "needsHuman": false
+}

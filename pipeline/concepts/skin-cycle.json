@@ -1,0 +1,86 @@
+{
+  "id": "skin-cycle",
+  "name": "Skin Cycle",
+  "stage": "killed",
+  "created": "2026-03-26",
+  "lastUpdated": "2026-03-27T07:42:00+00:00",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-26",
+      "agent": "scout",
+      "notes": "Skin cycling routine planner sourced from sustained TikTok skincare trend ('Skin Cycling 2.0' in 2026); no dedicated cycling scheduler exists among iOS skincare apps, low keyword difficulty, and clear subscription monetization in the beauty category."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T07:05:00+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research — spawning Validator subagent (retry after previous validator failed with API 500)"
+    },
+    {
+      "stage": "killed",
+      "date": "2026-03-27T07:42:00+00:00",
+      "agent": "validator",
+      "notes": "KILL: Monetization potential rated low — direct competitor Sycle has been live 14+ months with zero ratings despite dedicated skin cycling features, proving the niche cannot sustain paid subscriptions; MRR math yields ~$300/month max; trend showing decline signals in 2026 sources."
+    }
+  ],
+  "research": {
+    "verdict": "KILL",
+    "decidedAt": "2026-03-27T07:42:00+00:00",
+    "killReasons": [
+      "Low monetization potential: direct competitor Sycle (launched Jan 2025, $2.99/week or $19.99/year) has zero App Store ratings after 14+ months, proving insufficient willingness to pay for a dedicated skin cycling app. MRR math: 2,000 downloads/month × 5% conversion × $2.99/month = ~$300/month — well below $500 minimum threshold.",
+      "Trend declining: Beauty Independent and Who What Wear 2026 articles report skin cycling is 'fading' as consumers move toward stability over aggressive active rotation routines. The trend peaked and is now normalizing.",
+      "Niche too narrow: ASO keyword 'skin cycling' has popularity of only 22 (barely above 20 minimum). The addressable market of people who specifically need a cycling scheduler (vs general skincare tracking) is very small."
+    ],
+    "marketSize": {
+      "demandSignals": [
+        "TikTok #skincycling hashtag has 3.5 billion cumulative views",
+        "r/SkincareAddiction has ~1.4 million members with regular skin cycling discussion threads",
+        "Multiple 2026 articles (Netmeds, Boozyshop, Beauty Independent) confirm 'Skin Cycling 2.0' trend is recognized"
+      ],
+      "trendDirection": "declining",
+      "notes": "Demand signals exist at the awareness level (people know about skin cycling), but 2026 sources indicate the trend is fading. Beauty Independent reports 'the trend of over-exfoliation and constant skin cycling is fading' as consumers seek stability. Who What Wear lists skin cycling among '3 Trends That Are Out' in 2026. The trend had real momentum in 2023-2025 but appears to be past peak."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Sycle: Skin Cycling Tracker", "rating": null, "ratingCount": 0, "model": "freemium ($2.99/week or $19.99/year)"},
+        {"name": "FeelinMySkin", "rating": 4.59, "ratingCount": 3300, "model": "freemium (subscription)"},
+        {"name": "Skin Bliss", "rating": null, "ratingCount": null, "model": "freemium (3M+ users claimed)"},
+        {"name": "BasicBeauty", "rating": null, "ratingCount": null, "model": "freemium ($2.99/month or $4.99/year or $7.99 one-time)"},
+        {"name": "Skinly: AI Skin & Cycle Care", "rating": 5.0, "ratingCount": 2, "model": "freemium"}
+      ],
+      "saturationLevel": "low",
+      "identifiedGap": "Sycle is a direct purpose-built skin cycling tracker but has zero traction after 14+ months. General skincare apps lack dedicated cycling logic. However, the gap exists because demand for a dedicated cycling scheduler is insufficient, not because competitors missed the opportunity.",
+      "notes": "The scout's assertion that 'no purpose-built skin cycling scheduler exists' was incorrect — Sycle launched in Jan 2025 with exactly this concept. Its zero-traction outcome is a strong negative signal. General skincare apps (FeelinMySkin, Skin Bliss) serve the broader routine tracking need adequately."
+    },
+    "monetization": {
+      "pricePoints": ["$2.99/week (Sycle)", "$19.99/year (Sycle)", "$2.99/month (BasicBeauty)", "$4.99/year (BasicBeauty)", "$7.99 one-time (BasicBeauty)"],
+      "recommendedModel": "subscription",
+      "mrrEstimate": "low",
+      "mrrMath": "Optimistic: 2,000 downloads/month × 5% conversion × $2.99/month = $299/month. Realistic: 500 downloads/month × 3% conversion × $2.99/month = $45/month. Both below $500 minimum. Sycle's zero-rating outcome after 14+ months confirms insufficient paying demand.",
+      "notes": "The beauty/skincare subscription market works for broad apps (FeelinMySkin has 3.3K ratings), but a narrow 'skin cycling scheduler' does not have enough addressable users willing to pay. Skin cycling is a simple 4-night rotation that most users can track with a basic calendar or notes app."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1,
+      "risks": [],
+      "notes": "Simple calendar/scheduler app. SwiftUI with local storage, UserNotifications for reminders, optional PhotosUI for selfie journaling. No expensive APIs, no backend required. Technically trivial — which is also a risk, as the simplicity makes it hard to justify a subscription."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [],
+      "notes": "Skincare routine tracker with no medical claims, no diagnosis, no health data collection. Straightforward utility app. Multiple similar apps already approved. No guideline concerns."
+    }
+  },
+  "design": {},
+  "content": {
+    "posts": []
+  },
+  "eval": {
+    "attempts": 0,
+    "last_result": null
+  },
+  "blockers": [],
+  "needsHuman": false
+}

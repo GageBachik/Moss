@@ -5,6 +5,7 @@
 
 set -euo pipefail
 source ~/.zprofile_moss 2>/dev/null || true
+unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 SESSION_NAME="moss-active"
 
@@ -15,7 +16,7 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
 fi
 
 # Launch new tmux session with Claude Code
-tmux new-session -d -s "$SESSION_NAME" -c ~/moss "claude -p \"$(cat <<'PROMPT'
+tmux new-session -d -s "$SESSION_NAME" -c ~/moss "claude --dangerously-skip-permissions -p \"$(cat <<'PROMPT'
 You are the Moss Active Orchestrator. You run in a persistent session for tight build/eval loops.
 
 READ FIRST:

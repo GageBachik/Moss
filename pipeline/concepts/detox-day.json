@@ -1,0 +1,101 @@
+{
+  "id": "detox-day",
+  "name": "Detox Day",
+  "stage": "killed",
+  "created": "2026-03-26",
+  "lastUpdated": "2026-03-27T07:15:00.000000+00:00",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-26",
+      "agent": "scout",
+      "notes": "Dopamine detox app riding the viral TikTok digital detox and sleepmaxxing trends; low keyword competition with growing search volume and clear subscription monetization."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T06:36:59.901967+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research — spawning Validator subagent"
+    },
+    {
+      "stage": "killed",
+      "date": "2026-03-27T07:15:00.000000+00:00",
+      "agent": "validator",
+      "notes": "KILL: 10+ strong competitors (Opal at $10M ARR, One Sec with 22K ratings, Forest, plus 7+ dedicated dopamine detox apps) far exceed saturation threshold; directly competes with Apple's built-in Screen Time (a documented failure pattern); Apple has history of removing third-party screen time apps (2019 crackdown, Congressional antitrust hearings)."
+    }
+  ],
+  "research": {
+    "verdict": "KILL",
+    "decidedAt": "2026-03-27T07:15:00.000000+00:00",
+    "killReasons": [
+      "Competitor saturation exceeds threshold (10+): Opal ($10M ARR, 4.8 stars, 200K downloads/mo), One Sec (4.83 stars, 22K ratings), Forest (established), Dopamine Detox: Restrict Apps, Elqi, FocusZone, Zario, Doxo AI, AppBlock, Cleverest, plus Apple Screen Time built-in. No clear gap — Opal already dominates with beautiful design and gamification.",
+      "Directly competes with Apple's built-in Screen Time feature — scout learnings explicitly flag this as a failure pattern ('Apps competing directly with Apple's built-in apps').",
+      "Apple has documented history of removing/restricting third-party screen time apps (2019 crackdown per CNN, 9to5Mac; Tim Cook questioned in 2020 Congressional antitrust hearing per TechCrunch). Category carries elevated App Store review risk."
+    ],
+    "marketSize": {
+      "demandSignals": [
+        "TikTok 'dopamine detox' and 'digital detox 2026' content surging with hundreds of thousands of views",
+        "Multiple news outlets covering 'Dopamine Overload: Tech Detox in 2026' (ActionNews5, WNEM, WGEM, Jan 2026)",
+        "r/DopamineDetoxing subreddit has ~13K members (per subredditstats.com)",
+        "Google Trends 2026 wellness reports list digital detox as a key trend (chaindrugreview.com, ericadiamond.com)"
+      ],
+      "trendDirection": "growing",
+      "notes": "Demand signals are real — the trend is growing. But demand alone is insufficient when the market is already saturated with well-funded competitors. The $1.12B global digital detox app market (per growthmarketreports.com) means incumbents are already capturing this demand."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Opal: Screen Time Control", "rating": 4.8, "ratingCount": "200K+ downloads/mo", "model": "subscription $99.99/yr, $10M ARR"},
+        {"name": "one sec", "rating": 4.83, "ratingCount": 22000, "model": "freemium subscription"},
+        {"name": "Forest", "rating": 4.7, "ratingCount": "established, millions of users", "model": "paid + IAP"},
+        {"name": "Dopamine Detox: Restrict Apps (Redev Inc.)", "rating": 4.5, "ratingCount": "available on App Store", "model": "freemium"},
+        {"name": "Elqi - The Dopamine App", "rating": 4.3, "ratingCount": "available on App Store", "model": "freemium"},
+        {"name": "Zario: Digital Dopamine Detox", "rating": 4.4, "ratingCount": "available on App Store", "model": "freemium"},
+        {"name": "Doxo AI: Dopamine Detox Coach", "rating": 4.2, "ratingCount": "available on App Store", "model": "freemium"},
+        {"name": "AppBlock", "rating": 4.5, "ratingCount": "established", "model": "freemium"},
+        {"name": "Cleverest: Focus Digital Detox", "rating": 4.3, "ratingCount": "available since 2014", "model": "freemium"},
+        {"name": "Dopamine Detox - FocusZone", "rating": 4.0, "ratingCount": "available on App Store", "model": "freemium"}
+      ],
+      "saturationLevel": "high",
+      "identifiedGap": "None that would justify entry. The scout's original hypothesis ('existing apps are too complex or lack engaging design') is invalidated — Opal specifically is praised for beautiful design and simplicity, and has $10M ARR proving product-market fit.",
+      "notes": "Exceeds max_competitor_saturation threshold of 10. Additionally, Apple Screen Time is a built-in zero-cost competitor that ships on every iPhone."
+    },
+    "monetization": {
+      "pricePoints": ["free (Apple Screen Time)", "$3.99/mo - $8.99/mo (typical)", "$29.99/yr - $99.99/yr (Opal)"],
+      "recommendedModel": "subscription",
+      "mrrEstimate": "low",
+      "mrrMath": "In a saturated market, a new app might get 500-1000 downloads/mo. At 3% conversion to $3.99/mo = 15-30 subscribers = $60-$120 MRR. Even optimistic 2000 downloads/mo at 5% conversion = $400/mo. Does not reach medium threshold ($500+) within 3 months given competitor dominance.",
+      "notes": "Opal captures the premium segment at $99.99/yr. Competing at $3.99/mo ($29.99/yr) leaves little room. Users who want free use Apple Screen Time. Users who want premium use Opal. There is no viable price point in between that generates meaningful MRR for a new entrant."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": [
+        "App blocking requires Screen Time API (Family Controls framework) which has restrictions and requires special entitlements",
+        "Family Controls entitlement requires Apple approval and has been historically difficult to obtain"
+      ],
+      "notes": "Basic challenge/streak/timer features are buildable in 1-2 weeks with SwiftUI. However, the core differentiating feature (app blocking) requires Family Controls entitlement which adds approval friction. Without app blocking, the app is just a timer with challenges — even less differentiated."
+    },
+    "appStoreRisk": {
+      "riskLevel": "high",
+      "concerns": [
+        "Apple removed/restricted multiple third-party screen time apps in 2019 (reported by CNN, 9to5Mac, NYT)",
+        "Apple CEO Tim Cook was questioned about this removal in 2020 Congressional antitrust hearing (TechCrunch)",
+        "EU antitrust complaints filed by Kidslox and Qustodio over Apple's anti-competitive behavior in this exact category",
+        "Family Controls entitlement required for app blocking features — Apple controls the approval gate",
+        "Category directly overlaps with Apple's built-in Screen Time feature"
+      ],
+      "notes": "While some screen time apps have survived (Opal, One Sec), they are well-funded companies that can fight back. A solo indie app in this category faces elevated review risk and Apple could restrict functionality at any iOS update."
+    }
+  },
+  "design": {},
+  "content": {
+    "posts": []
+  },
+  "eval": {
+    "attempts": 0,
+    "last_result": null
+  },
+  "blockers": [],
+  "needsHuman": false
+}

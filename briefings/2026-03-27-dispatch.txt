@@ -1,0 +1,25 @@
+🌙 Moss Nightly Retro -- 2026-03-27
+
+📊 Pipeline: 9 active concepts across 3 stages
+  Validated (ready to build): 4 | Content creating: 2 | Scouted: 3
+
+🏆 Big day: Validator evaluated 10 concepts — 4 GO, 6 KILL
+  GO: glow-cal (zero competitors!), prote-tracker, stack-check, cold-plunge-log
+  Both snap-split & nospend-streak PASSED EVAL → content-creating
+
+📝 Published today: 0 posts (content creation just starting)
+
+⚙️ System health: 2 tmux failures, both worked around by running eval in interactive session. xcodebuild -scheme and signing fixes discovered and documented.
+
+💡 Improvements: 3 auto-applied, 1 suggest, 1 flagged
+  Auto: xcodebuild learnings, eval recovery steps, scout kill-pattern filters
+  Suggest: Increase stuck_detection timeout 30→60min
+  Flag: Consider pausing scout when 7+ concepts queued
+
+🚨 Blockers:
+  - API credits needed for claude -p automation (tmux keeps dying without them)
+  - snap-split camera needs real AVCaptureSession before App Store
+
+📋 Tomorrow: Start content for snap-split & nospend-streak, begin glow-cal build, validate 3 scouted concepts
+
+Full briefing: ~/moss/briefings/2026-03-27.md

@@ -1,0 +1,85 @@
+{
+  "id": "stack-check",
+  "name": "Stack Check",
+  "stage": "validated",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T14:45:00+00:00",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27",
+      "agent": "scout",
+      "notes": "Wellness supplement TikTok trend 70M+ views. Supplement stack organizer with timing reminders — no clean dedicated app exists. ASO: popularity 32, difficulty 22."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T14:05:00+00:00",
+      "agent": "orchestrator",
+      "notes": "Moved to researching — spawning validator agent"
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-27T14:45:00+00:00",
+      "agent": "validator",
+      "notes": "GO: Growing wellness market ($12.78B, 14.9% CAGR), 7 competitors but clear UX gaps (crashes, aggressive paywalls, clinical feel), buildable in 1-2 weeks in SwiftUI, low App Store risk with proper disclaimers."
+    }
+  ],
+  "research": {
+    "verdict": "GO",
+    "decidedAt": "2026-03-27T14:45:00+00:00",
+    "marketSize": {
+      "demandSignals": [
+        "TikTok supplement stack and 'what I take daily' trends with 70M+ combined views",
+        "r/Nootropics has 350K+ members; r/StackAdvice and r/Supplements are active communities discussing supplement organization",
+        "Wellness apps market valued at $12.78B in 2025 growing at 14.9% CAGR (Coherent Market Insights)",
+        "Supplements market at $291B in 2025 growing 7.9% CAGR — massive addressable user base",
+        "SuppCo alone has 70K users and 10K App Store ratings, proving demand for dedicated supplement trackers"
+      ],
+      "trendDirection": "growing",
+      "notes": "Strong demand signals across social media (TikTok, Reddit), market research, and competitor traction. The supplement-tracking niche is a growing subset of the broader wellness app market. Multiple new apps launched in 2025-2026 indicate increasing developer and user interest."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "SuppCo", "rating": 4.79, "ratingCount": 10000, "model": "free (affiliate revenue, premium planned)"},
+        {"name": "SuppTrack", "rating": 4.5, "ratingCount": 500, "model": "freemium ($14.99/year)"},
+        {"name": "Supplements AI", "rating": 4.3, "ratingCount": 300, "model": "subscription"},
+        {"name": "Supplify", "rating": 4.2, "ratingCount": 200, "model": "freemium"},
+        {"name": "Prove It", "rating": 4.0, "ratingCount": 150, "model": "freemium (aggressive paywall)"}
+      ],
+      "saturationLevel": "medium",
+      "identifiedGap": "Existing apps suffer from: (1) clinical/medical feel rather than lifestyle-oriented design, (2) apps crash when tracking 15+ supplements, (3) aggressive paywalls before showing any value, (4) forced onboarding questionnaires with no skip option, (5) no sensible defaults for dosages requiring manual input every time. A beautiful, lifestyle-first supplement organizer with frictionless onboarding and reliable performance is the clear gap.",
+      "notes": "7 identifiable competitors, below the 10-app saturation threshold. SuppCo is the strongest competitor with 70K users but monetizes via affiliate revenue (not subscription). SuppTrack charges $14.99/year. Most apps focus on barcode scanning and database lookup rather than beautiful daily stack organization and timing. None nail the lifestyle aesthetic that TikTok supplement users want."
+    },
+    "monetization": {
+      "pricePoints": ["SuppCo: free (affiliate)", "SuppTrack: $14.99/year", "Supplements AI: subscription (est. $4-6/month)", "Prove It: freemium with paywall"],
+      "recommendedModel": "freemium",
+      "mrrEstimate": "medium",
+      "mrrMath": "Estimated 500 downloads/month (ASO difficulty 22 is favorable). At 5% conversion to $2.99/month subscription: 500 * 0.05 * $2.99 = $75/month initial. With compounding retention over 3 months and content-driven growth to 1,500 downloads/month: ~750 total subscribers * 5% * $2.99 = $112/month organic + retained subscribers ~$800-1,500 MRR by month 3. Recommend $2.99/month or $19.99/year instead of proposed $1.99/week ($8/month) which is 5x more expensive than SuppTrack and will hurt conversion.",
+      "notes": "The proposed $1.99/week pricing is too aggressive for this category. Competitors charge $1.25/month (SuppTrack) to ~$5/month. Recommend $2.99/month or $19.99/year with a generous free tier (5 supplements free is good). Medium MRR potential is achievable with strong TikTok/content marketing driving downloads above organic ASO baseline."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": [
+        "Supplement interaction warnings database needs curation — start with top 50 common interactions, expand over time",
+        "Local notifications for reminders require UNUserNotificationCenter permission (standard, low friction)"
+      ],
+      "notes": "Core app is straightforward SwiftUI: list of supplements with timing categories (morning/with meals/evening/bedtime), local notifications for reminders, streak tracking with UserDefaults or SwiftData. No backend required for MVP — all data stored locally. Supplement database can be seeded with ~200 common supplements. Interaction warnings can use a static JSON dataset of known interactions. No expensive APIs needed. HealthKit integration is a nice-to-have for future versions but not required for launch."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [
+        "Must include disclaimer that interaction warnings are informational only, not medical advice",
+        "Cannot claim to diagnose, treat, or prevent any condition",
+        "Privacy disclosures must be explicit if any health data is shared (2025-2026 updated guidelines)"
+      ],
+      "notes": "Supplement tracker apps are established in the App Store (SuppCo, SuppTrack, Supplements AI all approved). This is a wellness/lifestyle app, not a medical device. As long as we include 'not medical advice' disclaimers on interaction warnings and do not claim to diagnose or treat conditions, App Store review risk is low. Keep all data local for MVP to minimize privacy review complexity."
+    }
+  },
+  "design": {},
+  "content": {"posts": []},
+  "eval": {"attempts": 0, "last_result": null},
+  "blockers": [],
+  "needsHuman": false
+}

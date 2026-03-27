@@ -1,0 +1,88 @@
+{
+  "id": "adhd-focus-timer",
+  "name": "ADHD Focus Timer",
+  "stage": "killed",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T10:15:00.000Z",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27",
+      "agent": "scout",
+      "notes": "Underserved ADHD-specific timer niche; most habit/focus apps are generic. Rising neurodivergent awareness trend with low ASO competition."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T09:03:12+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research — spawning Validator. Note: focus-forge was killed for saturation in focus timer space — validator should assess ADHD differentiation."
+    },
+    {
+      "stage": "killed",
+      "date": "2026-03-27T10:15:00.000Z",
+      "agent": "validator",
+      "notes": "KILL: ADHD focus/timer niche is NOT underserved — 12+ competitors including Tiimo (2025 iPhone App of the Year), Focus Bear (4.9 stars, AuDHD-specific), and 7+ other ADHD-specific apps. Realistic MRR of ~$300/mo falls below the $500/mo medium threshold required. The 'ADHD-specific' positioning that was supposed to differentiate from generic focus timers is itself a saturated market."
+    }
+  ],
+  "research": {
+    "verdict": "KILL",
+    "decidedAt": "2026-03-27T10:15:00.000Z",
+    "killReasons": [
+      "Competitor saturation exceeds max_competitor_saturation threshold of 10: Tiimo (2025 iPhone App of the Year, $12/mo, 6600+ reviews), Focus Bear (4.9 stars, AuDHD-specific), Clarify (by Fabulous), Focus: ADHD Organizer & Timer, Inflow ADHD ($47.99/mo), Numo, Engross: ADHD Focus Timer, Win Focus: ADHD Focus Timer, ADHD Planner & Focus Organizer — 9+ ADHD-specific apps plus Forest (16K ratings), Focus Keeper (25.8K ratings, markets as 'ADHD Friendly'), and Flora — totaling 12+ strong competitors.",
+      "Monetization potential rated LOW: MRR math at realistic download volumes (500/mo for a new entrant competing against an App of the Year winner) with 5% conversion at $12/mo yields $300/mo — below the $500/mo medium threshold. Even optimistic 1500 downloads/mo yields $900/mo, but achieving 1500 downloads/mo against Tiimo's Apple-endorsed dominance is unrealistic for a new entrant with no brand.",
+      "Near-duplicate of killed concept focus-forge: while ADHD positioning was hypothesized as differentiation from the generic focus timer space, research reveals the ADHD focus/timer niche is itself saturated with dedicated, well-funded competitors. The differentiation thesis is invalidated."
+    ],
+    "marketSize": {
+      "demandSignals": [
+        "ADHD apps market valued at $2.22B in 2025, growing at 16.6% CAGR to $11.9B by 2035 (Market Growth Reports, Business Research Insights)",
+        "r/ADHD subreddit has ~2M members, active discussion of timer/focus tools (SubredditStats)",
+        "Adults represent 59% of ADHD app market; 46% of adults with ADHD use productivity apps at work (Business Research Insights)",
+        "Multiple 'best ADHD timer apps 2026' roundups from Morgen, GetInflow, ToolFinder, Gridfiti, The ADHD Lifestyle — indicating sustained search demand",
+        "ASO keyword 'adhd timer': popularity 30, difficulty 25 — passes both thresholds (min_popularity 20, max_difficulty 50)"
+      ],
+      "trendDirection": "growing",
+      "notes": "Strong and growing market demand exists — the problem is not lack of interest but that the ADHD-specific niche has attracted well-funded competitors who have already captured this demand. Tiimo's 2025 App of the Year award signals peak mainstream recognition."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Tiimo", "rating": 4.8, "ratingCount": 6600, "model": "subscription ($12/mo or $54/yr)", "notes": "2025 iPhone App of the Year winner. Visual planner for neurodivergent users."},
+        {"name": "Focus Bear", "rating": 4.9, "ratingCount": 500, "model": "subscription", "notes": "Built by/for AuDHDers. Blocks distractions + habits + timer."},
+        {"name": "Clarify: ADHD Organizer, Timer", "rating": 4.5, "ratingCount": 1000, "model": "subscription (Fabulous)", "notes": "ADHD organizer with coaching lessons and focus room."},
+        {"name": "Inflow ADHD", "rating": 4.7, "ratingCount": 3000, "model": "subscription ($47.99/mo)", "notes": "CBT-based ADHD management program."},
+        {"name": "Focus Keeper", "rating": 4.8, "ratingCount": 25800, "model": "freemium", "notes": "Generic Pomodoro timer now marketing as 'ADHD Friendly'."}
+      ],
+      "saturationLevel": "high",
+      "identifiedGap": "Some users complain about Tiimo bugs ('one step forward, two steps back'), Focus Bear's confusing setup, and generic timers being too complex. However, these are UX issues the incumbents will fix — not structural gaps. No unmet need was found that isn't already addressed by at least 2-3 existing apps.",
+      "notes": "12+ competitors serve the ADHD focus/timer market. The ADHD-specific niche that was supposed to differentiate us from the generic focus timer space (which killed focus-forge) is itself saturated. Tiimo's App of the Year award creates an insurmountable ASO and credibility moat for ADHD-related search terms."
+    },
+    "monetization": {
+      "pricePoints": ["$12/mo (Tiimo)", "$54/yr (Tiimo)", "$47.99/mo (Inflow)", "subscription (Focus Bear)", "$3.99 one-time (Forest)", "free with IAP (generic timers)"],
+      "recommendedModel": "subscription",
+      "mrrEstimate": "low",
+      "mrrMath": "Realistic: 500 downloads/mo * 5% conversion * $12/mo = $300/mo. Optimistic: 1500 downloads/mo * 5% * $12 = $900/mo. To reach medium ($500/mo): need 834 downloads/mo at 5% conversion and $12/mo price — plausible in theory but unrealistic against Tiimo (App of the Year) dominating ADHD search terms. Weekly sub alternative: 500 * 5% * $2.99 * 4.3 = $322/mo — same problem.",
+      "notes": "ADHD niche supports higher pricing than generic focus timers ($12/mo vs $2-4/mo), but Tiimo's App Store Award dominance means a new entrant cannot capture enough downloads to reach medium MRR. The pricing ceiling is set by well-funded incumbents."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1,
+      "risks": [],
+      "notes": "Straightforward SwiftUI build: visual timer, haptic nudges, micro-reward animations, body-doubling audio (bundled sounds), local storage. RevenueCat for subscriptions. No expensive APIs, no backend infrastructure needed. Zero technical blockers."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": ["Must avoid health claims about treating/diagnosing ADHD (Guideline 5.1.1)", "Position as productivity tool 'designed for ADHD brains' not as medical/therapeutic app", "Include disclaimer encouraging users to consult healthcare professionals"],
+      "notes": "Productivity timers are a safe App Store category. Risk only arises if marketing makes health/medical claims about ADHD treatment. With proper positioning as a productivity tool (not a medical app), review risk is low."
+    }
+  },
+  "design": {},
+  "content": {
+    "posts": []
+  },
+  "eval": {
+    "attempts": 0,
+    "last_result": null
+  },
+  "blockers": [],
+  "needsHuman": false
+}

@@ -1,14 +1,15 @@
 #!/bin/bash
 # Moss Content Tracker -- Stats polling for posted content
-# Runs on schedule (e.g., every 4 hours) or spawned by Orchestrator
+# Runs every 2 hours via launchd (com.moss.content-tracker) or spawned by Orchestrator
 # READ ONLY: never posts, comments, likes, or interacts with any platform
 
 set -euo pipefail
 source ~/.zprofile_moss 2>/dev/null || true
+unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 cd ~/moss
 
-claude -p "$(cat <<'PROMPT'
+claude --dangerously-skip-permissions -p "$(cat <<'PROMPT'
 You are the Moss Content Tracker. Your ONLY job is to collect analytics data from social platforms for posted content. You READ stats. You NEVER post, comment, like, share, or interact with any platform in any way. Any interaction beyond reading analytics is strictly forbidden.
 
 ---
@@ -31,16 +32,18 @@ After reading context, identify:
 
 ---
 
-## Step 1: Open iPhone Mirroring
+## Step 1: Open iPhone Mirroring via Desktop Bridge
 
-Open the iPhone Mirroring app on the Mac. Wait for it to connect to the iPhone.
+Use the Claude Desktop Bridge to open and interact with iPhone Mirroring. You are a CLI agent and cannot see or click screens directly.
 
-If iPhone Mirroring fails to open or connect:
-1. Close and reopen iPhone Mirroring
-2. Wait 5 seconds
-3. Retry once
-4. If still failing, proceed with web fallbacks for all platforms
-5. Note the failure in your output
+```bash
+response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect." 2>/dev/null)
+```
+
+If Desktop Bridge reports failure:
+1. Retry once with: `claude-desktop-send "Try reconnecting iPhone Mirroring again" 2>/dev/null`
+2. If still failing, proceed with web fallbacks for all platforms
+3. Note the failure in your output
 
 ---
 
@@ -60,41 +63,36 @@ For EACH platform, collect stats for ALL posts on that platform across ALL track
 
 ### Platform-specific navigation:
 
-**TikTok (primary: iPhone Mirroring)**
-- Open TikTok app via iPhone Mirroring
-- Navigate to Profile → your posted video
-- Tap the video → tap the three-dot menu → tap "Analytics"
-- Read: Video views, Likes, Comments, Shares, Saves (if shown)
+**TikTok (primary: Desktop Bridge + iPhone Mirroring)**
+```bash
+response=$(claude-desktop-send "In iPhone Mirroring, open TikTok. Go to Profile, tap the posted video, tap the three-dot menu, then tap Analytics. Read and report: Video views, Likes, Comments, Shares, Saves." 2>/dev/null)
+```
 - Fallback if mirroring fails: tiktok.com → Creator tools → Analytics → Content
 
-**Instagram (primary: iPhone Mirroring)**
-- Open Instagram app via iPhone Mirroring
-- Navigate to Profile → your posted reel/carousel
-- Tap "View insights" below the post
-- Read: Plays/Reach, Likes, Comments, Shares, Saves
+**Instagram (primary: Desktop Bridge + iPhone Mirroring)**
+```bash
+response=$(claude-desktop-send "In iPhone Mirroring, open Instagram. Go to Profile, tap the posted reel/carousel, tap View insights. Read and report: Plays/Reach, Likes, Comments, Shares, Saves." 2>/dev/null)
+```
 - Fallback: instagram.com → Professional dashboard → Content
 
-**X / Twitter (primary: iPhone Mirroring)**
-- Open X app via iPhone Mirroring
-- Navigate to your posted tweet
-- Tap the bar chart icon (analytics) on the post
-- Read: Impressions, Likes, Replies, Reposts, Bookmarks
+**X / Twitter (primary: Desktop Bridge + iPhone Mirroring)**
+```bash
+response=$(claude-desktop-send "In iPhone Mirroring, open X. Navigate to the posted tweet, tap the bar chart icon (analytics). Read and report: Impressions, Likes, Replies, Reposts, Bookmarks." 2>/dev/null)
+```
 - Map: Impressions → views, Bookmarks → saves, Reposts → shares
 - Fallback: x.com → post → view analytics
 
-**YouTube Shorts (primary: iPhone Mirroring)**
-- Open YouTube Studio app via iPhone Mirroring
-- Navigate to Content → your Short
-- Tap the Short → Analytics
-- Read: Views, Likes, Comments, Shares
+**YouTube Shorts (primary: Desktop Bridge + iPhone Mirroring)**
+```bash
+response=$(claude-desktop-send "In iPhone Mirroring, open YouTube Studio. Go to Content, tap the Short, then Analytics. Read and report: Views, Likes, Comments, Shares." 2>/dev/null)
+```
 - Note: Saves not available on YouTube Shorts
 - Fallback: studio.youtube.com → Content → Analytics
 
-**Threads (primary: iPhone Mirroring)**
-- Open Threads app via iPhone Mirroring
-- Navigate to your posted thread
-- Tap the insights icon (bar chart) if available
-- Read: Views/Impressions, Likes, Replies, Reposts, Quotes
+**Threads (primary: Desktop Bridge + iPhone Mirroring)**
+```bash
+response=$(claude-desktop-send "In iPhone Mirroring, open Threads. Navigate to the posted thread, tap the insights icon (bar chart). Read and report: Views/Impressions, Likes, Replies, Reposts, Quotes." 2>/dev/null)
+```
 - Map: Impressions → views, Reposts+Quotes → shares
 - Note: Saves not available on Threads
 - Fallback: threads.net → post insights
@@ -265,4 +263,4 @@ Dispatch sent: 1 (strong performer alert)
 Human blockers: none
 ```
 PROMPT
-)" --max-tokens 8000
+)"

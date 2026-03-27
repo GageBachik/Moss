@@ -1,0 +1,103 @@
+{
+  "id": "dopamine-reset",
+  "name": "Dopamine Reset",
+  "stage": "killed",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T09:18:00.000000+00:00",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27",
+      "agent": "scout",
+      "notes": "Massive 'dopamine detox 2026' trend across major news outlets and TikTok; few dedicated iOS apps in this niche despite high search volume."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T09:03:12+00:00",
+      "agent": "orchestrator",
+      "notes": "Advancing to research — spawning Validator. NOTE: Very similar to killed concept 'detox-day' — validator should compare."
+    },
+    {
+      "stage": "killed",
+      "date": "2026-03-27T09:18:00.000000+00:00",
+      "agent": "validator",
+      "notes": "KILL: Near-identical to detox-day (killed same day) — same 10+ saturated competitor field (Opal $10M ARR, One Sec, Forest, 7+ dedicated detox apps), same Apple Screen Time competition (documented failure pattern), same elevated App Store review risk (2019 crackdown). 'Guided recovery' reframe does not constitute meaningful differentiation — Doxo AI already occupies that positioning. MRR math unchanged at low ($60-$400/mo)."
+    }
+  ],
+  "research": {
+    "verdict": "KILL",
+    "decidedAt": "2026-03-27T09:18:00.000000+00:00",
+    "killReasons": [
+      "Near-duplicate of killed concept 'detox-day' — validator rules require kill unless situation has materially changed, and it has not (killed same day).",
+      "Competitor saturation exceeds threshold (10+): Opal ($10M ARR, 4.8 stars), One Sec (4.83 stars, 22K ratings), Forest (millions of users), Dopamine Detox: Restrict Apps, Elqi, Zario, Doxo AI, AppBlock, Cleverest, FocusZone, plus Apple Screen Time built-in.",
+      "Directly competes with Apple's built-in Screen Time — scout learnings explicitly flag 'apps competing directly with Apple's built-in apps' as a failure pattern.",
+      "Apple has history of removing/restricting third-party screen time apps (2019 crackdown, 2020 Congressional hearing, EU antitrust complaints). Elevated App Store review risk for solo indie developer.",
+      "'Guided recovery' positioning is not differentiated — Doxo AI already brands as 'Dopamine Detox Coach' with guided approach."
+    ],
+    "marketSize": {
+      "demandSignals": [
+        "TikTok 'dopamine detox' content surging in 2026",
+        "Multiple news outlets covering dopamine detox trend (ActionNews5, WNEM, WFMZ)",
+        "r/DopamineDetoxing subreddit ~13K members",
+        "Google Trends 2026 wellness reports list digital detox as key trend"
+      ],
+      "trendDirection": "growing",
+      "notes": "Demand is real and growing, but demand alone is insufficient — identical finding to detox-day. The $1.12B digital detox app market is already captured by well-funded incumbents."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Opal: Screen Time Control", "rating": 4.8, "ratingCount": "200K+ downloads/mo", "model": "subscription $99.99/yr, $10M ARR"},
+        {"name": "one sec", "rating": 4.83, "ratingCount": 22000, "model": "freemium subscription"},
+        {"name": "Forest", "rating": 4.7, "ratingCount": "millions of users", "model": "paid + IAP"},
+        {"name": "Doxo AI: Dopamine Detox Coach", "rating": 4.2, "ratingCount": "available on App Store", "model": "freemium"},
+        {"name": "Zario: Digital Dopamine Detox", "rating": 4.4, "ratingCount": "available on App Store", "model": "freemium"}
+      ],
+      "saturationLevel": "high",
+      "identifiedGap": "None. The 'guided recovery' angle that dopamine-reset proposes is already occupied by Doxo AI (Dopamine Detox Coach). Opal covers gamification and beautiful design. No viable gap remains.",
+      "notes": "Exceeds max_competitor_saturation threshold of 10. Same competitor landscape as detox-day kill assessment from earlier today."
+    },
+    "monetization": {
+      "pricePoints": ["free (Apple Screen Time)", "$3.99/mo - $8.99/mo (typical)", "$29.99/yr - $99.99/yr (Opal)"],
+      "recommendedModel": "subscription",
+      "mrrEstimate": "low",
+      "mrrMath": "Saturated market → 500-1000 downloads/mo realistic. At 3% conversion to $2.99/wk ($12.87/mo effective) = 15-30 subscribers = $193-$386/mo MRR. Even at optimistic 2000 downloads/mo at 5% = $1,287/mo — but weekly churn is high (50%+ monthly), netting ~$640/mo best case. Does not reliably reach medium threshold.",
+      "notes": "Weekly subscription model has higher churn than monthly. Users who want free use Apple Screen Time. Users who want premium use Opal. No viable price positioning for a new entrant."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1,
+      "risks": [
+        "Without app blocking (requires Family Controls entitlement with Apple approval), the app is just a timer with challenges — extremely undifferentiated",
+        "Family Controls entitlement historically difficult to obtain for indie developers"
+      ],
+      "notes": "Basic timer/streak/challenge features are buildable in 1 week with SwiftUI. But without app blocking capability, the core value proposition is weak."
+    },
+    "appStoreRisk": {
+      "riskLevel": "high",
+      "concerns": [
+        "Apple removed/restricted multiple third-party screen time apps in 2019",
+        "Congressional and EU antitrust scrutiny of Apple's behavior in this category",
+        "Family Controls entitlement required for blocking features — Apple controls the gate",
+        "Category directly overlaps with Apple's built-in Screen Time"
+      ],
+      "notes": "Identical risk profile to detox-day. Solo indie developer cannot weather App Store enforcement actions that well-funded companies like Opal can."
+    },
+    "comparisonToDetoxDay": {
+      "originalConcept": "detox-day",
+      "killedDate": "2026-03-27T07:15:00.000000+00:00",
+      "isDifferentiated": false,
+      "differentiationAnalysis": "dopamine-reset reframes 'digital detox' as 'guided dopamine recovery with science-backed timelines.' This is a messaging change, not a product change. Doxo AI already positions as a guided dopamine detox coach. The underlying market dynamics (saturation, Apple competition, review risk) are identical and unchanged."
+    }
+  },
+  "design": {},
+  "content": {
+    "posts": []
+  },
+  "eval": {
+    "attempts": 0,
+    "last_result": null
+  },
+  "blockers": [],
+  "needsHuman": false
+}

@@ -126,13 +126,13 @@ If no app screenshots exist yet (rare — content-creating stage comes after bui
 
 ---
 
-## Step 3: Post via iPhone Mirroring (PRIMARY)
+## Step 3: Post via Claude Desktop Bridge + iPhone Mirroring (PRIMARY)
 
-iPhone mirroring is the required posting method. Web is fallback only, used per-platform if mirroring fails for that platform.
+All platform interactions go through the Claude Desktop Bridge (`claude-desktop-send`). You are a CLI agent — you cannot see or click screens directly. Desktop Bridge delegates to Claude Desktop which has computer use capabilities.
 
 ### Pre-Posting Checklist
 
-Before opening iPhone Mirroring:
+Before posting:
 1. Confirm all assets are saved to `~/moss/content/{concept-id}/`
 2. Confirm captions are written in `captions.md`
 3. Confirm which platforms still need posting (check concept file `content.posts`)
@@ -148,14 +148,16 @@ Post in the order defined in `~/moss/config/platforms.json` `posting_order`:
 
 For each platform:
 
-**Step A: Open iPhone Mirroring**
-- Launch the iPhone Mirroring app on the Mac
-- Wait for the iPhone screen to appear and be responsive
-- If mirroring fails to connect: close app, wait 5 seconds, reopen. Retry once. If still failing, skip to web fallback for this platform.
+**Step A: Open iPhone Mirroring via Desktop Bridge**
+```bash
+response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. Wait for it to connect and show the iPhone screen. If it shows disconnected, click Reconnect." 2>/dev/null)
+```
+- If response indicates failure: retry once. If still failing, skip to web fallback for this platform.
 
 **Step B: Open the Platform App**
-- Tap the platform's app icon on the iPhone home screen
-- Wait for the app to fully load (not just the splash screen)
+```bash
+response=$(claude-desktop-send --approve-for 10 "In iPhone Mirroring, tap the {platform} app icon on the home screen. Wait for it to fully load." 2>/dev/null)
+```
 - **If the app is logged out: DO NOT attempt to log in. This is a human blocker.**
   - Add to concept blockers: `"{platform} logged out — needs human"`
   - Set `needsHuman: true` on the concept file
@@ -164,23 +166,24 @@ For each platform:
 
 **Step C: Navigate to Create**
 
-Platform-specific navigation:
+Send platform-specific instructions to Desktop Bridge:
 
-- **TikTok**: Tap "+" at bottom center → select upload (not record) → choose from photos/files
-- **Instagram**: Tap "+" at bottom → select Post (for carousel) or Reel (for video) → choose from library
-- **X**: Tap compose button (pencil icon) → tap image icon to attach carousel slides → add as multiple images
-- **YouTube Shorts**: Tap "+" at bottom → Create a Short → upload video from files
-- **Threads**: Tap compose → attach image(s) or video → write text
+- **TikTok**: `"In TikTok, tap the + button at bottom center, then select upload (not record)"`
+- **Instagram**: `"In Instagram, tap the + at bottom, then select Post for carousel or Reel for video"`
+- **X**: `"In X, tap the compose button (pencil icon), then tap the image icon to attach images"`
+- **YouTube Shorts**: `"In YouTube, tap + at bottom, then Create a Short, then upload video"`
+- **Threads**: `"In Threads, tap compose, then attach images or video"`
 
 **Step D: Upload Assets**
-- Select the correct files from `~/moss/content/{concept-id}/`
-- For carousels: select slides in order (01 through 07)
-- For video: select the short-video.mp4
-- Wait for upload to complete before proceeding
+```bash
+response=$(claude-desktop-send "Now select and upload the content files from ~/moss/content/{concept-id}/carousel/ — select slides in order from slide-01 through the last slide. Wait for upload to complete." 2>/dev/null)
+```
 
 **Step E: Write Caption**
-- Copy the platform-appropriate caption from `captions.md`
-- Paste into the caption field
+```bash
+caption=$(cat ~/moss/content/{concept-id}/captions.md | sed -n '/## {Platform}/,/## /p' | head -n -1)
+response=$(claude-desktop-send "Paste this caption into the caption field: ${caption}" 2>/dev/null)
+```
 - Double-check hashtags, spacing, and that the correct platform version is used
 
 **Step F: Post**
@@ -255,9 +258,14 @@ Update the concept file:
 If at least 3 of 5 platforms were successfully posted:
 - Set `stage` to `"content-tracking"`
 - Add history entry for the stage transition
+- **Spawn the Social Warmer agent** immediately after advancing. Pass it the concept file path and niche keywords from the research section. The Social Warmer will engage with niche content across all platforms to warm up the algorithm. Spawn it as a background subagent:
+  ```bash
+  claude --dangerously-skip-permissions -p "You are the Moss Social Warmer. Read ~/moss/agents/social-warmer/CLAUDE.md for your instructions. Your concept file is ~/moss/pipeline/concepts/{concept-id}.json. The niche is: {brief niche description from research}. Go." &
+  ```
 
 If fewer than 3 platforms were posted (due to logged-out blockers or failures):
 - Do NOT advance the stage
+- Do NOT spawn the Social Warmer
 - Set `needsHuman: true`
 - Escalate via Dispatch with a summary of what was posted and what is blocked
 

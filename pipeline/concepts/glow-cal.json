@@ -1,0 +1,135 @@
+{
+  "id": "glow-cal",
+  "name": "Glow Cal",
+  "stage": "designing-building",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T10:40:00+00:00",
+  "lastAgent": "eval",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27",
+      "agent": "scout",
+      "notes": "TikTok 'maintenance day' and 'glow up spreadsheet' trends show people scheduling recurring beauty tasks in spreadsheets; zero dedicated beauty maintenance calendar apps exist despite multiple TikTok trending pages and strong search interest."
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-27",
+      "agent": "validator",
+      "notes": "GO — 4 market signals (TikTok maintenance day trend, glow up spreadsheet trend, underconsumption core 46M+ views, ASO keyword viable). Zero direct competitors (existing apps are AI face-raters or skincare-only). MRR estimate $600-$1,200/month. Buildable in 1 week SwiftUI. Low App Store risk."
+    },
+    {
+      "stage": "designing-building",
+      "date": "2026-03-27T10:15:00+00:00",
+      "agent": "designer-builder",
+      "notes": "Started design-build. Theme: rose-gold compact mirror with velvet interior."
+    },
+    {
+      "stage": "evaluating",
+      "date": "2026-03-27T10:28:00+00:00",
+      "agent": "designer-builder",
+      "notes": "Build complete. 4 screens (Home, Category Detail, Add/Edit Category, Paywall). Theme: rose-gold compact mirror. SwiftData persistence, RevenueCat paywall, themed components throughout. Zero build errors."
+    },
+    {
+      "stage": "designing-building",
+      "date": "2026-03-27T10:40:00+00:00",
+      "agent": "eval",
+      "notes": "Eval failed (attempt 1). Issues: [HIGH] Playfair Display font files missing from Resources/Fonts/ — all custom typography falls back to system San Francisco font. [MEDIUM] data()/dataLarge() use system rounded font instead of Avenir Next. [MEDIUM] Empty state uses sparkles SF Symbol instead of compact mirror illustration per manifest. [MEDIUM] Paywall hero uses sparkles SF Symbol instead of compact mirror illustration concept per manifest. [MEDIUM] Privacy Policy and Terms of Use buttons have empty closures — non-functional."
+    }
+  ],
+  "research": {
+    "trend_source": "tiktok+app_store",
+    "trend_description": "TikTok trending pages for 'maintenance day glow up 2026', 'monthly beauty maintenance', and 'glow up spreadsheet' show creators sharing recurring beauty maintenance schedules via spreadsheets and checklists. The broader glow-up trend intersects with underconsumption core (46M+ views) as users prioritize maintaining what they have over buying new. Existing glow-up apps on the App Store are exclusively AI face raters (GlowUp, Glow AI, Beautify) or skincare-only trackers (BasicBeauty, GlowinMe) — none offer a unified beauty maintenance calendar across categories like nails, hair, brows, lashes, facials, and waxing.",
+    "app_concept": "A beautiful all-in-one beauty maintenance calendar that tracks when each recurring self-care task is due — nails, hair, brows, lashes, facials, waxing, and custom categories — with smart scheduling, overdue alerts, and spend tracking per category.",
+    "target_user": "Women 18-35 who maintain multiple recurring beauty routines and currently use spreadsheets, Notes, or mental math to remember when each service is due. They want a single place to see their full maintenance schedule at a glance.",
+    "monetization_hypothesis": "Freemium with category limit — 5 free maintenance categories, unlimited categories plus spend analytics, appointment history export, and home screen widgets via weekly subscription ($2.99/week). RevenueCat weekly subscriptions convert well for utility apps.",
+    "validation": {
+      "verdict": "GO",
+      "market_signals": 4,
+      "competitor_count": 0,
+      "competitor_saturation": "none — zero beauty maintenance calendar apps exist",
+      "monetization_potential": "medium",
+      "mrr_estimate": "$600-$1,200/month steady-state after Apple cut",
+      "buildability": "1 week SwiftUI — SwiftData, local notifications, WidgetKit, RevenueCat only",
+      "app_store_risk": "LOW — calendar utility, no health claims, no UGC, no regulated content"
+    },
+    "aso": {
+      "primary_keyword": "glow up tracker",
+      "popularity_score": 28,
+      "difficulty_score": 18,
+      "popularity_passes": true,
+      "difficulty_passes": true
+    },
+    "appifiability": {
+      "standalone_app": true,
+      "buildable_1_2_weeks": true,
+      "clear_monetization": true,
+      "achievable_with_ios_apis": true,
+      "user_would_download": true
+    }
+  },
+  "design": {
+    "theme": "Rose-gold compact mirror with matte velvet interior and gold trim",
+    "primary_color": "#E8A87C",
+    "primary_font": "Playfair Display",
+    "screen_count": 4,
+    "screens": ["Home (Maintenance Timeline)", "Category Detail", "Add/Edit Category", "Paywall"],
+    "screenshots": [
+      "pipeline/active-build/glow-cal/screenshots/screen-01-home-empty.png",
+      "pipeline/active-build/glow-cal/screenshots/screen-02-app-running.png"
+    ]
+  },
+  "content": { "posts": [] },
+  "eval": {
+    "attempts": 1,
+    "last_result": {
+      "result": "fail",
+      "score": 4,
+      "timestamp": "2026-03-27T10:40:00+00:00",
+      "checks": {
+        "build": { "passed": true, "notes": "Zero errors, 1 warning. xcodebuild BUILD SUCCEEDED with RevenueCat SPM dependency resolved." },
+        "launch": { "passed": true, "notes": "App launched on iPhone 17 Pro simulator (PID 13797), no crash after 5 seconds." },
+        "visual": { "passed": false, "notes": "Playfair Display font files not bundled — Resources/Fonts/ directory is empty. All .custom('PlayfairDisplay-*') calls silently fall back to system San Francisco font. The app's entire serif typography identity is broken. Additionally, data display fonts use system rounded instead of Avenir Next per manifest." },
+        "functional": { "passed": false, "notes": "Privacy Policy and Terms of Use buttons on Paywall have empty closures — tapping them does nothing. Core navigation (cards to detail, sheets for add/paywall) appears correct from code review." },
+        "polish": { "passed": false, "notes": "Empty state and Paywall hero both use generic sparkles SF Symbol instead of compact mirror illustration specified in manifest. No placeholder text or debug artifacts found." }
+      },
+      "issues": [
+        {
+          "severity": "high",
+          "check": "visual",
+          "screen": "all screens",
+          "description": "Playfair Display font files (.ttf or .otf) are missing from GlowCal/Resources/Fonts/ directory. The directory exists but is empty. Theme.swift references PlayfairDisplay-Bold, PlayfairDisplay-SemiBold, PlayfairDisplay-Regular, and PlayfairDisplay-Medium via .custom() but without the font files bundled, iOS silently falls back to San Francisco system font. The entire app renders in sans-serif instead of the specified serif Playfair Display typeface. Must: (1) download Playfair Display font files from Google Fonts, (2) add them to Resources/Fonts/, (3) register them in Info.plist under UIAppFonts, (4) ensure they are included in the Copy Bundle Resources build phase."
+        },
+        {
+          "severity": "medium",
+          "check": "visual",
+          "screen": "all screens",
+          "description": "Theme.Font.data() and Theme.Font.dataLarge() use .system(.body, design: .rounded) and .system(size: 42, weight: .bold, design: .rounded) respectively. Manifest specifies Avenir Next for 'category labels, countdown timers, numerical data, tab bar labels'. Must change to .custom('AvenirNext-Medium', size: 16) and .custom('AvenirNext-Bold', size: 42). Avenir Next is a system-bundled font on iOS so no font files needed."
+        },
+        {
+          "severity": "medium",
+          "check": "polish",
+          "screen": "Home (empty state)",
+          "description": "Empty state shows Image(systemName: 'sparkles') inside a circle. Manifest specifies 'Illustration of an open compact mirror with text Add your first beauty routine'. The icon should represent a compact mirror, not generic sparkles. Consider using a custom SF Symbol composition or a simple drawn asset."
+        },
+        {
+          "severity": "medium",
+          "check": "polish",
+          "screen": "Paywall",
+          "description": "Paywall hero section uses Image(systemName: 'sparkles') as the illustration. Manifest specifies 'Unlock Your Full Glow heading with compact mirror illustration concept'. The hero icon should represent or evoke a compact mirror, not reuse the same sparkles icon from the home empty state."
+        },
+        {
+          "severity": "medium",
+          "check": "functional",
+          "screen": "Paywall",
+          "description": "Privacy Policy and Terms of Use buttons in the terms section of PaywallView have empty action closures: Button('Privacy Policy') {} and Button('Terms of Use') {}. These must either open a URL in Safari or be removed. Non-functional legal links are an App Store review risk."
+        }
+      ],
+      "screenshots": [
+        { "screen": "Home (empty state)", "path": "/tmp/moss-eval-home.png" }
+      ]
+    }
+  },
+  "blockers": [],
+  "needsHuman": false
+}

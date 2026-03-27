@@ -1,0 +1,91 @@
+{
+  "id": "breath-score",
+  "name": "Breath Score",
+  "stage": "validated",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T16:12:00Z",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27T15:03:00Z",
+      "agent": "scout",
+      "notes": "Nasal breathing and breathwork are the viral health trend of early 2026, driven by mouth taping content on TikTok and influencers like Patrick McKeown. No dedicated app exists that gives users a daily 'breath score' based on their breathing habits (nasal vs mouth, breath holds, HRV correlation). Existing breathwork apps (Breathwrk, Pocket Breath Coach) focus on guided sessions, not habit tracking and scoring. Opportunity for a gamified daily breathing assessment + training app. Users do a 60-second morning breath test, get a score, then do a short training session. Monetization via $4.99/mo premium with advanced analytics, breath hold progression, and personalized protocols."
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-27T16:12:00Z",
+      "agent": "validator",
+      "notes": "GO: Nasal breathing trend is at peak momentum (TikTok virality, Google Trends peak Mar 2026, American Lung Association engagement, Huberman/McKeown influencer ecosystem). Clear gap exists -- all existing apps (Breathwrk, OA, Inhale) focus on guided sessions, not gamified daily scoring. Competitor saturation is low in the scoring niche (<10 strong apps). Monetization is medium ($500-2k MRR plausible at $4.99/mo). Technically simple SwiftUI build in 1-2 weeks with no expensive APIs. Low-medium App Store risk if positioned as wellness tracker, not medical device."
+    }
+  ],
+  "research": {
+    "verdict": "GO",
+    "decidedAt": "2026-03-27T16:12:00Z",
+    "trendSource": "TikTok #nasalbreathing #mouthtaping, Google Trends 'nasal breathing' peak Mar 2026, Our Healtho trending insight Mar 24 2026",
+    "estimatedKeyword": "nasal breathing trainer",
+    "estimatedPopularity": 35,
+    "estimatedDifficulty": 25,
+    "marketSize": {
+      "demandSignals": [
+        "TikTok #nasalbreathing and #mouthtaping content viral in early 2026 with millions of views; mouth taping became the wellness world's go-to sleep hack",
+        "Google Trends 'nasal breathing' at peak in March 2026; Our Healtho trending insight confirmed Mar 24 2026",
+        "American Lung Association published warnings about the trend, indicating mainstream penetration beyond niche wellness circles",
+        "Patrick McKeown (Oxygen Advantage) and Huberman Lab continue to drive sustained interest as major influencers in the space",
+        "Reddit communities r/buteyko and r/breathwork active with discussions; Sleep Foundation Community has mouth taping threads"
+      ],
+      "trendDirection": "growing",
+      "notes": "5 independent demand signals identified, exceeding the minimum threshold of 3. The trend has crossed from niche biohacker communities to mainstream awareness, evidenced by medical organizations issuing public responses. Early 2026 represents peak momentum."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Breathwrk", "rating": 4.8, "ratingCount": 17900, "model": "freemium", "price": "$9/mo or $49/yr (acquired by Peloton)"},
+        {"name": "Oxygen Advantage", "rating": 4.0, "ratingCount": 500, "model": "free", "price": "Free, no IAP"},
+        {"name": "Inhale", "rating": 4.5, "ratingCount": 300, "model": "freemium", "price": "$4.99/mo or $29.99/yr or $59.99 lifetime"},
+        {"name": "Breathscape", "rating": 4.3, "ratingCount": 200, "model": "freemium", "price": "Free with premium"},
+        {"name": "SONU (SONUCheck)", "rating": 3.5, "ratingCount": 100, "model": "freemium", "price": "Free with premium features"}
+      ],
+      "saturationLevel": "low",
+      "identifiedGap": "All top competitors focus on guided breathwork sessions. None offer a gamified daily 'breath score' with progression tracking. Oxygen Advantage has BOLT score but is bare-bones and free. SONU has nasal patency scoring but uses medical vocal biomarker approach, not a simple daily wellness assessment. The gap is a fun, gamified daily breath test that gives you a score, tracks improvement, and suggests training -- think 'Duolingo for breathing.'",
+      "competitorWeaknesses": "Breathwrk users complain about: subscription frustration, lost features after updates, app crashes/freezing, poor navigation in new UI, no offline mode, syncing issues with health apps. Oxygen Advantage is free but basic with limited engagement features. SONU is medical-positioned and intimidating for casual wellness users.",
+      "notes": "Fewer than 10 strong competitors in the breath scoring niche specifically. The broader breathwork category has more apps, but none own the 'daily score + gamification' positioning. This is a clear differentiation opportunity."
+    },
+    "monetization": {
+      "pricePoints": ["Breathwrk: $9/mo or $49/yr", "Inhale: $4.99/mo or $29.99/yr or $59.99 lifetime", "Othership: $17.99/mo or $129.99/yr", "The Breathing App: $4.99/mo or $44.99/yr"],
+      "recommendedModel": "freemium",
+      "recommendedPrice": "$4.99/mo or $29.99/yr",
+      "mrrEstimate": "medium",
+      "mrrMath": "Conservative: 1,500 downloads/mo (riding TikTok trend + ASO on low-difficulty keyword) * 5% subscription conversion * $4.99/mo = $375/mo initially. Growth scenario at 3 months: 3,000 downloads/mo * 6% conversion (better onboarding) * $4.99/mo = $900/mo. Optimistic with content marketing: 5,000 downloads/mo * 7% * $4.99 = $1,750/mo. Medium rating justified.",
+      "freeFeatures": "Daily breath test (60-second), basic score, 3-day streak tracking, 2 training exercises",
+      "premiumFeatures": "Full score history and trends, all training exercises, breath hold progression tracking, HRV correlation (HealthKit), personalized protocols, weekly insights report",
+      "notes": "Subscription model is proven in breathwork category. $4.99/mo is competitive vs Breathwrk ($9/mo) and below Othership ($17.99/mo). Lifetime purchase option ($39.99) could boost initial revenue. The gamification/score mechanic creates natural retention hooks that guided-session-only apps lack."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": [
+        "Breath hold timing accuracy needs careful UX (tap-to-start, tap-to-stop is simplest and most reliable)",
+        "HRV correlation via HealthKit is optional premium feature -- requires HealthKit permission which adds some friction"
+      ],
+      "coreStack": "Pure SwiftUI, local scoring algorithm (no backend needed for MVP), UserDefaults or SwiftData for persistence, optional HealthKit for HRV",
+      "noExpensiveAPIs": true,
+      "notes": "Very straightforward SwiftUI build. Core features are: timer UI, scoring algorithm (based on breath hold duration, breathing rate, consistency), streak/history tracking, training exercise animations. No server-side computation needed. No real-time data feeds. No camera/microphone required for core flow (unlike SONU's vocal biomarker approach). HealthKit is optional enhancement, not core dependency."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [
+        "Must avoid medical claims -- position as 'wellness tracker' not 'health diagnostic tool'",
+        "Include standard disclaimer: 'This app is for informational and wellness purposes only. Consult your healthcare provider before making health decisions.'",
+        "Do not claim to measure blood oxygen, diagnose sleep apnea, or treat any condition",
+        "HealthKit usage must clearly explain data purpose in privacy description"
+      ],
+      "mitigations": "Similar apps (Breathwrk, Oxygen Advantage, Inhale) are approved and available on the App Store without issues. Positioning as a wellness/fitness tool with breathing exercises avoids Guideline 5.1.1 medical device scrutiny. The 'score' is a gamification mechanic based on exercise performance, not a medical measurement.",
+      "notes": "Low risk. Breathwork apps have a clear precedent on the App Store. Key is framing: 'improve your breathing habits' not 'diagnose breathing disorders.' No sensor-only health measurements (which Apple explicitly prohibits). Standard wellness app positioning."
+    }
+  },
+  "design": {},
+  "content": {"posts": []},
+  "eval": {"attempts": 0, "last_result": null},
+  "blockers": [],
+  "needsHuman": false
+}

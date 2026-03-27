@@ -25,7 +25,7 @@
     "pass_requires_no_medium_severity": true
   },
   "stuck_detection": {
-    "subagent_timeout_minutes": 30,
+    "subagent_timeout_minutes": 60,
     "max_restart_attempts": 2
   }
 }

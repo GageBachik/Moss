@@ -1,0 +1,84 @@
+{
+  "id": "cold-plunge-log",
+  "name": "Cold Plunge Log",
+  "stage": "validated",
+  "created": "2026-03-27",
+  "lastUpdated": "2026-03-27T15:22:00+00:00",
+  "lastAgent": "validator",
+  "history": [
+    {
+      "stage": "scouted",
+      "date": "2026-03-27",
+      "agent": "scout",
+      "notes": "Cold plunge/cold exposure/Wim Hof trend 80M+ TikTok views. Session timer + streak tracker + temperature logging. ASO: popularity 30, difficulty 15."
+    },
+    {
+      "stage": "researching",
+      "date": "2026-03-27T14:05:00+00:00",
+      "agent": "orchestrator",
+      "notes": "Moved to researching — spawning validator agent"
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-27T15:22:00+00:00",
+      "agent": "validator",
+      "notes": "GO: Growing $330M+ cold plunge market with fragmented app competition (top standalone tracker has only 254 ratings), low ASO difficulty 15, and straightforward SwiftUI build with no expensive APIs or App Store risk."
+    }
+  ],
+  "research": {
+    "verdict": "GO",
+    "decidedAt": "2026-03-27T15:22:00+00:00",
+    "marketSize": {
+      "demandSignals": [
+        "Cold plunge tub market valued at $330-390M in 2024-2025, growing at 6.5-8.1% CAGR to $660-730M by 2033 (Grand View Research, SkyQuest, Future Market Insights)",
+        "TikTok cold plunge content at 80M+ combined views; mainstream adoption expanding beyond athletes into general wellness",
+        "r/BecomingTheIceman ~10K subscribers, r/coldshowers ~13K subscribers — active communities discussing cold exposure routines and tracking needs",
+        "Wim Hof Method app has 11,499 App Store ratings showing massive engaged community around cold exposure and breathwork",
+        "Multiple market research firms confirm cold exposure trend is growing driven by influencer endorsements, athlete adoption, and wellness culture expansion"
+      ],
+      "trendDirection": "growing",
+      "notes": "Cold exposure has crossed from niche biohacker trend into mainstream wellness. Hardware market growth (tubs, plunges) creates derivative demand for software tracking. The Wim Hof app's 11K+ ratings prove willingness to download cold-exposure-related apps."
+    },
+    "competitors": {
+      "topApps": [
+        {"name": "Plunge (Official)", "rating": 4.7, "ratingCount": 1553, "model": "free", "notes": "Hardware companion app for Plunge brand tubs — not a standalone tracker. Free because it drives hardware sales."},
+        {"name": "GoPolar: Cold Plunge & Sauna", "rating": 4.7, "ratingCount": 254, "model": "freemium", "notes": "$6.99/mo or $39.99/yr. Tracks cold plunge and sauna. Complaints about manual sauna data entry and limited analytics."},
+        {"name": "Brisk: Cold Plunge Tracker", "rating": 4.8, "ratingCount": 58, "model": "freemium", "notes": "$4.99/mo or $39.99/yr. Session tracking with health metrics. Small user base."},
+        {"name": "Ultra Plunge: Cold & Sauna", "rating": 4.2, "ratingCount": 40, "model": "freemium", "notes": "$4.99/mo or $39.99/yr. AI coaching features. 7-day free trial. Lower rating suggests quality gaps."},
+        {"name": "IceBuddy: Cold Plunge Tracker", "rating": 4.8, "ratingCount": 23, "model": "free (subscription coming)", "notes": "Newest entrant. Apple Watch support. Still rolling out paid features."},
+        {"name": "Cold Water Therapy", "rating": 2.7, "ratingCount": 44, "model": "freemium", "notes": "$2.99/mo or $22.99/yr. Poor rating indicates low quality — opportunity to capture disappointed users."},
+        {"name": "Wim Hof Method", "rating": 4.8, "ratingCount": 11499, "model": "freemium", "notes": "$5.99/mo or $42.99/yr. Breathwork-focused, not a plunge tracker. Adjacent but different core value prop."}
+      ],
+      "saturationLevel": "low",
+      "identifiedGap": "No competitor combines a polished breathing timer + temperature logging + shareable stats cards + streak tracking in one focused cold plunge app. Plunge is hardware-locked. GoPolar splits focus with sauna. Wim Hof is breathwork-centric. Reviews cite manual data entry friction and wanting better analytics/sharing features.",
+      "notes": "Only 6 direct competitors with the top standalone tracker (GoPolar) at just 254 ratings. This is an undersaturated category with clear room for a well-designed entrant. The Plunge app has traction but only serves Plunge hardware owners."
+    },
+    "monetization": {
+      "pricePoints": ["free (Plunge official)", "$2.99/mo (Cold Water Therapy)", "$4.99/mo (Brisk, Ultra Plunge)", "$6.99/mo (GoPolar)", "$5.99/mo (Wim Hof)"],
+      "recommendedModel": "freemium",
+      "recommendedPrice": "$4.99/mo or $29.99/yr",
+      "mrrEstimate": "medium",
+      "mrrMath": "Conservative: 500 downloads/mo * 5% conversion * $4.99 = $125/mo in month 1. With content marketing growth to 2,000 downloads/mo by month 3: 2,000 * 5% * $4.99 = $499/mo. Cumulative subscribers compound. Reaching $500-1,000 MRR by month 3 is plausible. Note: original $1.99/week ($8.67/mo) pricing is above market — recommend $4.99/mo to match competitors.",
+      "notes": "Subscription model is validated by all competitors using it. $4.99/mo is the market sweet spot. The $1.99/week price from the scout brief should be adjusted down to $4.99/mo or $29.99/yr to match category norms and reduce subscription fatigue. Annual plan at $29.99 provides good LTV."
+    },
+    "technicalFeasibility": {
+      "buildable": true,
+      "estimatedWeeks": 1.5,
+      "risks": [],
+      "notes": "Pure SwiftUI build: countdown timer, temperature number input, streak logic with UserDefaults/SwiftData, Swift Charts for history, ShareLink for stats cards (rendered as images), breathing timer with simple animation. HealthKit integration for workout logging is a standard API. No backend needed for MVP — local storage with optional CloudKit sync. Apple Watch companion would differentiate but is not required for v1. No expensive APIs, no rate-limited services, no complex backend."
+    },
+    "appStoreRisk": {
+      "riskLevel": "low",
+      "concerns": [
+        "Must avoid making specific health benefit claims in App Store metadata (e.g., 'reduces inflammation', 'boosts immune system') — frame as tracking/logging only",
+        "HealthKit usage requires NSHealthShareUsageDescription and NSHealthUpdateUsageDescription privacy strings"
+      ],
+      "notes": "This is a tracking/logging app, not a medical device or health advisor. Multiple competitors are already approved in this exact category. No regulated category concerns (not medical, financial, or kids). Standard HealthKit permissions are well-understood by App Store review. Low rejection probability."
+    }
+  },
+  "design": {},
+  "content": {"posts": []},
+  "eval": {"attempts": 0, "last_result": null},
+  "blockers": [],
+  "needsHuman": false
+}
