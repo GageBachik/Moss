@@ -359,7 +359,17 @@ mcp__postiz__integrationSchedulePostTool({
 
 **Caption formatting:** Postiz uses HTML. Wrap each line in `<p>` tags. Use `<strong>` for bold.
 
-**Attachments:** Pass the image/video URLs as an array. If images are local files, you may need to host them temporarily or use the Postiz `generateImageTool` upload endpoint to get URLs. Alternatively, if Pexels/fal.ai URLs are still accessible, pass those directly.
+**Attachments:** Postiz needs publicly accessible URLs. After creating images locally with ImageMagick, upload them to get public URLs:
+
+```bash
+# Upload each local image to litterbox (72h temp hosting, no auth needed)
+URL1=$(curl -s -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@frame1.png" https://litterbox.catbox.moe/resources/internals/api.php)
+URL2=$(curl -s -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@frame2.png" https://litterbox.catbox.moe/resources/internals/api.php)
+URL3=$(curl -s -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@frame3.png" https://litterbox.catbox.moe/resources/internals/api.php)
+# Use these URLs in the Postiz attachments array
+```
+
+For video posts, upload the assembled .mp4 the same way. Litterbox supports files up to 1GB and URLs last 72 hours — more than enough for Postiz to fetch and post.
 
 **Post to all 5 platforms** (TikTok, Instagram, X, Threads, YouTube). Get the schema for each platform first to check required settings.
 
