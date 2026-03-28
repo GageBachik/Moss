@@ -312,84 +312,67 @@ If design mockups or wireframes exist in the concept file:
 
 ---
 
-## Step 3: Post via Mirroir MCP (PRIMARY)
+## Step 3: Post via Postiz API (PRIMARY)
 
-All iPhone interactions use **Mirroir MCP tools** directly. These are fast MCP tools — not computer use. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used as a fallback to reconnect iPhone Mirroring when it is broken.
+Post to all platforms using the **Postiz MCP tools** — this posts directly via API, no phone/camera needed.
 
-### Pre-Posting: Verify iPhone Mirroring Connection
+**NEVER post via iPhone Mirroring.** Mirroir MCP is for reading analytics and social warmup only. Postiz handles all posting.
 
-Before posting to any platform:
+### Postiz Integration IDs
 
-1. Call `status` to check if iPhone Mirroring is connected.
-2. If NOT connected or status shows errors:
-   a. Use Claude Desktop Bridge to reconnect:
-      ```bash
-      response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. If it shows disconnected, click Reconnect. Wait for the iPhone screen to appear, then press the home button." 2>/dev/null)
-      ```
-   b. Call `status` again to verify connection.
-   c. If still not connected, log failure and exit gracefully — do not loop.
-3. If connected, proceed with Mirroir MCP tools below.
+| Platform | Integration ID |
+|----------|---------------|
+| TikTok | `cmmzmfq5704etp30yjhdmf0oe` |
+| YouTube | `cmmzm9hli04eap30y18fep300` |
+| X | `cmmzm2rew04dyp30ydk672f72` |
+| Instagram | `cmmzm6qmm0dmqle0yoxye9d5z` |
+| Threads | `cmmzmhqg704fdp30y0nv3gudx` |
 
 ### Pre-Posting Checklist
 
-Before posting:
 1. Confirm all assets are saved to `~/moss/content/{concept-id}/`
 2. Confirm captions are written in `captions.md`
 3. Confirm which platforms still need posting (check concept file `content.posts`)
-4. Read the caption for each platform from `captions.md` BEFORE starting the posting flow.
+4. Get the integration schema for each platform first: `mcp__postiz__integrationSchema(platform, isPremium=false)`
 
-### Posting Flow — Mirroir MCP Step by Step
+### Posting Flow
 
-Post in order: TikTok -> Instagram -> X -> YouTube Shorts -> Threads.
+For each platform, use `mcp__postiz__integrationSchedulePostTool` to post. The carousel images/video need to be accessible via URL — upload them first or use the file paths from content creation.
 
-For EACH platform, use Mirroir MCP tools to navigate and post. Example for TikTok (adapt for each platform):
+**Post to each platform:**
+```
+mcp__postiz__integrationSchedulePostTool({
+  socialPost: [{
+    integrationId: "INTEGRATION_ID",
+    isPremium: false,
+    date: "CURRENT_UTC_DATETIME",
+    shortLink: false,
+    type: "now",
+    postsAndComments: [{
+      content: "<p>Your caption here</p><p>Each line in a p tag</p>",
+      attachments: ["https://url-to-image1.png", "https://url-to-image2.png"]
+    }],
+    settings: []
+  }]
+})
+```
 
-1. `launch_app("TikTok")`
-2. `describe_screen` to see the app state
-3. If logged out (detected via `describe_screen`): this is a HUMAN BLOCKER. Add to concept blockers, escalate via Dispatch, skip to next platform.
-4. `tap(x, y)` the + button at bottom center (coordinates from `describe_screen`)
-5. `describe_screen` to see the upload/create options
-6. `tap(x, y)` to select upload (not record)
-7. Navigate the upload flow — use `describe_screen` after each step to find the right elements, then `tap` to select carousel slides from the photo library
-8. `describe_screen` to confirm upload is ready
-9. `tap` into the caption field
-10. `type_text("{paste the TikTok caption here}")`
-11. `describe_screen` to verify caption and find the Post button
-12. `tap(x, y)` the Post button
-13. Wait a moment, then `describe_screen` to confirm it posted
-14. Navigate to the post on the profile to get the post URL
-15. `screenshot` to capture proof of the posted content
-16. `press_home()` before moving to next platform
+**Caption formatting:** Postiz uses HTML. Wrap each line in `<p>` tags. Use `<strong>` for bold.
 
-**After each platform post:** Record the post URL/ID immediately. Then proceed to the next platform.
+**Attachments:** Pass the image/video URLs as an array. If images are local files, you may need to host them temporarily or use the Postiz `generateImageTool` upload endpoint to get URLs. Alternatively, if Pexels/fal.ai URLs are still accessible, pass those directly.
 
-### Platform-Specific Navigation Notes
+**Post to all 5 platforms** (TikTok, Instagram, X, Threads, YouTube). Get the schema for each platform first to check required settings.
 
-**TikTok:** Tap + -> Upload -> select slides -> caption -> Post
-**Instagram:** Tap + -> Post -> select slides -> Next -> caption -> Share
-**X:** Tap compose -> attach images -> type caption -> Post
-**YouTube Shorts:** Tap + -> Upload -> select video -> add details -> Upload
-**Threads:** Tap compose -> attach images -> type caption -> Post
+### Platform-specific notes
 
-### Record Post ID or URL
-- After posting, navigate to the post from the profile
-- Use `describe_screen` to read the post URL or ID
-- Record this in the concept file
+- **TikTok**: Check schema for required settings (privacy, etc.)
+- **Instagram**: May need carousel-specific settings
+- **X**: `isPremium` might affect media upload limits
+- **YouTube**: May need title/description settings for Shorts
+- **Threads**: Usually straightforward text + images
 
-### Web Fallback (Per-Platform Only)
-
-Use web fallback only if Mirroir MCP fails for a specific platform after one retry. Do not use web fallback preemptively.
-
-Web posting URLs:
-- TikTok: tiktok.com/upload
-- Instagram: instagram.com (desktop upload via browser, limited — use only for feed posts)
-- X: x.com/compose/post
-- YouTube Shorts: studio.youtube.com
-- Threads: threads.net
-
-Web fallback notes:
-- Instagram web upload is limited — carousels may not work; use single image if needed
-- Record that web fallback was used in the concept file
+### Record Post Results
+After each post, Postiz returns a post ID. Record it in the concept file immediately.
 
 ---
 
