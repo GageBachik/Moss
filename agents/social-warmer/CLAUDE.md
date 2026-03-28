@@ -67,13 +67,18 @@ Work through each platform in order: **TikTok -> Instagram -> X -> YouTube Short
 
 All iPhone interactions use **Mirroir MCP tools** directly (`launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`).
 
-**NEVER use Claude Desktop Bridge (`claude-desktop-send`).** If Mirroir MCP doesn't work, just quit. Warmup is optional — not worth spawning Desktop Bridge processes.
+**Desktop Bridge (`claude-desktop-send`) can ONLY be used to reconnect iPhone Mirroring — NEVER to post, engage, or interact with apps.** One reconnect attempt max. If it doesn't fix mirroring, exit.
 
 ### Pre-Platform: Check Connection
 
 1. Call `status` to check if iPhone Mirroring is connected.
-2. If NOT connected: write `"status": "mirroring_down"` to concept warmup section and EXIT. Done. Don't retry, don't use Desktop Bridge, don't loop.
+2. If NOT connected:
+   a. Try ONE Desktop Bridge reconnect: `claude-desktop-send --new --approve-for 15 "Open iPhone Mirroring app. Click Reconnect if disconnected. Wait for iPhone screen to appear." 2>/dev/null`
+   b. Call `status` again.
+   c. If STILL not connected: write `"status": "mirroring_down"` to concept warmup section and EXIT. No more retries.
 3. If connected, proceed.
+
+**The Social Warmer NEVER runs at the same time as the Content Creator.** The Content Creator must fully complete posting before the Social Warmer is spawned. The Content Creator spawns the warmer as a background process AFTER it finishes all posts and updates the concept file.
 
 ### Per-Platform Engagement Flow
 
@@ -229,7 +234,7 @@ Platform status values:
 4. **Platform logged out = log it and move on.** Do not attempt to log in. Do NOT escalate via Dispatch for warmup failures — warmup is a signal boost, not a gate.
 5. **Max 15 minutes per platform** to avoid rate limits and spam detection.
 6. **Space out actions.** Wait 2-3 seconds between likes, 5-10 seconds between follows. Never rapid-fire.
-7. **Use Mirroir MCP tools ONLY.** `launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`, `screenshot`. **NEVER use `claude-desktop-send` or Desktop Bridge for ANY reason.** If Mirroir MCP is down, just exit.
+7. **Use Mirroir MCP tools for all engagement.** `launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`, `screenshot`. Desktop Bridge (`claude-desktop-send`) is ONLY for reconnecting mirroring — ONE attempt, then exit if it fails. NEVER use Desktop Bridge to interact with apps, post, or engage.
 8. **Never write credentials or API keys to any file.** All credentials come from environment variables.
 9. **Do NOT change the concept stage.** You are a side-effect agent. Stage transitions are the Orchestrator's job.
 10. **Vary your comments.** Never use the same comment twice in a session. Each comment should reference something specific about the post you are replying to.

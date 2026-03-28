@@ -417,7 +417,7 @@ Update the concept file:
 If at least 3 of 5 platforms were successfully posted:
 - Set `stage` to `"content-tracking"`
 - Add history entry for the stage transition
-- **Spawn the Social Warmer agent** immediately after advancing. Pass it the concept file path and niche keywords from the research section. The Social Warmer will engage with niche content across all platforms to warm up the algorithm. Spawn it as a background subagent:
+- **AFTER you are completely done** (all platforms posted, concept file updated, stage advanced), spawn the Social Warmer as the LAST thing you do. The Content Creator and Social Warmer CANNOT run at the same time — finish ALL your work first.
   ```bash
   claude --dangerously-skip-permissions --mcp-config ~/moss/config/mcp-servers.json -p "You are the Moss Social Warmer. Read ~/moss/agents/social-warmer/CLAUDE.md for your instructions. Your concept file is ~/moss/pipeline/concepts/{concept-id}.json. The niche is: {brief niche description from research}. Go." &
   ```
