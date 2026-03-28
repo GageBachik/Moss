@@ -128,79 +128,72 @@ Create all assets before posting. Save to `~/moss/content/{concept-id}/`.
   captions.md      (all platform captions, written in Step 1c)
 ```
 
-### Background Image Priority (for ALL visual content)
+### Background Images (for ALL visual content)
 
-Use this hierarchy for background images. Try each in order. NEVER use solid black.
+Each slide gets a DIFFERENT background. Mix sources across posts to stay organic. NEVER use solid black.
 
-**Priority 1: Real stock photos from Pexels API (FREE)**
-Search for realistic, niche-relevant photos. Download ONE PHOTO PER SLIDE — each slide should have a different background for visual variety.
+**Source A: Pexels API (FREE, real stock photos)**
 ```bash
-# Search Pexels for multiple portrait photos matching the concept's niche
-# Get 3-4 photos (one per slide) in a single API call
 URLS=$(curl -s -H "Authorization: $PEXELS_API_KEY" \
   "https://api.pexels.com/v1/search?query=NICHE+KEYWORDS&orientation=portrait&per_page=4" \
   | python3 -c "import sys,json; d=json.load(sys.stdin); [print(p['src']['portrait']) for p in d['photos']]")
-
-# Download each as a separate background
 echo "$URLS" | head -1 | xargs curl -sL -o bg1.jpg
 echo "$URLS" | sed -n 2p | xargs curl -sL -o bg2.jpg
 echo "$URLS" | sed -n 3p | xargs curl -sL -o bg3.jpg
 ```
-Choose search terms that match the concept mood: "money wallet aesthetic" for finance, "gym workout" for fitness, "cozy desk morning" for productivity, "skincare routine" for beauty, etc. Use different but related search terms if the first query doesn't return enough variety.
 
-**Priority 2: Nano Banana Pro via fal.ai ($0.15/image)**
-Generate a realistic SCENE (not text — text will be overlaid with ImageMagick). Prompt for photorealistic backgrounds only.
+**Source B: Nano Banana Pro via fal.ai ($0.15/image, realistic scenes)**
 ```bash
-# Generate a realistic background scene (NO TEXT IN PROMPT — text is added programmatically)
 RESULT=$(curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
-  -H "Authorization: Key $FAL_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"prompt": "realistic photograph of a minimalist wallet on a marble countertop, soft natural lighting, shallow depth of field, lifestyle photography", "aspect_ratio": "9:16", "num_images": 1, "output_format": "png"}')
+  -H "Authorization: Key $FAL_KEY" -H "Content-Type: application/json" \
+  -d '{"prompt": "realistic photograph of SCENE DESCRIPTION, lifestyle photography", "aspect_ratio": "9:16", "num_images": 1, "output_format": "png"}')
 IMG_URL=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['images'][0]['url'])")
 curl -L -o bg.png "$IMG_URL"
 ```
-CRITICAL: Never ask the AI to render text. Text is ALWAYS added programmatically via ImageMagick/FFmpeg.
+CRITICAL: Never ask AI to render text. Text is ALWAYS added via ImageMagick.
 
-**Priority 3: Gradient backgrounds (FREE, always works)**
-Last resort if APIs fail. Use mood-appropriate gradients, never solid black.
+**Source C: Gradients (FREE, fallback only)**
 ```bash
 magick -size 1080x1920 'gradient:#0a1628-#1a3a4a' bg.png
 ```
 
+**Variety rule: ALWAYS MIX IT UP.** Don't use the same source or style for every post. Alternate between Pexels and fal.ai across different concepts. Use different search terms. If the Content Tracker data shows a particular visual style getting more views, lean into that style more — but never make every post identical.
+
 ### Content Type A: Video with Real Backgrounds (TikTok, Reels, YouTube Shorts)
 
-Primary format for video platforms. 3-4 slides with text overlaid on real backgrounds.
+3 slides with text overlaid on real backgrounds. Different photo per slide.
 
 **How to create:**
-1. Get a background image using the priority list above
-2. Create 3-4 frames with text overlaid using ImageMagick (keep it simple — fewer slides = cheaper + more impactful)
-3. Assemble frames into a video with FFmpeg
+1. Download/generate 3 different on-theme backgrounds (one per slide)
+2. Overlay text with a text shadow/stroke for readability (NO dark bar — use text border instead)
+3. Assemble into 15-second video
 
 ```bash
 FONT="path/to/font.ttf"  # Check ~/moss/pipeline/active-build/*/Resources/Fonts/
 
-# Create frames with text over real background photo
-# Frame 1: Hook
-magick bg.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,600 1080,1100' \
-  -font "$FONT" -pointsize 64 -fill white -gravity center \
-  -annotate +0-50 "you track every penny" \
-  -fill '#ff6b6b' -annotate +0+40 "but still feel broke" \
+# TEXT STYLING: Use stroke/shadow for readability, NOT a dark bar overlay.
+# This looks more natural and works on any background.
+# -stroke black -strokewidth 3 gives a clean outline
+# Text is ALWAYS centered with -gravity center -annotate +0+0
+
+# Frame 1: Hook (on bg1)
+magick bg1.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
+  -font "$FONT" -pointsize 64 -fill white -stroke black -strokewidth 3 \
+  -gravity center -annotate +0-30 "you track every penny" \
+  -fill '#ff6b6b' -annotate +0+50 "but still feel broke" \
   frame1.png
 
-# Frame 2: Solution
-magick bg.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,600 1080,1100' \
-  -font "$FONT" -pointsize 56 -fill white -gravity center \
-  -annotate +0-30 "what if you just tracked" \
+# Frame 2: Solution (on bg2)
+magick bg2.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
+  -font "$FONT" -pointsize 56 -fill white -stroke black -strokewidth 3 \
+  -gravity center -annotate +0-30 "what if you just tracked" \
   -fill '#4ecdc4' -annotate +0+40 "the days you didn't spend?" \
   frame2.png
 
-# Frame 3: CTA
-magick bg.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,650 1080,1050' \
-  -font "$FONT" -pointsize 72 -fill '#ffd93d' -gravity center \
-  -annotate +0+0 "would you use this?" \
+# Frame 3: CTA (on bg3)
+magick bg3.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
+  -font "$FONT" -pointsize 68 -fill '#ffd93d' -stroke black -strokewidth 3 \
+  -gravity center -annotate +0+0 "would you use this?" \
   frame3.png
 
 # Assemble into video (3 frames x 5 seconds each = 15 seconds)
@@ -209,7 +202,23 @@ echo -e "file 'part1.mp4'\nfile 'part2.mp4'\nfile 'part3.mp4'" > concat.txt
 ffmpeg -y -f concat -safe 0 -i concat.txt -c copy video.mp4 2>/dev/null
 ```
 
-**Keep it to 3 slides.** Hook → Solution → CTA. Fewer = cheaper + higher watch-through rate.
+**TEXT POSITIONING RULES:**
+- ALWAYS use `-gravity center` so text is centered regardless of how many lines
+- Use `-annotate +0+0` as the base position (dead center). Offset with `+0-30` (up) or `+0+30` (down) for multi-line layouts
+- NEVER use absolute Y coordinates that drift between slides
+- Use `-stroke black -strokewidth 3` for readability on any background — no dark bars needed
+- Keep font size consistent across slides (56-68pt range)
+
+**Keep it to 3 slides.** Hook → Solution → CTA.
+
+### Learning from performance
+
+After the Content Tracker collects stats, check `~/moss/content-stats/` for what's working:
+- If Pexels backgrounds get more views than fal.ai, use Pexels more
+- If a certain search term's photos perform well, reuse that aesthetic
+- If text-with-stroke outperforms text-with-bar, stick with stroke
+- Update `~/moss/learnings/content.md` with findings
+- The nightly retro will also surface patterns — follow its recommendations
 
 **Video rules:**
 - 15 seconds max. 3 slides x 5 seconds.
@@ -239,34 +248,34 @@ Write as a real person. Conversational. Imperfect. No bullet points or formatted
 
 ### Content Type C: Carousel with Real Backgrounds (Instagram, X)
 
-3-4 slides with text over real photos. Same background priority: Pexels → Nano Banana Pro → gradient.
+3 slides, each with a DIFFERENT background photo. Mix Pexels and fal.ai across posts.
 
 ```bash
 FONT="path/to/font.ttf"
 
-# Slide 1: Hook (text over real photo with dark overlay)
-magick bg.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
-  -fill 'rgba(0,0,0,0.45)' -draw 'rectangle 0,0 1080,1350' \
-  -font "$FONT" -pointsize 72 -fill white -gravity center \
-  -annotate 0 "You've been tracking\nyour spending wrong" \
+# Each slide uses a DIFFERENT background (bg1.jpg, bg2.jpg, bg3.jpg)
+# Text uses stroke for readability — no dark bars
+
+# Slide 1: Hook (on bg1)
+magick bg1.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
+  -font "$FONT" -pointsize 72 -fill white -stroke black -strokewidth 3 \
+  -gravity center -annotate +0+0 "You've been tracking\nyour spending wrong" \
   slide-01.png
 
-# Slide 2: Pain point
-magick bg.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
-  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,0 1080,1350' \
-  -font "$FONT" -pointsize 52 -fill '#e0e0e0' -gravity center \
-  -annotate 0 "Every app wants you to\nlog every purchase.\n\nYou forget by lunch.\nThen you feel guilty." \
+# Slide 2: Pain point (on bg2)
+magick bg2.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
+  -font "$FONT" -pointsize 52 -fill '#e0e0e0' -stroke black -strokewidth 3 \
+  -gravity center -annotate +0+0 "Every app wants you to\nlog every purchase.\n\nYou forget by lunch.\nThen you feel guilty." \
   slide-02.png
 
-# Slide 3: CTA
-magick bg.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
-  -fill 'rgba(0,0,0,0.45)' -draw 'rectangle 0,0 1080,1350' \
-  -font "$FONT" -pointsize 64 -fill '#ffd93d' -gravity center \
-  -annotate 0 "Would you use this?\n\nComment YES if you need it" \
+# Slide 3: CTA (on bg3)
+magick bg3.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
+  -font "$FONT" -pointsize 64 -fill '#ffd93d' -stroke black -strokewidth 3 \
+  -gravity center -annotate +0+0 "Would you use this?\n\nComment YES if you need it" \
   slide-03.png
 ```
 
-**Keep carousels to 3 slides.** Hook → Pain → CTA. Minimal, impactful.
+**Keep carousels to 3 slides.** Hook → Pain → CTA.
 
 **Carousel structure:**
 1. **Slide 1 — Hook**: Bold text. Pain point or curiosity gap. High contrast. Stop the scroll.
