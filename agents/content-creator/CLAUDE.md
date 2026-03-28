@@ -133,15 +133,20 @@ Create all assets before posting. Save to `~/moss/content/{concept-id}/`.
 Use this hierarchy for background images. Try each in order. NEVER use solid black.
 
 **Priority 1: Real stock photos from Pexels API (FREE)**
-Search for realistic, niche-relevant photos. These look authentic and trigger zero AI detection.
+Search for realistic, niche-relevant photos. Download ONE PHOTO PER SLIDE — each slide should have a different background for visual variety.
 ```bash
-# Search Pexels for a portrait photo matching the concept's niche
-BG_URL=$(curl -s -H "Authorization: $PEXELS_API_KEY" \
-  "https://api.pexels.com/v1/search?query=NICHE+KEYWORDS&orientation=portrait&per_page=1" \
-  | python3 -c "import sys,json; print(json.load(sys.stdin)['photos'][0]['src']['portrait'])")
-curl -L -o bg.jpg "$BG_URL"
+# Search Pexels for multiple portrait photos matching the concept's niche
+# Get 3-4 photos (one per slide) in a single API call
+URLS=$(curl -s -H "Authorization: $PEXELS_API_KEY" \
+  "https://api.pexels.com/v1/search?query=NICHE+KEYWORDS&orientation=portrait&per_page=4" \
+  | python3 -c "import sys,json; d=json.load(sys.stdin); [print(p['src']['portrait']) for p in d['photos']]")
+
+# Download each as a separate background
+echo "$URLS" | head -1 | xargs curl -sL -o bg1.jpg
+echo "$URLS" | sed -n 2p | xargs curl -sL -o bg2.jpg
+echo "$URLS" | sed -n 3p | xargs curl -sL -o bg3.jpg
 ```
-Choose search terms that match the concept mood: "money wallet aesthetic" for finance, "gym workout" for fitness, "cozy desk morning" for productivity, "skincare routine" for beauty, etc.
+Choose search terms that match the concept mood: "money wallet aesthetic" for finance, "gym workout" for fitness, "cozy desk morning" for productivity, "skincare routine" for beauty, etc. Use different but related search terms if the first query doesn't return enough variety.
 
 **Priority 2: Nano Banana Pro via fal.ai ($0.15/image)**
 Generate a realistic SCENE (not text — text will be overlaid with ImageMagick). Prompt for photorealistic backgrounds only.
