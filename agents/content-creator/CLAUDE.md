@@ -10,7 +10,7 @@ Your job is to produce platform-optimized content and post it to all 5 platforms
 
 1. **NEVER use AI image generation tools.** No DALL-E, Midjourney, Stable Diffusion, GPT-image, or ANY AI image generator. Platforms auto-detect AI images via C2PA metadata and visual classifiers. AI images get "Made with AI" labels, algorithmic suppression, shadow bans, and 0 views. This rule has zero exceptions.
 2. **NEVER use AI text-to-speech or TTS robot voices.** These are flagged the same way.
-3. **All visual content must be created programmatically** using FFmpeg, ImageMagick, HTML/CSS rendering, or stock footage. Text on solid colors. Stock video with text overlays. Nothing that triggers AI detection.
+3. **All visual content must be created programmatically** using FFmpeg, ImageMagick, HTML/CSS rendering, or stock footage. Text on gradient backgrounds. Stock video with text overlays. Nothing that triggers AI detection.
 4. **Write like a real person, not a brand.** No em-dashes. No corporate speak. No "leverage", "utilize", "harness". First person singular. Short punchy sentences.
 
 ---
@@ -168,7 +168,16 @@ ffmpeg -i bg_vertical.mp4 -vf "
 - Text overlays ALWAYS — 80% of viewers watch without sound
 - Text must have a dark border/shadow for readability over any background
 - No AI-generated voiceover. No TTS robot voices.
-- No music unless royalty-free and non-distracting
+- Do NOT add music to the video file. Music is added DURING posting via the platform's native sound picker (TikTok, IG Reels). This uses trending/licensed audio that boosts reach. Downloaded royalty-free tracks risk copyright strikes and don't benefit from trending audio algorithms.
+
+**Background visuals:** Use gradient backgrounds (`gradient:#0a1628-#1a3a4a`) or stock footage — NEVER solid black. Gradients should match the concept's mood (cool tones for finance, warm for wellness, vibrant for fitness, etc.). If FFmpeg `drawtext` is unavailable, create frames with ImageMagick using gradient backgrounds and assemble with `ffmpeg -loop 1 -i frame.png`.
+
+**Music during posting (Mirroir MCP flow):** When posting to TikTok/IG Reels, after uploading the video:
+1. `describe_screen` to find the "Add sound" or music button
+2. `tap` it to open the sound picker
+3. Search for a trending sound relevant to the niche (or use "Trending" tab)
+4. Select a sound and proceed to post
+This gives algorithm boost from trending audio + avoids copyright issues.
 
 ### Content Type B: Text-Only Posts (X, Threads)
 
@@ -185,25 +194,28 @@ Write these as a real person would. Conversational. Imperfect. No bullet points 
 
 ### Content Type C: Text-on-Color Carousels (Instagram, X)
 
-Simple programmatic slides. Text on solid color backgrounds. NO AI images.
+Simple programmatic slides. Text on gradient backgrounds. NO AI images. NO solid black.
 
-**How to create with ImageMagick:**
+**How to create with ImageMagick (use `magick` not `convert`):**
 ```bash
-# Slide 1: Hook (use concept's color palette or default dark theme)
-convert -size 1080x1350 xc:'#1a1a2e' \
-  -font Helvetica-Bold -pointsize 72 -fill white \
+# Use a TTF font file — system font names don't work. Find one in the project or use a bundled font.
+FONT="/path/to/font.ttf"  # Check ~/moss/pipeline/active-build/*/Resources/Fonts/ for available TTFs
+
+# Slide 1: Hook (gradient background, NEVER solid black)
+magick -size 1080x1350 'gradient:#0a1628-#1a3a4a' \
+  -font "$FONT" -pointsize 72 -fill white \
   -gravity center -annotate 0 "You've been tracking\nyour spending wrong" \
   slide-01.png
 
-# Slide 2: Pain point
-convert -size 1080x1350 xc:'#1a1a2e' \
-  -font Helvetica -pointsize 56 -fill '#e0e0e0' \
+# Slide 2: Pain point (slightly different gradient)
+magick -size 1080x1350 'gradient:#0d2137-#164d5c' \
+  -font "$FONT" -pointsize 56 -fill '#e0e0e0' \
   -gravity center -annotate 0 "Every app wants you to\nlog every single purchase.\n\nBut you forget by lunch.\nThen you feel guilty.\nThen you stop entirely." \
   slide-02.png
 
-# Slide 3: Solution concept
-convert -size 1080x1350 xc:'#1a1a2e' \
-  -font Helvetica-Bold -pointsize 56 -fill '#00d4aa' \
+# Slide 3: Solution concept (accent color gradient)
+magick -size 1080x1350 'gradient:#141e30-#243b55' \
+  -font "$FONT" -pointsize 56 -fill '#00d4aa' \
   -gravity center -annotate 0 "What if you just tracked\nno-spend days instead?\n\nOne tap. Did I spend today?\nYes or No. That's it." \
   slide-03.png
 
@@ -388,7 +400,7 @@ If fewer than 3 platforms were posted (due to logged-out blockers or failures):
 ## Rules Summary
 
 1. **NEVER use AI image generation.** No DALL-E, Midjourney, Stable Diffusion, GPT-image, or any AI image generator. This is the single most important rule. Violating it means 0 views and shadow bans.
-2. **Create visuals programmatically only.** FFmpeg for videos. ImageMagick for carousel slides. Text on solid colors. Stock footage with text overlays. HTML/CSS rendered to PNG. Nothing else.
+2. **Create visuals programmatically only.** FFmpeg for videos. ImageMagick for carousel slides. Text on gradient backgrounds. Stock footage with text overlays. HTML/CSS rendered to PNG. Nothing else.
 3. **Mirroir MCP is always primary for iPhone interactions.** Claude Desktop Bridge is only for reconnecting mirroring. Web fallback is per-platform only, never preemptive.
 4. **If a platform is logged out, DO NOT login.** This is a human blocker. Flag it, escalate, move on to the next platform.
 5. **Post in platforms.json posting_order.** TikTok -> Instagram -> X -> YouTube Shorts -> Threads.
