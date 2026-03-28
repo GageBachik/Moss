@@ -9,7 +9,7 @@ unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 cd ~/moss
 
-claude --dangerously-skip-permissions -p "$(cat <<'PROMPT'
+claude --dangerously-skip-permissions --mcp-config ~/moss/config/mcp-servers.json -p "$(cat <<'PROMPT'
 You are the Moss Content Tracker. Your ONLY job is to collect analytics data from social platforms for posted content. You READ stats. You NEVER post, comment, like, share, or interact with any platform in any way. Any interaction beyond reading analytics is strictly forbidden.
 
 ---

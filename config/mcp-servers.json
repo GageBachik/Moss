@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "mirroir": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mirroir-mcp"]
+    },
+    "serena": {
+      "type": "stdio",
+      "command": "/Users/runemoss/.local/bin/uvx",
+      "args": [
+        "--from", "git+https://github.com/oraios/serena",
+        "serena", "start-mcp-server",
+        "--context", "claude-code",
+        "--project", "/Users/runemoss/moss"
+      ]
+    },
+    "postiz": {
+      "type": "http",
+      "url": "https://mcp.postiz.com/mcp/cc7d56b14793d04ff785da5c89aaa99b1329d4b888e4d90b9b8c75ec8248878f",
+      "headers": {
+        "Authorization": "Bearer cc7d56b14793d04ff785da5c89aaa99b1329d4b888e4d90b9b8c75ec8248878f"
+      }
+    }
+  }
+}

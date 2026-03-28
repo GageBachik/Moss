@@ -16,7 +16,7 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
 fi
 
 # Launch new tmux session with Claude Code
-tmux new-session -d -s "$SESSION_NAME" -c ~/moss "claude --dangerously-skip-permissions -p \"$(cat <<'PROMPT'
+tmux new-session -d -s "$SESSION_NAME" -c ~/moss "claude --dangerously-skip-permissions --mcp-config ~/moss/config/mcp-servers.json -p \"$(cat <<'PROMPT'
 You are the Moss Active Orchestrator. You run in a persistent session for tight build/eval loops.
 
 READ FIRST:

@@ -10,7 +10,7 @@ unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 cd ~/moss
 
 # Run Claude Code with the heartbeat prompt
-claude --dangerously-skip-permissions -p "$(cat <<'PROMPT'
+claude --dangerously-skip-permissions --mcp-config ~/moss/config/mcp-servers.json -p "$(cat <<'PROMPT'
 You are the Moss Orchestrator running a scheduled heartbeat sweep.
 
 READ FIRST:

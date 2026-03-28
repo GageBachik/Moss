@@ -176,23 +176,23 @@ FONT="path/to/font.ttf"  # Check ~/moss/pipeline/active-build/*/Resources/Fonts/
 # -stroke black -strokewidth 3 gives a clean outline
 # Text is ALWAYS centered with -gravity center -annotate +0+0
 
-# Frame 1: Hook (on bg1) — bigger font to compensate for stroke
+# Frame 1: Hook (on bg1) — big bold text, thin outline
 magick bg1.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -font "$FONT" -pointsize 78 -fill white -stroke black -strokewidth 4 \
+  -font "$FONT" -pointsize 86 -fill white -stroke black -strokewidth 2 \
   -gravity center -annotate +0-30 "you track every penny" \
-  -fill '#ff6b6b' -annotate +0+60 "but still feel broke" \
+  -fill '#ff6b6b' -annotate +0+70 "but still feel broke" \
   frame1.png
 
 # Frame 2: Solution (on bg2)
 magick bg2.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -font "$FONT" -pointsize 68 -fill white -stroke black -strokewidth 4 \
+  -font "$FONT" -pointsize 76 -fill white -stroke black -strokewidth 2 \
   -gravity center -annotate +0-30 "what if you just tracked" \
-  -fill '#4ecdc4' -annotate +0+50 "the days you didn't spend?" \
+  -fill '#4ecdc4' -annotate +0+55 "the days you didn't spend?" \
   frame2.png
 
 # Frame 3: CTA (on bg3)
 magick bg3.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -font "$FONT" -pointsize 82 -fill '#ffd93d' -stroke black -strokewidth 4 \
+  -font "$FONT" -pointsize 90 -fill '#ffd93d' -stroke black -strokewidth 2 \
   -gravity center -annotate +0+0 "would you use this?" \
   frame3.png
 
@@ -207,7 +207,7 @@ ffmpeg -y -f concat -safe 0 -i concat.txt -c copy video.mp4 2>/dev/null
 - Use `-annotate +0+0` as the base position (dead center). Offset with `+0-30` (up) or `+0+30` (down) for multi-line layouts
 - NEVER use absolute Y coordinates that drift between slides
 - Use `-stroke black -strokewidth 3` for readability on any background — no dark bars needed
-- Font size: 68-82pt for stroke text (stroke eats into the visual size, so go bigger than you think)
+- Font size: 76-90pt with thin stroke (`-strokewidth 2`) — big bold white text with thin black outline for readability. More white than black.
 - **ONE style per concept.** Pick one background source (Pexels OR fal.ai OR gradient) and one text style for all slides of that concept. Don't mix 3 styles in one post. Vary styles BETWEEN concepts, not within.
 
 **Keep it to 3 slides.** Hook → Solution → CTA.
@@ -436,7 +436,7 @@ If at least 3 of 5 platforms were successfully posted:
 - Add history entry for the stage transition
 - **Spawn the Social Warmer agent** immediately after advancing. Pass it the concept file path and niche keywords from the research section. The Social Warmer will engage with niche content across all platforms to warm up the algorithm. Spawn it as a background subagent:
   ```bash
-  claude --dangerously-skip-permissions -p "You are the Moss Social Warmer. Read ~/moss/agents/social-warmer/CLAUDE.md for your instructions. Your concept file is ~/moss/pipeline/concepts/{concept-id}.json. The niche is: {brief niche description from research}. Go." &
+  claude --dangerously-skip-permissions --mcp-config ~/moss/config/mcp-servers.json -p "You are the Moss Social Warmer. Read ~/moss/agents/social-warmer/CLAUDE.md for your instructions. Your concept file is ~/moss/pipeline/concepts/{concept-id}.json. The niche is: {brief niche description from research}. Go." &
   ```
 
 If fewer than 3 platforms were posted (due to logged-out blockers or failures):

@@ -11,7 +11,7 @@ unset ANTHROPIC_API_KEY  # Force Max plan OAuth, never use API credits
 
 cd ~/moss
 
-claude --dangerously-skip-permissions -p "$(cat <<'PROMPT'
+claude --dangerously-skip-permissions --mcp-config ~/moss/config/mcp-servers.json -p "$(cat <<'PROMPT'
 You are the Moss Nightly Retro agent. It is end-of-day. You have THREE jobs: compile today's briefing, propose self-improvements, and send a Dispatch summary. Complete ALL THREE.
 
 TODAY=$(date +%Y-%m-%d)
