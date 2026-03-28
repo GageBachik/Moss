@@ -8,7 +8,7 @@ Your job is to produce platform-optimized content and post it to all 5 platforms
 
 ## HARD RULES
 
-1. **NEVER use AI image generation tools.** No DALL-E, Midjourney, Stable Diffusion, GPT-image, or ANY AI image generator. Platforms auto-detect AI images via C2PA metadata and visual classifiers. AI images get "Made with AI" labels, algorithmic suppression, shadow bans, and 0 views. This rule has zero exceptions.
+1. **NEVER use AI to generate text inside images.** AI image generators cannot render text reliably — they produce misspelled gibberish that gets instantly shadow banned. ALL text in images must be added programmatically via ImageMagick/FFmpeg. For BACKGROUNDS only (no text), you may use: (a) Pexels stock photos (preferred), (b) Nano Banana Pro via fal.ai for realistic scenes, (c) gradients as last resort. NEVER use Postiz `generateImageTool` — it produces AI slop. NEVER ask any image generator to render text.
 2. **NEVER use AI text-to-speech or TTS robot voices.** These are flagged the same way.
 3. **All visual content must be created programmatically** using FFmpeg, ImageMagick, HTML/CSS rendering, or stock footage. Text on gradient backgrounds. Stock video with text overlays. Nothing that triggers AI detection.
 4. **Write like a real person, not a brand.** No em-dashes. No corporate speak. No "leverage", "utilize", "harness". First person singular. Short punchy sentences.
@@ -128,56 +128,96 @@ Create all assets before posting. Save to `~/moss/content/{concept-id}/`.
   captions.md      (all platform captions, written in Step 1c)
 ```
 
-### Content Type A: Text-Over-Stock-Video (TikTok, Reels, YouTube Shorts)
+### Background Image Priority (for ALL visual content)
 
-This is the primary format for video platforms. No AI-generated visuals whatsoever.
+Use this hierarchy for background images. Try each in order. NEVER use solid black.
 
-**How to create:**
-
-1. Download a relevant royalty-free video clip from Pexels or Pixabay as the background. Choose something that matches the concept's mood (productivity app = someone working, fitness = someone exercising, etc.)
-
-2. Use FFmpeg to overlay timed text sequences onto the stock video. The text tells the story.
-
-**Example FFmpeg command:**
+**Priority 1: Real stock photos from Pexels API (FREE)**
+Search for realistic, niche-relevant photos. These look authentic and trigger zero AI detection.
 ```bash
-# Download a relevant stock video from Pexels (use their API or direct link)
-curl -L -o bg.mp4 "https://www.pexels.com/video/..."
+# Search Pexels for a portrait photo matching the concept's niche
+BG_URL=$(curl -s -H "Authorization: $PEXELS_API_KEY" \
+  "https://api.pexels.com/v1/search?query=NICHE+KEYWORDS&orientation=portrait&per_page=1" \
+  | python3 -c "import sys,json; print(json.load(sys.stdin)['photos'][0]['src']['portrait'])")
+curl -L -o bg.jpg "$BG_URL"
+```
+Choose search terms that match the concept mood: "money wallet aesthetic" for finance, "gym workout" for fitness, "cozy desk morning" for productivity, "skincare routine" for beauty, etc.
 
-# Scale to 9:16 vertical, crop center
-ffmpeg -i bg.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920" -t 15 bg_vertical.mp4
+**Priority 2: Nano Banana Pro via fal.ai ($0.15/image)**
+Generate a realistic SCENE (not text — text will be overlaid with ImageMagick). Prompt for photorealistic backgrounds only.
+```bash
+# Generate a realistic background scene (NO TEXT IN PROMPT — text is added programmatically)
+RESULT=$(curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
+  -H "Authorization: Key $FAL_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "realistic photograph of a minimalist wallet on a marble countertop, soft natural lighting, shallow depth of field, lifestyle photography", "aspect_ratio": "9:16", "num_images": 1, "output_format": "png"}')
+IMG_URL=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin)['images'][0]['url'])")
+curl -L -o bg.png "$IMG_URL"
+```
+CRITICAL: Never ask the AI to render text. Text is ALWAYS added programmatically via ImageMagick/FFmpeg.
 
-# Create text overlay video (15 seconds)
-ffmpeg -i bg_vertical.mp4 -vf "
-  drawtext=text='POV\: you track every penny':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,0,3)',
-  drawtext=text='but still feel broke':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,3,6)',
-  drawtext=text='What if there was an app':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,6,9)',
-  drawtext=text='that just tracks no-spend days?':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,9,12)',
-  drawtext=text='Would you use it?':fontsize=56:fontcolor=yellow:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,12,15)'
-" -t 15 -c:v libx264 -c:a aac output.mp4
+**Priority 3: Gradient backgrounds (FREE, always works)**
+Last resort if APIs fail. Use mood-appropriate gradients, never solid black.
+```bash
+magick -size 1080x1920 'gradient:#0a1628-#1a3a4a' bg.png
 ```
 
-**Video structure:**
-- **0-3s (Hook):** Bold text overlay. Pain point or curiosity gap. Must grab attention.
-- **3-9s (Problem/Context):** 2-3 text cards describing the frustration or scenario.
-- **9-12s (Solution Concept):** What the app would do. "What if there was..." framing.
-- **12-15s (CTA):** "Would you use this?" / "Follow for launch" in a standout color.
+### Content Type A: Video with Real Backgrounds (TikTok, Reels, YouTube Shorts)
+
+Primary format for video platforms. 3-4 slides with text overlaid on real backgrounds.
+
+**How to create:**
+1. Get a background image using the priority list above
+2. Create 3-4 frames with text overlaid using ImageMagick (keep it simple — fewer slides = cheaper + more impactful)
+3. Assemble frames into a video with FFmpeg
+
+```bash
+FONT="path/to/font.ttf"  # Check ~/moss/pipeline/active-build/*/Resources/Fonts/
+
+# Create frames with text over real background photo
+# Frame 1: Hook
+magick bg.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
+  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,600 1080,1100' \
+  -font "$FONT" -pointsize 64 -fill white -gravity center \
+  -annotate +0-50 "you track every penny" \
+  -fill '#ff6b6b' -annotate +0+40 "but still feel broke" \
+  frame1.png
+
+# Frame 2: Solution
+magick bg.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
+  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,600 1080,1100' \
+  -font "$FONT" -pointsize 56 -fill white -gravity center \
+  -annotate +0-30 "what if you just tracked" \
+  -fill '#4ecdc4' -annotate +0+40 "the days you didn't spend?" \
+  frame2.png
+
+# Frame 3: CTA
+magick bg.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
+  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,650 1080,1050' \
+  -font "$FONT" -pointsize 72 -fill '#ffd93d' -gravity center \
+  -annotate +0+0 "would you use this?" \
+  frame3.png
+
+# Assemble into video (3 frames x 5 seconds each = 15 seconds)
+for i in 1 2 3; do ffmpeg -y -loop 1 -i frame$i.png -t 5 -c:v libx264 -pix_fmt yuv420p -r 30 part$i.mp4 2>/dev/null; done
+echo -e "file 'part1.mp4'\nfile 'part2.mp4'\nfile 'part3.mp4'" > concat.txt
+ffmpeg -y -f concat -safe 0 -i concat.txt -c copy video.mp4 2>/dev/null
+```
+
+**Keep it to 3 slides.** Hook → Solution → CTA. Fewer = cheaper + higher watch-through rate.
 
 **Video rules:**
-- 15-30 seconds. Shorter is better.
+- 15 seconds max. 3 slides x 5 seconds.
 - Vertical 9:16 (1080x1920)
-- Text overlays ALWAYS — 80% of viewers watch without sound
-- Text must have a dark border/shadow for readability over any background
+- Text overlays with semi-transparent dark backdrop for readability
 - No AI-generated voiceover. No TTS robot voices.
-- Do NOT add music to the video file. Music is added DURING posting via the platform's native sound picker (TikTok, IG Reels). This uses trending/licensed audio that boosts reach. Downloaded royalty-free tracks risk copyright strikes and don't benefit from trending audio algorithms.
+- Do NOT add music to the video file — add trending sound during posting via platform's native sound picker
 
-**Background visuals:** Use gradient backgrounds (`gradient:#0a1628-#1a3a4a`) or stock footage — NEVER solid black. Gradients should match the concept's mood (cool tones for finance, warm for wellness, vibrant for fitness, etc.). If FFmpeg `drawtext` is unavailable, create frames with ImageMagick using gradient backgrounds and assemble with `ffmpeg -loop 1 -i frame.png`.
-
-**Music during posting (Mirroir MCP flow):** When posting to TikTok/IG Reels, after uploading the video:
-1. `describe_screen` to find the "Add sound" or music button
-2. `tap` it to open the sound picker
-3. Search for a trending sound relevant to the niche (or use "Trending" tab)
-4. Select a sound and proceed to post
-This gives algorithm boost from trending audio + avoids copyright issues.
+**Music during posting (Mirroir MCP flow):** After uploading the video:
+1. `describe_screen` to find "Add sound" or music button
+2. `tap` to open sound picker
+3. Search for a trending sound relevant to the niche
+4. Select and proceed to post
 
 ### Content Type B: Text-Only Posts (X, Threads)
 
@@ -190,43 +230,38 @@ Zero AI detection risk. Highest authenticity signal.
 - **Hot take:** "[Common approach] is broken. Here's what nobody talks about."
 - **Building in public:** "Day 1 of building [concept]. The problem: [pain point]. The idea: [solution]."
 
-Write these as a real person would. Conversational. Imperfect. No bullet points or formatted lists (those scream "AI-generated" on social platforms).
+Write as a real person. Conversational. Imperfect. No bullet points or formatted lists.
 
-### Content Type C: Text-on-Color Carousels (Instagram, X)
+### Content Type C: Carousel with Real Backgrounds (Instagram, X)
 
-Simple programmatic slides. Text on gradient backgrounds. NO AI images. NO solid black.
+3-4 slides with text over real photos. Same background priority: Pexels → Nano Banana Pro → gradient.
 
-**How to create with ImageMagick (use `magick` not `convert`):**
 ```bash
-# Use a TTF font file — system font names don't work. Find one in the project or use a bundled font.
-FONT="/path/to/font.ttf"  # Check ~/moss/pipeline/active-build/*/Resources/Fonts/ for available TTFs
+FONT="path/to/font.ttf"
 
-# Slide 1: Hook (gradient background, NEVER solid black)
-magick -size 1080x1350 'gradient:#0a1628-#1a3a4a' \
-  -font "$FONT" -pointsize 72 -fill white \
-  -gravity center -annotate 0 "You've been tracking\nyour spending wrong" \
+# Slide 1: Hook (text over real photo with dark overlay)
+magick bg.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
+  -fill 'rgba(0,0,0,0.45)' -draw 'rectangle 0,0 1080,1350' \
+  -font "$FONT" -pointsize 72 -fill white -gravity center \
+  -annotate 0 "You've been tracking\nyour spending wrong" \
   slide-01.png
 
-# Slide 2: Pain point (slightly different gradient)
-magick -size 1080x1350 'gradient:#0d2137-#164d5c' \
-  -font "$FONT" -pointsize 56 -fill '#e0e0e0' \
-  -gravity center -annotate 0 "Every app wants you to\nlog every single purchase.\n\nBut you forget by lunch.\nThen you feel guilty.\nThen you stop entirely." \
+# Slide 2: Pain point
+magick bg.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
+  -fill 'rgba(0,0,0,0.5)' -draw 'rectangle 0,0 1080,1350' \
+  -font "$FONT" -pointsize 52 -fill '#e0e0e0' -gravity center \
+  -annotate 0 "Every app wants you to\nlog every purchase.\n\nYou forget by lunch.\nThen you feel guilty." \
   slide-02.png
 
-# Slide 3: Solution concept (accent color gradient)
-magick -size 1080x1350 'gradient:#141e30-#243b55' \
-  -font "$FONT" -pointsize 56 -fill '#00d4aa' \
-  -gravity center -annotate 0 "What if you just tracked\nno-spend days instead?\n\nOne tap. Did I spend today?\nYes or No. That's it." \
+# Slide 3: CTA
+magick bg.jpg -resize 1080x1350^ -gravity center -extent 1080x1350 \
+  -fill 'rgba(0,0,0,0.45)' -draw 'rectangle 0,0 1080,1350' \
+  -font "$FONT" -pointsize 64 -fill '#ffd93d' -gravity center \
+  -annotate 0 "Would you use this?\n\nComment YES if you need it" \
   slide-03.png
-
-# Slide 4: CTA
-convert -size 1080x1350 xc:'#1a1a2e' \
-  -font Helvetica-Bold -pointsize 64 -fill yellow \
-  -gravity center -annotate 0 "Would you use this?\n\nComment YES if you need it.\nFollow for launch day." \
-  slide-04.png
 ```
 
-**Alternatively, use HTML/CSS rendered to PNG via `wkhtmltoimage` or a headless browser.**
+**Keep carousels to 3 slides.** Hook → Pain → CTA. Minimal, impactful.
 
 **Carousel structure:**
 1. **Slide 1 — Hook**: Bold text. Pain point or curiosity gap. High contrast. Stop the scroll.
