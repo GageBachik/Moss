@@ -65,21 +65,15 @@ Define what kinds of posts to interact with based on the target audience:
 
 Work through each platform in order: **TikTok -> Instagram -> X -> YouTube Shorts -> Threads**.
 
-All iPhone interactions use **Mirroir MCP tools** directly. These are fast MCP tools — not computer use. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used as a fallback to reconnect iPhone Mirroring when it is broken.
+All iPhone interactions use **Mirroir MCP tools** directly (`launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`).
 
-### Pre-Platform: Verify iPhone Mirroring Connection
+**NEVER use Claude Desktop Bridge (`claude-desktop-send`).** If Mirroir MCP doesn't work, just quit. Warmup is optional — not worth spawning Desktop Bridge processes.
 
-Before starting engagement:
+### Pre-Platform: Check Connection
 
 1. Call `status` to check if iPhone Mirroring is connected.
-2. If NOT connected or status shows errors:
-   a. Use Claude Desktop Bridge to reconnect:
-      ```bash
-      response=$(claude-desktop-send --new --approve-for 15 "Open the iPhone Mirroring app. If it shows disconnected, click Reconnect. Wait for the iPhone screen to appear, then press the home button." 2>/dev/null)
-      ```
-   b. Call `status` again to verify connection.
-   c. If still not connected, log failure and exit gracefully — do not loop.
-3. If connected, proceed with Mirroir MCP tools below.
+2. If NOT connected: write `"status": "mirroring_down"` to concept warmup section and EXIT. Done. Don't retry, don't use Desktop Bridge, don't loop.
+3. If connected, proceed.
 
 ### Per-Platform Engagement Flow
 
@@ -144,14 +138,13 @@ Repeat with adapted navigation for each platform:
 
 ### Platform Failure Handling
 
-**IMPORTANT: The Social Warmer is a nice-to-have signal boost, NOT a pipeline gate. If anything fails, log it locally and move on. Do NOT escalate via Dispatch or send iMessages for warmup failures — the human does not need to be notified about warmup issues.**
+**The Social Warmer is OPTIONAL. If anything fails, just stop and exit. No retries, no fallbacks, no Desktop Bridge, no Dispatch, no web fallback.**
 
 For each platform:
-1. If Mirroir MCP fails for a platform: retry the operation once
-2. If retry fails: try web fallback
-3. If web fallback fails: log the failure in the concept's `warmup` section with `"status": "failed"`, skip the platform, continue to next
-4. If ALL platforms fail (e.g., Mirroir MCP is completely down): log failures in concept file, write a note to `~/moss/logs/social-warmer.log`, and exit gracefully. Do NOT retry in a loop. Do NOT call dispatch.sh.
-5. If the platform is logged out (detected via `describe_screen`): log it in the concept's `warmup` section with `"status": "logged_out"`. Move on to the next platform. The Content Tracker will flag logged-out platforms during its regular run.
+1. If Mirroir MCP fails (any tool returns an error): log `"status": "failed"` for that platform, skip to next
+2. If the platform is logged out: log `"status": "logged_out"`, skip to next
+3. If 2+ platforms fail in a row: EXIT immediately. Write what you completed to the concept file and quit.
+4. **NEVER use `claude-desktop-send`.** NEVER call `dispatch.sh`. NEVER retry more than once. NEVER loop.
 
 ---
 
@@ -216,8 +209,9 @@ Add or update a `warmup` section in the concept JSON:
 Platform status values:
 - `"complete"` — all actions performed successfully
 - `"partial"` — some actions completed, some failed (note reason in `notes`)
-- `"skipped"` — platform was skipped entirely (Desktop Bridge + web fallback both failed)
-- `"blocked"` — platform is logged out (human blocker)
+- `"skipped"` — platform was skipped (Mirroir MCP failed)
+- `"blocked"` — platform is logged out
+- `"mirroring_down"` — iPhone Mirroring not connected, entire run skipped
 
 ### Update Metadata
 
@@ -235,7 +229,7 @@ Platform status values:
 4. **Platform logged out = log it and move on.** Do not attempt to log in. Do NOT escalate via Dispatch for warmup failures — warmup is a signal boost, not a gate.
 5. **Max 15 minutes per platform** to avoid rate limits and spam detection.
 6. **Space out actions.** Wait 2-3 seconds between likes, 5-10 seconds between follows. Never rapid-fire.
-7. **Use Mirroir MCP tools for all iPhone interactions.** Use `launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`, `screenshot`, etc. Claude Desktop Bridge (`claude-desktop-send`) is ONLY used to reconnect iPhone Mirroring when it is broken.
+7. **Use Mirroir MCP tools ONLY.** `launch_app`, `describe_screen`, `tap`, `swipe`, `type_text`, `screenshot`. **NEVER use `claude-desktop-send` or Desktop Bridge for ANY reason.** If Mirroir MCP is down, just exit.
 8. **Never write credentials or API keys to any file.** All credentials come from environment variables.
 9. **Do NOT change the concept stage.** You are a side-effect agent. Stage transitions are the Orchestrator's job.
 10. **Vary your comments.** Never use the same comment twice in a session. Each comment should reference something specific about the post you are replying to.
