@@ -176,23 +176,23 @@ FONT="path/to/font.ttf"  # Check ~/moss/pipeline/active-build/*/Resources/Fonts/
 # -stroke black -strokewidth 3 gives a clean outline
 # Text is ALWAYS centered with -gravity center -annotate +0+0
 
-# Frame 1: Hook (on bg1)
+# Frame 1: Hook (on bg1) — bigger font to compensate for stroke
 magick bg1.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -font "$FONT" -pointsize 64 -fill white -stroke black -strokewidth 3 \
+  -font "$FONT" -pointsize 78 -fill white -stroke black -strokewidth 4 \
   -gravity center -annotate +0-30 "you track every penny" \
-  -fill '#ff6b6b' -annotate +0+50 "but still feel broke" \
+  -fill '#ff6b6b' -annotate +0+60 "but still feel broke" \
   frame1.png
 
 # Frame 2: Solution (on bg2)
 magick bg2.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -font "$FONT" -pointsize 56 -fill white -stroke black -strokewidth 3 \
+  -font "$FONT" -pointsize 68 -fill white -stroke black -strokewidth 4 \
   -gravity center -annotate +0-30 "what if you just tracked" \
-  -fill '#4ecdc4' -annotate +0+40 "the days you didn't spend?" \
+  -fill '#4ecdc4' -annotate +0+50 "the days you didn't spend?" \
   frame2.png
 
 # Frame 3: CTA (on bg3)
 magick bg3.jpg -resize 1080x1920^ -gravity center -extent 1080x1920 \
-  -font "$FONT" -pointsize 68 -fill '#ffd93d' -stroke black -strokewidth 3 \
+  -font "$FONT" -pointsize 82 -fill '#ffd93d' -stroke black -strokewidth 4 \
   -gravity center -annotate +0+0 "would you use this?" \
   frame3.png
 
@@ -207,7 +207,8 @@ ffmpeg -y -f concat -safe 0 -i concat.txt -c copy video.mp4 2>/dev/null
 - Use `-annotate +0+0` as the base position (dead center). Offset with `+0-30` (up) or `+0+30` (down) for multi-line layouts
 - NEVER use absolute Y coordinates that drift between slides
 - Use `-stroke black -strokewidth 3` for readability on any background — no dark bars needed
-- Keep font size consistent across slides (56-68pt range)
+- Font size: 68-82pt for stroke text (stroke eats into the visual size, so go bigger than you think)
+- **ONE style per concept.** Pick one background source (Pexels OR fal.ai OR gradient) and one text style for all slides of that concept. Don't mix 3 styles in one post. Vary styles BETWEEN concepts, not within.
 
 **Keep it to 3 slides.** Hook → Solution → CTA.
 

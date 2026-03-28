@@ -1,10 +1,10 @@
 {
   "id": "glow-cal",
   "name": "Glow Cal",
-  "stage": "content-creating",
+  "stage": "validated",
   "created": "2026-03-27",
-  "lastUpdated": "2026-03-27T17:52:00+00:00",
-  "lastAgent": "eval",
+  "lastUpdated": "2026-03-28T01:07:27.230342Z",
+  "lastAgent": "orchestrator",
   "history": [
     {
       "stage": "scouted",
@@ -16,7 +16,7 @@
       "stage": "validated",
       "date": "2026-03-27",
       "agent": "validator",
-      "notes": "GO — 4 market signals (TikTok maintenance day trend, glow up spreadsheet trend, underconsumption core 46M+ views, ASO keyword viable). Zero direct competitors (existing apps are AI face-raters or skincare-only). MRR estimate $600-$1,200/month. Buildable in 1 week SwiftUI. Low App Store risk."
+      "notes": "GO \u2014 4 market signals (TikTok maintenance day trend, glow up spreadsheet trend, underconsumption core 46M+ views, ASO keyword viable). Zero direct competitors (existing apps are AI face-raters or skincare-only). MRR estimate $600-$1,200/month. Buildable in 1 week SwiftUI. Low App Store risk."
     },
     {
       "stage": "designing-building",
@@ -34,7 +34,7 @@
       "stage": "designing-building",
       "date": "2026-03-27T10:40:00+00:00",
       "agent": "eval",
-      "notes": "Eval failed (attempt 1). Issues: [HIGH] Playfair Display font files missing from Resources/Fonts/ — all custom typography falls back to system San Francisco font. [MEDIUM] data()/dataLarge() use system rounded font instead of Avenir Next. [MEDIUM] Empty state uses sparkles SF Symbol instead of compact mirror illustration per manifest. [MEDIUM] Paywall hero uses sparkles SF Symbol instead of compact mirror illustration concept per manifest. [MEDIUM] Privacy Policy and Terms of Use buttons have empty closures — non-functional."
+      "notes": "Eval failed (attempt 1). Issues: [HIGH] Playfair Display font files missing from Resources/Fonts/ \u2014 all custom typography falls back to system San Francisco font. [MEDIUM] data()/dataLarge() use system rounded font instead of Avenir Next. [MEDIUM] Empty state uses sparkles SF Symbol instead of compact mirror illustration per manifest. [MEDIUM] Paywall hero uses sparkles SF Symbol instead of compact mirror illustration concept per manifest. [MEDIUM] Privacy Policy and Terms of Use buttons have empty closures \u2014 non-functional."
     },
     {
       "stage": "evaluating",
@@ -47,23 +47,41 @@
       "date": "2026-03-27T17:52:00+00:00",
       "agent": "eval",
       "notes": "Eval passed (attempt 2). Score: 9/10. All 5 previously-reported issues resolved. Build succeeds, app launches without crash, CompactMirrorIcon renders correctly, Playfair Display font bundled and registered, Avenir Next used for data fonts, legal links functional. One low-severity note: font rendering could not be pixel-verified at specific weights due to variable font weight matching."
+    },
+    {
+      "stage": "content-creating",
+      "date": "2026-03-27T19:08:00+00:00",
+      "agent": "content-creator",
+      "notes": "Posted to 4/5 platforms (TikTok, Instagram, X, Threads) via Postiz. YouTube Shorts skipped (requires video, no video asset created). Carousel format: 4 slides (hook, problem, solution concept, engagement CTA) with rose-gold theme. Assets at ~/moss/content/glow-cal/"
+    },
+    {
+      "stage": "content-tracking",
+      "date": "2026-03-27T19:08:00+00:00",
+      "agent": "content-creator",
+      "notes": "Advanced to content-tracking. 4/5 platforms posted successfully (meets 3+ threshold). YouTube Shorts not posted (video-only platform, no video asset). Spawning Social Warmer agent."
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-28",
+      "agent": "orchestrator",
+      "notes": "Reset for repost \u2014 old content deleted, Content Creator rewritten"
     }
   ],
   "research": {
     "trend_source": "tiktok+app_store",
-    "trend_description": "TikTok trending pages for 'maintenance day glow up 2026', 'monthly beauty maintenance', and 'glow up spreadsheet' show creators sharing recurring beauty maintenance schedules via spreadsheets and checklists. The broader glow-up trend intersects with underconsumption core (46M+ views) as users prioritize maintaining what they have over buying new. Existing glow-up apps on the App Store are exclusively AI face raters (GlowUp, Glow AI, Beautify) or skincare-only trackers (BasicBeauty, GlowinMe) — none offer a unified beauty maintenance calendar across categories like nails, hair, brows, lashes, facials, and waxing.",
-    "app_concept": "A beautiful all-in-one beauty maintenance calendar that tracks when each recurring self-care task is due — nails, hair, brows, lashes, facials, waxing, and custom categories — with smart scheduling, overdue alerts, and spend tracking per category.",
+    "trend_description": "TikTok trending pages for 'maintenance day glow up 2026', 'monthly beauty maintenance', and 'glow up spreadsheet' show creators sharing recurring beauty maintenance schedules via spreadsheets and checklists. The broader glow-up trend intersects with underconsumption core (46M+ views) as users prioritize maintaining what they have over buying new. Existing glow-up apps on the App Store are exclusively AI face raters (GlowUp, Glow AI, Beautify) or skincare-only trackers (BasicBeauty, GlowinMe) \u2014 none offer a unified beauty maintenance calendar across categories like nails, hair, brows, lashes, facials, and waxing.",
+    "app_concept": "A beautiful all-in-one beauty maintenance calendar that tracks when each recurring self-care task is due \u2014 nails, hair, brows, lashes, facials, waxing, and custom categories \u2014 with smart scheduling, overdue alerts, and spend tracking per category.",
     "target_user": "Women 18-35 who maintain multiple recurring beauty routines and currently use spreadsheets, Notes, or mental math to remember when each service is due. They want a single place to see their full maintenance schedule at a glance.",
-    "monetization_hypothesis": "Freemium with category limit — 5 free maintenance categories, unlimited categories plus spend analytics, appointment history export, and home screen widgets via weekly subscription ($2.99/week). RevenueCat weekly subscriptions convert well for utility apps.",
+    "monetization_hypothesis": "Freemium with category limit \u2014 5 free maintenance categories, unlimited categories plus spend analytics, appointment history export, and home screen widgets via weekly subscription ($2.99/week). RevenueCat weekly subscriptions convert well for utility apps.",
     "validation": {
       "verdict": "GO",
       "market_signals": 4,
       "competitor_count": 0,
-      "competitor_saturation": "none — zero beauty maintenance calendar apps exist",
+      "competitor_saturation": "none \u2014 zero beauty maintenance calendar apps exist",
       "monetization_potential": "medium",
       "mrr_estimate": "$600-$1,200/month steady-state after Apple cut",
-      "buildability": "1 week SwiftUI — SwiftData, local notifications, WidgetKit, RevenueCat only",
-      "app_store_risk": "LOW — calendar utility, no health claims, no UGC, no regulated content"
+      "buildability": "1 week SwiftUI \u2014 SwiftData, local notifications, WidgetKit, RevenueCat only",
+      "app_store_risk": "LOW \u2014 calendar utility, no health claims, no UGC, no regulated content"
     },
     "aso": {
       "primary_keyword": "glow up tracker",
@@ -85,13 +103,20 @@
     "primary_color": "#E8A87C",
     "primary_font": "Playfair Display",
     "screen_count": 4,
-    "screens": ["Home (Maintenance Timeline)", "Category Detail", "Add/Edit Category", "Paywall"],
+    "screens": [
+      "Home (Maintenance Timeline)",
+      "Category Detail",
+      "Add/Edit Category",
+      "Paywall"
+    ],
     "screenshots": [
       "pipeline/active-build/glow-cal/screenshots/screen-01-home-empty.png",
       "pipeline/active-build/glow-cal/screenshots/screen-02-app-running.png"
     ]
   },
-  "content": { "posts": [] },
+  "content": {
+    "posts": []
+  },
   "eval": {
     "attempts": 2,
     "last_result": {
@@ -99,11 +124,26 @@
       "score": 9,
       "timestamp": "2026-03-27T17:52:00+00:00",
       "checks": {
-        "build": { "passed": true, "notes": "Zero errors. xcodebuild BUILD SUCCEEDED with RevenueCat SPM dependency and Playfair Display font bundled." },
-        "launch": { "passed": true, "notes": "App launched on iPhone 17 Pro simulator (PID 28444), no crash after 5 seconds." },
-        "visual": { "passed": true, "notes": "All previous issues resolved. Playfair Display variable font bundled in app, registered via CTFontManager and Info.plist UIAppFonts. Home screen heading renders in serif font. CompactMirrorIcon renders with gold trim ring, reflective gradient surface, and hinge detail. Colors match manifest hex values. Avenir Next now used for data fonts." },
-        "functional": { "passed": true, "notes": "Privacy Policy and Terms of Use now use Link views opening URLs in Safari. Core navigation correct from code review: NavigationLink cards to detail, sheets for add/paywall. RevenueCat fully integrated with fallback pricing." },
-        "polish": { "passed": true, "notes": "CompactMirrorIcon replaces generic sparkles on both Home empty state and Paywall hero. No placeholder text, no debug artifacts, no Lorem ipsum. Themed components throughout." }
+        "build": {
+          "passed": true,
+          "notes": "Zero errors. xcodebuild BUILD SUCCEEDED with RevenueCat SPM dependency and Playfair Display font bundled."
+        },
+        "launch": {
+          "passed": true,
+          "notes": "App launched on iPhone 17 Pro simulator (PID 28444), no crash after 5 seconds."
+        },
+        "visual": {
+          "passed": true,
+          "notes": "All previous issues resolved. Playfair Display variable font bundled in app, registered via CTFontManager and Info.plist UIAppFonts. Home screen heading renders in serif font. CompactMirrorIcon renders with gold trim ring, reflective gradient surface, and hinge detail. Colors match manifest hex values. Avenir Next now used for data fonts."
+        },
+        "functional": {
+          "passed": true,
+          "notes": "Privacy Policy and Terms of Use now use Link views opening URLs in Safari. Core navigation correct from code review: NavigationLink cards to detail, sheets for add/paywall. RevenueCat fully integrated with fallback pricing."
+        },
+        "polish": {
+          "passed": true,
+          "notes": "CompactMirrorIcon replaces generic sparkles on both Home empty state and Paywall hero. No placeholder text, no debug artifacts, no Lorem ipsum. Themed components throughout."
+        }
       },
       "issues": [
         {
@@ -114,10 +154,16 @@
         }
       ],
       "screenshots": [
-        { "screen": "Home (empty state)", "path": "/tmp/moss-eval2-home.png" }
+        {
+          "screen": "Home (empty state)",
+          "path": "/tmp/moss-eval2-home.png"
+        }
       ]
     }
   },
-  "blockers": [],
-  "needsHuman": false
+  "warmup": {},
+  "blockers": [
+    "Claude Desktop Bridge non-functional \u2014 Electron webview not exposing AX content, cannot interact with iPhone Mirroring or any platform"
+  ],
+  "needsHuman": true
 }

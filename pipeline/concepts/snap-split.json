@@ -1,10 +1,10 @@
 {
   "id": "snap-split",
   "name": "Snap Split",
-  "stage": "content-tracking",
+  "stage": "validated",
   "created": "2026-03-26",
-  "lastUpdated": "2026-03-27T17:25:00+00:00",
-  "lastAgent": "content-creator",
+  "lastUpdated": "2026-03-28T01:07:27.184749Z",
+  "lastAgent": "orchestrator",
   "history": [
     {
       "stage": "scouted",
@@ -53,6 +53,12 @@
       "date": "2026-03-27T17:25:00+00:00",
       "agent": "content-creator",
       "notes": "4/5 platforms posted (>=3 threshold met). Advancing to content-tracking. YouTube Shorts pending video creation."
+    },
+    {
+      "stage": "validated",
+      "date": "2026-03-28",
+      "agent": "orchestrator",
+      "notes": "Reset for repost \u2014 old content deleted, Content Creator rewritten"
     }
   ],
   "research": {
@@ -157,48 +163,19 @@
     "primaryFont": "Space Mono",
     "secondaryFont": "System Rounded (DM Sans fallback)",
     "screenCount": 5,
-    "screens": ["Home", "Camera/Scan", "Item Review/Split", "Summary/Share", "Paywall"],
+    "screens": [
+      "Home",
+      "Camera/Scan",
+      "Item Review/Split",
+      "Summary/Share",
+      "Paywall"
+    ],
     "screenshots": [
       "pipeline/active-build/snap-split/screenshots/screen-01-home.png"
     ]
   },
   "content": {
-    "posts": [
-      {
-        "platform": "tiktok",
-        "format": "carousel",
-        "posted_at": "2026-03-27T17:25:00+00:00",
-        "post_id": "cmn9647yk004lp70yq410jo4v",
-        "method": "postiz"
-      },
-      {
-        "platform": "x",
-        "format": "single_image",
-        "posted_at": "2026-03-27T17:25:00+00:00",
-        "post_id": "cmn96481n004mp70yestr4hu9",
-        "method": "postiz"
-      },
-      {
-        "platform": "instagram",
-        "format": "carousel",
-        "posted_at": "2026-03-27T17:25:00+00:00",
-        "post_id": "cmn964849004np70yqzmt1e9x",
-        "method": "postiz"
-      },
-      {
-        "platform": "threads",
-        "format": "carousel",
-        "posted_at": "2026-03-27T17:25:00+00:00",
-        "post_id": "cmn964882004pp70ypo5iejku",
-        "method": "postiz"
-      }
-    ],
-    "assets_path": "~/moss/content/snap-split/",
-    "image_urls": [
-      "https://uploads.postiz.com/DuLmNKX40k.png",
-      "https://uploads.postiz.com/Osagrcvlgd.png",
-      "https://uploads.postiz.com/EzwxGhNequ.png"
-    ]
+    "posts": []
   },
   "eval": {
     "attempts": 1,
@@ -207,7 +184,7 @@
     "details": "Simulator build: PASS. Code review: PASS. 5 screens, Vision OCR, Venmo/PayPal deep links, RevenueCat from env var, clean architecture."
   },
   "blockers": [
-    "CameraView is in demo mode — loads sample receipts instead of real AVFoundation camera capture. Must implement AVCaptureSession + camera permissions before App Store submission. Vision OCR pipeline is ready and correct."
+    "CameraView is in demo mode \u2014 loads sample receipts instead of real AVFoundation camera capture. Must implement AVCaptureSession + camera permissions before App Store submission. Vision OCR pipeline is ready and correct."
   ],
   "needsHuman": false
 }
