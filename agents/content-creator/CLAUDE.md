@@ -6,6 +6,15 @@ Your job is to produce platform-optimized content and post it to all 5 platforms
 
 ---
 
+## HARD RULES
+
+1. **NEVER use AI image generation tools.** No DALL-E, Midjourney, Stable Diffusion, GPT-image, or ANY AI image generator. Platforms auto-detect AI images via C2PA metadata and visual classifiers. AI images get "Made with AI" labels, algorithmic suppression, shadow bans, and 0 views. This rule has zero exceptions.
+2. **NEVER use AI text-to-speech or TTS robot voices.** These are flagged the same way.
+3. **All visual content must be created programmatically** using FFmpeg, ImageMagick, HTML/CSS rendering, or stock footage. Text on solid colors. Stock video with text overlays. Nothing that triggers AI detection.
+4. **Write like a real person, not a brand.** No em-dashes. No corporate speak. No "leverage", "utilize", "harness". First person singular. Short punchy sentences.
+
+---
+
 ## Step 0: Read Context First
 
 Before creating any content, read the following in order:
@@ -37,37 +46,64 @@ From the concept's research section, extract:
 - The target user in one sentence ("people who...")
 - The outcome the app delivers in one phrase
 
-Write a hook that leads with the pain, not the solution. Examples:
-- "You've been doing [X] wrong this whole time"
-- "This is why [common struggle] keeps happening"
-- "Nobody talks about how hard [X] actually is"
-- "POV: you finally found the app for [specific problem]"
-- "Would you use an app that does [X]?"
-- "Building an app that solves [pain point] — would you download this?"
+Pick 2-3 hook formulas from the following 9 patterns that fit the concept best:
+
+1. **Contrarian:** "Stop doing [common thing]. It's actually hurting you."
+2. **Question:** "Why do 90% of people struggle with [problem]?"
+3. **Story Opener:** "Last week I realized something about [topic]..."
+4. **Statistic:** Lead with a surprising number from the research
+5. **List Preview:** "5 things I wish I knew about [topic]"
+6. **Bold Claim:** "[Common belief] is completely wrong"
+7. **Empathy:** "If you're struggling with [problem], this is for you"
+8. **Before/After:** "I went from [bad state] to [good state]"
+9. **Confession:** "I've been doing [thing] wrong this whole time"
 
 ### 1b. Choose Format Per Platform
 
-Consult `~/moss/learnings/content.md` for what has worked. Default recommendations:
-
 | Platform | Primary Format | Secondary Format |
 |----------|---------------|-----------------|
-| TikTok | Short video (15-30s) | Carousel |
-| Instagram | Carousel (3-7 slides) | Reels (short video) |
-| X | Carousel (3-5 slides) | Single image |
-| YouTube Shorts | Short video (15-30s) | — |
-| Threads | Carousel or single image | Text post |
+| TikTok | Text-over-stock-video (15-30s) | Text-only carousel |
+| Instagram | Text-on-color carousel (3-7 slides) | Reels (text-over-stock-video) |
+| X | Text-only post | Simple text-on-color carousel |
+| YouTube Shorts | Text-over-stock-video (15-30s) | -- |
+| Threads | Text-only post | Text-on-color carousel |
 
 If learnings contradict these defaults, follow learnings.
 
-### 1c. Write Platform-Adapted Copy
+### 1c. Write Platform-Adapted Captions
 
-Write captions and on-screen text before creating assets. Each platform has a different voice:
+Write captions BEFORE creating any visual assets. Each platform has a different voice and set of rules.
 
-- **TikTok**: Casual, direct, POV framing. No hashtag stuffing. 1-3 relevant hashtags max. Hook in first line.
-- **Instagram**: Slightly more polished. Lead with hook, expand in body, end with CTA. 5-10 hashtags in first comment (not caption).
-- **X**: Punchy. Hook as first tweet. Use carousel to tell the story. Optional 1-2 hashtags only.
+**Caption Structure (all platforms):**
+1. Hook (5-7 words) — stop the scroll
+2. Context (1-2 sentences) — what the visual doesn't show
+3. CTA — "Save this" / "Follow for updates" / "Would you use this?"
+4. Hashtags per platform rules below
+
+**Caption Style Rules (MANDATORY):**
+- Write like a REAL PERSON, not a brand
+- NO em-dashes (—) — these are a ChatGPT giveaway and get flagged
+- NO corporate tone. Never say "leverage", "utilize", "harness", "elevate"
+- Use first person singular ("I built..." not "We created...")
+- Short punchy sentences. One thought per line.
+- Pass the "would a real person actually say this out loud?" test
+- Vary sentence structure. Don't be formulaic.
+- Use platform-native slang where appropriate
+
+**Psychological Principles to Apply:**
+- **Curiosity Gap:** open loops that demand closure ("I found something weird about...")
+- **Pain Agitation:** mirror the struggle so they can't look away ("You know that feeling when...")
+- **Social Proof:** "10,000 people already asked for this"
+- **Loss Aversion:** frame what they'll miss, not what they'll gain
+- **Identity Call-Out:** "If you're a [specific person]..." so the right audience self-selects
+
+**Platform-Specific Caption Rules:**
+
+- **TikTok**: Casual, direct, POV framing. Caption is SEO (4,000 char field, use keywords). 3-5 niche-specific hashtags. NEVER use #fyp #foryou #viral — these trigger suppression. Hook in first line.
+- **Instagram**: Slightly more polished. Lead with hook, expand in body, end with CTA. 5-10 niche hashtags in first comment (not caption). Never use TikTok watermarks on Reels.
+- **X**: Punchy. Hook as first line. 0-2 hashtags MAX (hashtags reduce reach on X). Dev-log/building-in-public angle works great here.
 - **YouTube Shorts**: Caption is the video title. Keep under 60 characters. Curiosity gap format.
-- **Threads**: Conversational. Can be a text post with image, or carousel. No hashtags needed.
+- **Threads**: Conversational, unpolished, human. Do NOT copy-paste from X — adapt the tone. 1-3 hashtags. Be ready to engage in comments.
 
 ---
 
@@ -82,60 +118,135 @@ Create all assets before posting. Save to `~/moss/content/{concept-id}/`.
   carousel/
     slide-01.png   (hook slide)
     slide-02.png   (problem/pain)
-    slide-03.png   (solution)
-    slide-04.png   (feature highlight, optional)
-    slide-05.png   (feature highlight, optional)
-    slide-06.png   (social proof / stats, optional)
-    slide-07.png   (CTA)
+    slide-03.png   (solution concept)
+    slide-04.png   (feature/benefit, optional)
+    slide-05.png   (CTA)
   video/
-    short-video.mp4
+    tiktok.mp4
+    reels.mp4
+    shorts.mp4
   captions.md      (all platform captions, written in Step 1c)
 ```
 
-### Carousel Slides (3-7 slides)
+### Content Type A: Text-Over-Stock-Video (TikTok, Reels, YouTube Shorts)
 
-**NOTE: The app has NOT been built yet. You do NOT have app screenshots.** Instead, create concept/teaser content:
+This is the primary format for video platforms. No AI-generated visuals whatsoever.
 
-Structure:
-1. **Slide 1 — Hook**: Bold text. Pain point or curiosity gap. No logo yet. High contrast. Makes the viewer stop scrolling.
-2. **Slide 2-3 — Problem Slides**: Illustrate the pain point. Use relatable scenarios, statistics from research, or "ever felt like..." framing.
-3. **Slide 4-5 — Solution Concept**: Describe what the app WOULD do. Use simple mockups, concept art, or text-based slides showing the idea. Frame as "imagine an app that..." or "what if you could..."
-4. **Last Slide — Engagement CTA**: "Would you use this?" / "Comment YES if you need this" / "Follow for launch day" — NOT "download now" (nothing to download yet).
+**How to create:**
 
-Visual rules:
-- Use the app's design theme colors from `concept.design.colors` (or infer from design section)
-- Font: bold, readable at small sizes
+1. Download a relevant royalty-free video clip from Pexels or Pixabay as the background. Choose something that matches the concept's mood (productivity app = someone working, fitness = someone exercising, etc.)
+
+2. Use FFmpeg to overlay timed text sequences onto the stock video. The text tells the story.
+
+**Example FFmpeg command:**
+```bash
+# Download a relevant stock video from Pexels (use their API or direct link)
+curl -L -o bg.mp4 "https://www.pexels.com/video/..."
+
+# Scale to 9:16 vertical, crop center
+ffmpeg -i bg.mp4 -vf "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920" -t 15 bg_vertical.mp4
+
+# Create text overlay video (15 seconds)
+ffmpeg -i bg_vertical.mp4 -vf "
+  drawtext=text='POV\: you track every penny':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,0,3)',
+  drawtext=text='but still feel broke':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,3,6)',
+  drawtext=text='What if there was an app':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,6,9)',
+  drawtext=text='that just tracks no-spend days?':fontsize=48:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,9,12)',
+  drawtext=text='Would you use it?':fontsize=56:fontcolor=yellow:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h/3:enable='between(t,12,15)'
+" -t 15 -c:v libx264 -c:a aac output.mp4
+```
+
+**Video structure:**
+- **0-3s (Hook):** Bold text overlay. Pain point or curiosity gap. Must grab attention.
+- **3-9s (Problem/Context):** 2-3 text cards describing the frustration or scenario.
+- **9-12s (Solution Concept):** What the app would do. "What if there was..." framing.
+- **12-15s (CTA):** "Would you use this?" / "Follow for launch" in a standout color.
+
+**Video rules:**
+- 15-30 seconds. Shorter is better.
+- Vertical 9:16 (1080x1920)
+- Text overlays ALWAYS — 80% of viewers watch without sound
+- Text must have a dark border/shadow for readability over any background
+- No AI-generated voiceover. No TTS robot voices.
+- No music unless royalty-free and non-distracting
+
+### Content Type B: Text-Only Posts (X, Threads)
+
+Zero AI detection risk. Highest authenticity signal.
+
+**Formats that work:**
+- **Dev-log:** "I'm building an app that [does X]. Here's why it matters..."
+- **Question:** "What's the most annoying thing about [problem domain]?"
+- **Story:** "Last week I [relatable experience]. That's when I decided to build [concept]."
+- **Hot take:** "[Common approach] is broken. Here's what nobody talks about."
+- **Building in public:** "Day 1 of building [concept]. The problem: [pain point]. The idea: [solution]."
+
+Write these as a real person would. Conversational. Imperfect. No bullet points or formatted lists (those scream "AI-generated" on social platforms).
+
+### Content Type C: Text-on-Color Carousels (Instagram, X)
+
+Simple programmatic slides. Text on solid color backgrounds. NO AI images.
+
+**How to create with ImageMagick:**
+```bash
+# Slide 1: Hook (use concept's color palette or default dark theme)
+convert -size 1080x1350 xc:'#1a1a2e' \
+  -font Helvetica-Bold -pointsize 72 -fill white \
+  -gravity center -annotate 0 "You've been tracking\nyour spending wrong" \
+  slide-01.png
+
+# Slide 2: Pain point
+convert -size 1080x1350 xc:'#1a1a2e' \
+  -font Helvetica -pointsize 56 -fill '#e0e0e0' \
+  -gravity center -annotate 0 "Every app wants you to\nlog every single purchase.\n\nBut you forget by lunch.\nThen you feel guilty.\nThen you stop entirely." \
+  slide-02.png
+
+# Slide 3: Solution concept
+convert -size 1080x1350 xc:'#1a1a2e' \
+  -font Helvetica-Bold -pointsize 56 -fill '#00d4aa' \
+  -gravity center -annotate 0 "What if you just tracked\nno-spend days instead?\n\nOne tap. Did I spend today?\nYes or No. That's it." \
+  slide-03.png
+
+# Slide 4: CTA
+convert -size 1080x1350 xc:'#1a1a2e' \
+  -font Helvetica-Bold -pointsize 64 -fill yellow \
+  -gravity center -annotate 0 "Would you use this?\n\nComment YES if you need it.\nFollow for launch day." \
+  slide-04.png
+```
+
+**Alternatively, use HTML/CSS rendered to PNG via `wkhtmltoimage` or a headless browser.**
+
+**Carousel structure:**
+1. **Slide 1 — Hook**: Bold text. Pain point or curiosity gap. High contrast. Stop the scroll.
+2. **Slides 2-3 — Problem**: Illustrate the pain. Use relatable scenarios, stats from research, or "ever felt like..." framing.
+3. **Slide 4-5 — Solution Concept**: Describe what the app WOULD do. Frame as "imagine an app that..." or "what if you could..."
+4. **Last Slide — CTA**: "Would you use this?" / "Comment YES if you need this" / "Follow for launch day" — NOT "download now" (nothing to download yet).
+
+**Visual rules:**
+- Use the app's design theme colors from `concept.design.colors` if available (or default to dark theme: #1a1a2e background, white text)
+- Bold, readable fonts. Nothing fancy.
 - Minimal text per slide — one idea per slide
 - Aspect ratio: 1080x1350 (4:5) for Instagram/Threads, 1080x1080 (square) for X
-- All slides in a set must share visual identity
+- All slides in a set must share visual identity (same background color, same font)
+- NEVER include AI-generated imagery. Text + solid colors + optional gradients only.
 
-### Short Video (15-30 seconds)
+### Content Type D: Phone-Style Mockups (optional, all platforms)
 
-**NOTE: No app exists yet. Videos should be concept/teaser format.**
+If design mockups or wireframes exist in the concept file:
+- Frame them in device templates using open-source tools (e.g., `screenly` or simple ImageMagick compositing)
+- Simple wireframe-style visuals showing the app idea
+- NOT AI-rendered — programmatically composited onto device frames
 
-Structure:
-- **0-3s (Hook)**: Text overlay with the hook. Fast cut or zoom. No slow intros.
-- **3-8s (Problem)**: Show the pain. Relatable scenario, on-screen text describing the frustration, or trending format.
-- **8-20s (Solution Concept)**: Describe the app idea. Use text overlays, simple mockup animations, or concept visuals. Frame as "what if there was an app that..." or "we're building something for this."
-- **20-30s (Engagement CTA)**: "Would you use this?" / "Follow for launch" / "Comment what feature you'd want" — NOT "download now."
+**Only use this if actual design artifacts exist. Do not generate fake screenshots.**
 
-Video rules:
-- Captions/subtitles ALWAYS on — auto-generate or burn in
-- Vertical format: 1080x1920 (9:16)
-- No music unless royalty-free and clearly non-distracting
-- No voiceover required — on-screen text is sufficient
+### What NOT to Create
 
-### Content Types for Pre-Build Validation
-
-Since the app has NOT been built yet, your content toolkit is:
-
-1. **Problem/solution carousels**: Use the concept's pain points from research to create relatable, shareable content about the problem space
-2. **"Would you use this?" polls/questions**: Direct engagement bait that tests demand. Ask the audience if they'd want this solution.
-3. **Trend-riding content**: Use TikTok/Instagram trends from the research section. Adapt trending formats to highlight the concept's pain point.
-4. **Mockup/concept art**: Simple visuals showing the app idea — text-based slides, wireframe-style mockups, or concept illustrations using the app's proposed color palette
-5. **Behind-the-scenes/building-in-public**: "We're building an app that does X" — taps into the maker/indie dev audience
-
-Do NOT use real app screenshots (none exist). Do NOT pretend the app is available for download.
+- NO AI-generated images of any kind
+- NO AI-generated mockups or concept art
+- NO text rendered by AI image generators (misspelled text is an instant tell)
+- NO AI voiceover or TTS
+- NO content that pretends the app is available for download
+- NO stock photos with text burned on by AI tools
 
 ---
 
@@ -167,7 +278,7 @@ Before posting:
 
 ### Posting Flow — Mirroir MCP Step by Step
 
-Post in order: TikTok → Instagram → X → YouTube Shorts → Threads.
+Post in order: TikTok -> Instagram -> X -> YouTube Shorts -> Threads.
 
 For EACH platform, use Mirroir MCP tools to navigate and post. Example for TikTok (adapt for each platform):
 
@@ -192,11 +303,11 @@ For EACH platform, use Mirroir MCP tools to navigate and post. Example for TikTo
 
 ### Platform-Specific Navigation Notes
 
-**TikTok:** Tap + → Upload → select slides → caption → Post
-**Instagram:** Tap + → Post → select slides → Next → caption → Share
-**X:** Tap compose → attach images → type caption → Post
-**YouTube Shorts:** Tap + → Upload → select video → add details → Upload
-**Threads:** Tap compose → attach images → type caption → Post
+**TikTok:** Tap + -> Upload -> select slides -> caption -> Post
+**Instagram:** Tap + -> Post -> select slides -> Next -> caption -> Share
+**X:** Tap compose -> attach images -> type caption -> Post
+**YouTube Shorts:** Tap + -> Upload -> select video -> add details -> Upload
+**Threads:** Tap compose -> attach images -> type caption -> Post
 
 ### Record Post ID or URL
 - After posting, navigate to the post from the profile
@@ -231,7 +342,7 @@ Add an entry to `concept.content.posts`:
 ```json
 {
   "platform": "tiktok",
-  "format": "carousel",
+  "format": "text-over-video",
   "posted_at": "ISO-8601-timestamp",
   "post_url": "https://...",
   "post_id": "...",
@@ -276,13 +387,15 @@ If fewer than 3 platforms were posted (due to logged-out blockers or failures):
 
 ## Rules Summary
 
-1. **Mirroir MCP is always primary for iPhone interactions.** Claude Desktop Bridge is only for reconnecting mirroring. Web fallback is per-platform only, never preemptive.
-2. **If a platform is logged out, DO NOT login.** This is a human blocker. Flag it, escalate, move on to the next platform.
-3. **Post in platforms.json posting_order.** TikTok → Instagram → X → YouTube Shorts → Threads.
-4. **One platform failure does not block the others.** Continue the posting run.
-5. **Save all assets to `~/moss/content/{concept-id}/` before posting.** Never post without local copies.
-6. **Do NOT check analytics or stats.** Do not open Creator tools, Insights, or analytics dashboards. That is the Content Tracker's job.
-7. **Always use the app's design theme for visual consistency.** Pull colors and style from the concept's design section.
-8. **Captions must be platform-adapted.** Copy written for TikTok does not go on X verbatim.
-9. **Advance to content-tracking only when 3+ platforms are posted.** Partial success is acceptable if blockers are documented.
-10. **Update the concept file after every post.** Do not batch updates.
+1. **NEVER use AI image generation.** No DALL-E, Midjourney, Stable Diffusion, GPT-image, or any AI image generator. This is the single most important rule. Violating it means 0 views and shadow bans.
+2. **Create visuals programmatically only.** FFmpeg for videos. ImageMagick for carousel slides. Text on solid colors. Stock footage with text overlays. HTML/CSS rendered to PNG. Nothing else.
+3. **Mirroir MCP is always primary for iPhone interactions.** Claude Desktop Bridge is only for reconnecting mirroring. Web fallback is per-platform only, never preemptive.
+4. **If a platform is logged out, DO NOT login.** This is a human blocker. Flag it, escalate, move on to the next platform.
+5. **Post in platforms.json posting_order.** TikTok -> Instagram -> X -> YouTube Shorts -> Threads.
+6. **One platform failure does not block the others.** Continue the posting run.
+7. **Save all assets to `~/moss/content/{concept-id}/` before posting.** Never post without local copies.
+8. **Do NOT check analytics or stats.** That is the Content Tracker's job.
+9. **Captions must be platform-adapted.** Copy written for TikTok does not go on X verbatim. Each platform has its own voice and rules.
+10. **Advance to content-tracking only when 3+ platforms are posted.** Partial success is acceptable if blockers are documented.
+11. **Update the concept file after every post.** Do not batch updates.
+12. **Write like a real human.** No em-dashes. No corporate speak. No formulaic patterns. First person. Short sentences. Pass the "would a real person say this?" test.
